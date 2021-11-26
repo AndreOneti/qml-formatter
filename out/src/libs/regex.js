@@ -10,12 +10,12 @@ var currentTabSize = 0;
 function Regex(line) {
     if (currentTabSize < 0)
         currentTabSize = 0;
-    if (IsImport.test(line)) {
+    if (IsImport.test(line))
         return stringFormatter_1.whiteSpaceRemove(line, currentTabSize);
-    }
     // currentTabSize += editor;
-    var newLine = stringFormatter_1.whiteSpaceRemove(line, currentTabSize);
-    return newLine;
+    // let newLine = whiteSpaceRemove(line, currentTabSize);
+    // return newLine;
+    return line;
 }
 exports.Regex = Regex;
 //# sourceMappingURL=regex.js.map

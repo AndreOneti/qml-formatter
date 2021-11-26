@@ -16,6 +16,7 @@ export function Regex(line: string): string {
 
   // currentTabSize += editor;
 
-  let newLine = whiteSpaceRemove(line, currentTabSize);
-  return newLine;
+  // let newLine = whiteSpaceRemove(line, currentTabSize);
+  // return newLine;
+  return line;
 }
