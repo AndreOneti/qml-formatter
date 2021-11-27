@@ -12,7 +12,7 @@ function activate(context) {
                 var edit = new vscode.WorkspaceEdit();
                 var file = document_1.getText().split('\n');
                 for (var index = 0; index < file.length; index++) {
-                    edit.replace(document_1.uri, new vscode.Range(index, 0, index, file[index].length), "" + libs_1.Regex(file[index]));
+                    edit.replace(document_1.uri, new vscode.Range(index, 0, index, file[index].length), "" + libs_1.Regex(file[index], index === 0));
                     if (index === (file.length - 1)) {
                         if (file[index] !== '') {
                             edit.insert(document_1.uri, document_1.lineAt(document_1.lineCount - 1).range.end, '\n');

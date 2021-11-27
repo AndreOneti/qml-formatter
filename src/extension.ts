@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
           edit.replace(
             document.uri,
             new vscode.Range(index, 0, index, file[index].length),
-            `${Regex(file[index])}`
+            `${Regex(file[index], index === 0)}`
           );
           if (index === (file.length - 1)) {
             if (file[index] !== '') {
