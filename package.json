@@ -2,7 +2,7 @@
   "name": "qml-formatter",
   "displayName": "QML Formatter",
   "description": "A simple QML formatter",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "publisher": "AndreOneti",
   "icon": "logo.png",
   "engines": {

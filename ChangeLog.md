@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.3] - 2021-11-27
+
+Adjust formatter with if steatement.
+
+### Added
+
+### Changed
+
+### Fixed
+- [Add regex/pattern to "if/else" statement](https://github.com/AndreOneti/qml-formatter/issues/2)
+
+Fix if/else formatter.
+- [Ignore format on comentede lines](https://github.com/AndreOneti/qml-formatter/issues/3)
+
+Fix comment formatter.
+
+------
+
 ## [1.0.2] - 2021-11-27
 
 Create some regex to formatte document.

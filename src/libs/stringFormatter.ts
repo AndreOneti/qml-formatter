@@ -1,5 +1,6 @@
 export function whiteSpaceRemove(str: string, spaceSize: number): string {
   str = str.trim();
+  spaceSize = spaceSize > 0 ? spaceSize : 0;
   let identationSpace = str === "" ? "" : " ".repeat(spaceSize);
   return (
     identationSpace +
@@ -7,6 +8,7 @@ export function whiteSpaceRemove(str: string, spaceSize: number): string {
       .replace(/,/g, ", ")
       .replace(/([^"]+)|("[^"]+")/g, function ($0, $1, $2) {
         if ($1) {
+          if (str.includes("//")) return $1;
           return $1.replace(/\s{1,}/g, " ");
         } else {
           return $2;

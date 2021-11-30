@@ -1,37 +1,44 @@
-'use strict';
-import * as vscode from 'vscode';
+"use strict";
+import * as vscode from "vscode";
 import { Regex } from "./libs";
 
 export function activate(context: vscode.ExtensionContext) {
-
-  vscode.languages.registerDocumentFormattingEditProvider('qml', {
-    provideDocumentFormattingEdits(document: vscode.TextDocument): vscode.TextEdit[] {
+  vscode.languages.registerDocumentFormattingEditProvider("qml", {
+    provideDocumentFormattingEdits(
+      document: vscode.TextDocument
+    ): vscode.TextEdit[] {
       const { activeTextEditor } = vscode.window;
 
-      if (activeTextEditor && activeTextEditor.document.languageId === 'qml') {
+      function getTabSize(): number {
+        return Number(activeTextEditor.options.tabSize);
+      }
+
+      if (activeTextEditor && activeTextEditor.document.languageId === "qml") {
         const { document } = activeTextEditor;
         const edit = new vscode.WorkspaceEdit();
-        const file = document.getText().split('\n');
+        const file = document.getText().split("\n");
+        const tabSize = getTabSize();
 
         for (let index = 0; index < file.length; index++) {
+          const line = file[index];
           edit.replace(
             document.uri,
-            new vscode.Range(index, 0, index, file[index].length),
-            `${Regex(file[index], index === 0)}`
+            new vscode.Range(index, 0, index, line.length),
+            `${Regex(line, index === 0, tabSize)}`
           );
-          if (index === (file.length - 1)) {
-            if (file[index] !== '') {
+          if (index === file.length - 1) {
+            if (line !== "") {
               edit.insert(
                 document.uri,
                 document.lineAt(document.lineCount - 1).range.end,
-                '\n'
+                "\n"
               );
             }
-            vscode.workspace.applyEdit(edit)
+            vscode.workspace.applyEdit(edit);
             return [];
           }
         }
       }
-    }
+    },
   });
 }
