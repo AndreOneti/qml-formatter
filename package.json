@@ -2,14 +2,20 @@
   "name": "qml-formatter",
   "displayName": "QML Formatter",
   "description": "A simple QML formatter",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "publisher": "AndreOneti",
-  "icon": "logo.png",
   "engines": {
     "vscode": "^1.6.0"
   },
+  "icon": "images/logo.png",
+  "galleryBanner": {
+    "color": "#FFFFFF",
+    "theme": "light"
+  },
   "categories": [
-    "Formatters"
+    "Programming Languages",
+    "Formatters",
+    "Snippets"
   ],
   "activationEvents": [
     "onLanguage:qml"
@@ -29,13 +35,22 @@
     "languages": [
       {
         "id": "qml",
-        "aliases": [
-          "qml"
-        ],
-        "filenamePatterns": [
-          "*.qml",
-          "*.qmlproject"
-        ]
+        "aliases": ["QML","qml"],
+        "filenamePatterns": ["*.qml","*.qmlproject"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "qml",
+        "scopeName": "source.qml",
+        "path": "./syntaxes/qml.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "qml",
+        "path": "./snippets/snippets.json"
       }
     ],
     "configuration": {

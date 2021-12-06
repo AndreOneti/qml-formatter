@@ -1,0 +1,124 @@
+{
+  "Print to console": {
+    "prefix": "cLog",
+    "body": [
+      "console.log(${1:variable})"
+    ],
+    "description": "Log output to console"
+  },
+  "Property": {
+    "prefix": "prop",
+    "scope": "qml",
+    "body": [
+      "property ${1|var,int,bool,double,string|} ${0:name}"
+    ],
+    "description": "property"
+  },
+  "Alias": {
+    "prefix": "alias",
+    "scope": "qml",
+    "body": [
+      "property alias ${1:name}: ${0:aliasreference}"
+    ],
+    "description": "alias property"
+  },
+  "Button component": {
+    "prefix": "button",
+    "scope": "qml",
+    "body": [
+      "Button {",
+      "\tid: ${1:btn}",
+      "\ttext: \"qsTr(${2:OK})\"",
+      "\tonClicked: ${3:submit()}",
+      "}",
+      "$0"
+    ],
+    "description": "Button componente"
+  },
+  "MouseArea": {
+    "prefix": [
+      "mouseArea",
+      "mouse",
+      "area"
+    ],
+    "scope": "qml",
+    "body": [
+      "MouseArea {",
+      "\tanchors.fill: parent",
+      "\tcursorShape: Qt.PointingHandCursor",
+      "\thoverEnabled: false",
+      "\tonEntered: {}",
+      "\tonExited: {}",
+      "\tonWheel: {}",
+      "\tonClicked: {}",
+      "}"
+    ],
+    "description": "MouseArea"
+  },
+  "Rectangle component": {
+    "prefix": "rectangle",
+    "scope": "qml",
+    "body": [
+      "Rectangle {",
+      "\twidth: 10",
+      "\theight: 10",
+      "\tcolor: \"transparent\"",
+      "}"
+    ],
+    "description": "Rectangle component"
+  },
+  "on Change": {
+    "prefix": [
+      "onchange",
+      "change"
+    ],
+    "body": [
+      "on${1:variable}Changed: { }"
+    ],
+    "description": "variable on Change"
+  },
+  "onCompleted": {
+    "prefix": "onCompleted",
+    "body": [
+      "Component.onCompleted: {",
+      "",
+      "}"
+    ],
+    "description": "Component onCompleted"
+  },
+  "onDestruction": {
+    "prefix": "onDestruction",
+    "body": [
+      "Component.onDestruction: {",
+      "",
+      "}"
+    ],
+    "description": "Component onDestruction"
+  },
+  "Connections": {
+    "prefix": "connections",
+    "body": [
+      "Connections {",
+      "\ttarget: ${1:component}",
+      "}"
+    ],
+    "description": "Component Connections"
+  },
+  "QtObject": {
+    "prefix": [
+      "qtobject",
+      "object"
+    ],
+    "body": [
+      "QtObject { }"
+    ],
+    "description": "QtObject"
+  },
+  "signal": {
+    "prefix": "signal",
+    "body": [
+      "signal ${1:name}()"
+    ],
+    "description": "Component signal"
+  }
+}
