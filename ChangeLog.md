@@ -4,7 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.0.3] - 2021-11-27
+## [1.1.0] - 2021-12-06
+
+Change to support language formatter and highlight properties.
+
+### Added
+  - Create highlight to properties..
+  - Suport to language QML.
+  - Create snippets.
+
+### Changed
+
+### Fixed
+
+------
+
+## [1.0.3] - 2021-11-30
 
 Adjust formatter with if steatement.
 
