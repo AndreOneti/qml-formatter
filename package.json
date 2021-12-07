@@ -2,7 +2,7 @@
   "name": "qml-formatter",
   "displayName": "QML Formatter",
   "description": "A simple QML formatter",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "publisher": "AndreOneti",
   "engines": {
     "vscode": "^1.6.0"

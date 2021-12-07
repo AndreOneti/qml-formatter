@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Regex = void 0;
 var stringFormatter_1 = require("./stringFormatter");
 var IsImport = /^\s{0,}import/;
-var IsBegingComponent = /^\s{0,}[A-Za-z.]{1,}\s{0,}:{0,1}\s{0,}\{$/;
+var IsBegingComponent = /^\s{0,}[A-Za-z0-9.]{1,}\s{0,}:{0,1}\s{0,}\{/;
 var IsEndComponent = /^\s{0,}\}$/;
 var IsBrackts = /^\s{0,}\{/;
 var IsLogicalOperator = /^\s{0,}&&/;
@@ -27,7 +27,16 @@ function Regex(line, isfirstLine, editor) {
     }
     if (IsBegingComponent.test(line)) {
         var data = stringFormatter_1.whiteSpaceRemove(line, currentTabSize);
-        currentTabSize += editor;
+        if (!data.endsWith("}"))
+            currentTabSize += editor;
+        if (data.endsWith("}")) {
+            data = data.replace(/\{\}/, "{ }");
+            if (data.indexOf("{") < data.indexOf("}") - 2) {
+                data = data
+                    .replace(/\{\s{0,}/, "{\n" + " ".repeat(currentTabSize + editor))
+                    .replace(/\s{0,}\}/, "\n" + " ".repeat(currentTabSize) + "}");
+            }
+        }
         return data;
     }
     if (IsEndComponent.test(line)) {
