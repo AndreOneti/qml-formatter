@@ -4,8 +4,8 @@ import { whiteSpaceRemove } from "./stringFormatter";
 
 const IsImport = /^\s{0,}import/;
 
-const IsBegingComponent = /^\s{0,}[A-Za-z0-9.]{1,}\s{0,}:{0,1}\s{0,}\{/;
-const IsEndComponent = /^\s{0,}\}$/;
+const IsBegingComponent = /^\s{0,}[A-Za-z0-9.]{1,}\s{0,}:{0,1}\s{0,}(\{|\[)/;
+const IsEndComponent = /^\s{0,}\}\s{0,},{0,1}\s{0,}|^\s{0,}\]\s{0,}$/;
 
 const IsBrackts = /^\s{0,}\{/;
 const IsLogicalOperator = /^\s{0,}&&/;
