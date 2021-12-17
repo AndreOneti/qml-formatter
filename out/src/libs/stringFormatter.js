@@ -7,7 +7,7 @@ function whiteSpaceRemove(str, spaceSize) {
     var identationSpace = str === "" ? "" : " ".repeat(spaceSize);
     return (identationSpace +
         str
-            .replace(/,/g, ", ")
+            .replace(/\s{0,},\s{0,}/g, ", ")
             .replace(/([^"]+)|("[^"]+")/g, function ($0, $1, $2) {
             if ($1) {
                 if (str.includes("//"))

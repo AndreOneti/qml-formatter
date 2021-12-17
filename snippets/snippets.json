@@ -68,10 +68,7 @@
     "description": "Rectangle component"
   },
   "on Change": {
-    "prefix": [
-      "onchange",
-      "change"
-    ],
+    "prefix": "onchange",
     "body": [
       "on${1:variable}Changed: { }"
     ],
@@ -120,5 +117,141 @@
       "signal ${1:name}()"
     ],
     "description": "Component signal"
+  },
+  "qsTr": {
+    "prefix": "qsTr",
+    "body": [
+      "qsTr(\"${1:text}\")"
+    ],
+    "description": "Simple qsTr converter"
+  },
+  "#region": {
+    "prefix": [
+      "region",
+      "#region"
+    ],
+    "body": [
+      "// #region ${1:text}",
+      "// #endregion"
+    ],
+    "description": "Simple region create"
+  },
+  "Property changed": {
+    "prefix": "changed",
+    "body": [
+      "${1:variable}Changed()"
+    ],
+    "description": "Property changed"
+  },
+  "anchors left": {
+    "prefix": "anchors.left",
+    "body": [
+      "anchors.left: ${1:parent}.left"
+    ],
+    "description": "anchors left"
+  },
+  "anchors top": {
+    "prefix": "anchors.top",
+    "body": [
+      "anchors.top: ${1:parent}.top"
+    ],
+    "description": "anchors top"
+  },
+  "anchors right": {
+    "prefix": "anchors.right",
+    "body": [
+      "anchors.right: ${1:parent}.right"
+    ],
+    "description": "anchors right"
+  },
+  "anchors bottom": {
+    "prefix": "anchors.bottom",
+    "body": [
+      "anchors.bottom: ${1:parent}.bottom"
+    ],
+    "description": "anchors bottom"
+  },
+  "anchors topMargin": {
+    "prefix": "anchors.topMargin",
+    "body": [
+      "anchors.topMargin: ${1:10}"
+    ],
+    "description": "anchors topMargin"
+  },
+  "anchors leftMargin": {
+    "prefix": "anchors.leftMargin",
+    "body": [
+      "anchors.leftMargin: ${1:10}"
+    ],
+    "description": "anchors leftMargin"
+  },
+  "anchors rightMargin": {
+    "prefix": "anchors.rightMargin",
+    "body": [
+      "anchors.rightMargin: ${1:10}"
+    ],
+    "description": "anchors rightMargin"
+  },
+  "anchors bottomMargin": {
+    "prefix": "anchors.bottomMargin",
+    "body": [
+      "anchors.bottomMargin: ${1:10}"
+    ],
+    "description": "anchors bottomMargin"
+  },
+  "anchors margins": {
+    "prefix": "anchors.margins",
+    "body": [
+      "anchors.margins: ${1:10}"
+    ],
+    "description": "anchors margins"
+  },
+  "anchors centerIn": {
+    "prefix": "anchors.centerIn",
+    "body": [
+      "anchors.centerIn: ${1:parent}"
+    ],
+    "description": "anchors centerIn"
+  },
+  "anchors fill": {
+    "prefix": "anchors.fill",
+    "body": [
+      "anchors.fill: ${1:parent}"
+    ],
+    "description": "anchors fill"
+  },
+  "anchors horizontalCenter": {
+    "prefix": "anchors.horizontalCenter",
+    "body": [
+      "anchors.horizontalCenter: ${1:parent}.horizontalCenter"
+    ],
+    "description": "anchors horizontalCenter"
+  },
+  "anchors verticalCenter": {
+    "prefix": "anchors.verticalCenter",
+    "body": [
+      "anchors.verticalCenter: ${1:parent}.verticalCenter"
+    ],
+    "description": "anchors verticalCenter"
+  },
+  "JSON stringify": {
+    "prefix": [
+      "JSON.stringify",
+      "stringify"
+    ],
+    "body": [
+      "JSON.stringify(${1:data}, null, 2)"
+    ],
+    "description": "Simple JSON.stringify"
+  },
+  "function": {
+    "prefix": "function",
+    "body": [
+      "function ${1:functionName}(${2:args})",
+      "{",
+      "",
+      "}"
+    ],
+    "description": "create a new function"
   }
 }

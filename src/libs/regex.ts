@@ -32,7 +32,7 @@ export function Regex(
 
   if (IsImport.test(line)) {
     currentTabSize = 0;
-    return whiteSpaceRemove(line, 0);
+    return whiteSpaceRemove(line.replace(/\s{0,}:\s{0,}/g, ":"), 0);
   }
 
   if (IsBegingComponent.test(line)) {

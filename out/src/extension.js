@@ -10,6 +10,13 @@ function activate(context) {
             function getTabSize() {
                 return Number(activeTextEditor.options.tabSize);
             }
+            function preFormatter(textDocument) {
+                var textDocumentFormatted = textDocument
+                    .replace(/\ {0,}\{\ {0,}/g, " {")
+                    .replace(/\s{0,}:\s{0,}/g, ": ")
+                    .replace(/\s{0,}=\s{0,}/g, " = ");
+                return textDocumentFormatted || textDocument;
+            }
             if (activeTextEditor && activeTextEditor.document.languageId === "qml") {
                 var document_1 = activeTextEditor.document;
                 var edit = new vscode.WorkspaceEdit();
@@ -17,7 +24,7 @@ function activate(context) {
                 var tabSize = getTabSize();
                 for (var index = 0; index < file.length; index++) {
                     var line = file[index];
-                    edit.replace(document_1.uri, new vscode.Range(index, 0, index, line.length), "" + libs_1.Regex(line, index === 0, tabSize));
+                    edit.replace(document_1.uri, new vscode.Range(index, 0, index, line.length), "" + libs_1.Regex(preFormatter(line), index === 0, tabSize));
                     if (index === file.length - 1) {
                         if (line !== "") {
                             edit.insert(document_1.uri, document_1.lineAt(document_1.lineCount - 1).range.end, "\n");

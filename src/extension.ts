@@ -13,6 +13,14 @@ export function activate(context: vscode.ExtensionContext) {
         return Number(activeTextEditor.options.tabSize);
       }
 
+      function preFormatter(textDocument: string): string {
+        let textDocumentFormatted = textDocument
+          .replace(/\ {0,}\{\ {0,}/g, " {")
+          .replace(/\s{0,}:\s{0,}/g, ": ")
+          .replace(/\s{0,}=\s{0,}/g, " = ");
+        return textDocumentFormatted || textDocument;
+      }
+
       if (activeTextEditor && activeTextEditor.document.languageId === "qml") {
         const { document } = activeTextEditor;
         const edit = new vscode.WorkspaceEdit();
@@ -24,7 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
           edit.replace(
             document.uri,
             new vscode.Range(index, 0, index, line.length),
-            `${Regex(line, index === 0, tabSize)}`
+            `${Regex(preFormatter(line), index === 0, tabSize)}`
           );
           if (index === file.length - 1) {
             if (line !== "") {

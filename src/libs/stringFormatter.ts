@@ -5,7 +5,7 @@ export function whiteSpaceRemove(str: string, spaceSize: number): string {
   return (
     identationSpace +
     str
-      .replace(/,/g, ", ")
+      .replace(/\s{0,},\s{0,}/g, ", ")
       .replace(/([^"]+)|("[^"]+")/g, function ($0, $1, $2) {
         if ($1) {
           if (str.includes("//")) return $1;

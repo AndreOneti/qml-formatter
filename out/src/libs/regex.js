@@ -23,7 +23,7 @@ function Regex(line, isfirstLine, editor) {
         currentTabSize = 0;
     if (IsImport.test(line)) {
         currentTabSize = 0;
-        return stringFormatter_1.whiteSpaceRemove(line, 0);
+        return stringFormatter_1.whiteSpaceRemove(line.replace(/\s{0,}:\s{0,}/g, ":"), 0);
     }
     if (IsBegingComponent.test(line)) {
         var data = stringFormatter_1.whiteSpaceRemove(line, currentTabSize);
