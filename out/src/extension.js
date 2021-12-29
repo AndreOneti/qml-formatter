@@ -12,7 +12,8 @@ function activate(context) {
             }
             function preFormatter(textDocument) {
                 var textDocumentFormatted = textDocument
-                    .replace(/\ {0,}\{\ {0,}/g, " {")
+                    .replace(/\ {0,}\{\ {0,}/g, "{ ")
+                    .replace(/\ {0,}\}\ {0,}/g, " }")
                     .replace(/\s{0,}:\s{0,}/g, ": ");
                 return textDocumentFormatted || textDocument;
             }
