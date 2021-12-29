@@ -15,8 +15,10 @@ export function activate(context: vscode.ExtensionContext) {
 
       function preFormatter(textDocument: string): string {
         let textDocumentFormatted = textDocument
-          .replace(/\ {0,}\{\ {0,}/g, "{ ")
-          .replace(/\ {0,}\}\ {0,}/g, " }")
+          .replace(/\ {0,}\{\ {0,}/g, " { ")
+          .replace(/\ {0,}\}\ {0,}/g, " } ")
+          .replace(/\(\ {0,}/g, "(")
+          .replace(/\ {0,}\)\ {0,}/g, ")")
           .replace(/\s{0,}:\s{0,}/g, ": ");
         return textDocumentFormatted || textDocument;
       }

@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.7] - 2021-12-29
+
+Fix some identation.
+
+### Added
+  - Add new rule in pré formatter.
+
+### Changed
+
+### Fixed
+
+------
+
 ## [1.1.6] - 2021-12-29
 
 Fix isseus.
@@ -16,6 +29,7 @@ Fix isseus.
   - Fix pré formatter.
 
 ------
+
 ## [1.1.5] - 2021-12-17
 
 Fix isseus.
