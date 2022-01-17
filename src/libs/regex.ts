@@ -37,7 +37,7 @@ export function Regex(
 
   if (IsBegingComponent.test(line)) {
     let data = whiteSpaceRemove(line, currentTabSize);
-    if (!data.endsWith("}")) currentTabSize += editor;
+    if (!data.endsWith("}") && !data.endsWith("]")) currentTabSize += editor;
     if (data.endsWith("}")) {
       data = data.replace(/\{\}/, "{ }");
       if (data.indexOf("{") < data.indexOf("}") - 2) {

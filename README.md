@@ -1,8 +1,12 @@
 # [QML](http://www.qt.io/) Formatter and Language support for [Visual Studio Code](https://code.visualstudio.com/)
 
 ## Features
+
+### Formatter
+![QML formatting](images/formatting.gif)
 ### Syntax coloring
 ![Syntax coloring](images/syntax.png)
+
 
 ## Installation
 ### Visual Studio Code

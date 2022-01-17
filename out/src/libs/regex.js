@@ -27,7 +27,7 @@ function Regex(line, isfirstLine, editor) {
     }
     if (IsBegingComponent.test(line)) {
         var data = stringFormatter_1.whiteSpaceRemove(line, currentTabSize);
-        if (!data.endsWith("}"))
+        if (!data.endsWith("}") && !data.endsWith("]"))
             currentTabSize += editor;
         if (data.endsWith("}")) {
             data = data.replace(/\{\}/, "{ }");

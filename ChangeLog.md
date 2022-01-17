@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.8] - 2022-01-17
+
+Fix some identation.
+
+### Added
+
+### Changed
+### Fixed
+  - Fix list identation based on issue [Wrong alignment when element contain list #11](https://github.com/AndreOneti/qml-formatter/issues/11)
+
+------
+
 ## [1.1.7] - 2021-12-29
 
 Fix some identation.
