@@ -1,0 +1,19 @@
+{
+	"name": "qml-formatter-server",
+	"description": "An QML server to format, auto complete and more.",
+	"version": "1.0.0",
+	"author": "AndreIneti",
+	"license": "MIT",
+	"engines": {
+		"node": "*"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/AndreOneti/qml-formatter.git"
+	},
+	"dependencies": {
+		"vscode-languageserver": "^7.0.0",
+		"vscode-languageserver-textdocument": "^1.0.1"
+	},
+	"scripts": {}
+}

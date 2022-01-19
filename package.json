@@ -2,15 +2,17 @@
   "name": "qml-formatter",
   "displayName": "QML Formatter",
   "description": "A simple QML formatter",
-  "version": "1.1.8",
+	"author": "AndreOneti",
+	"license": "MIT",
+  "version": "1.1.9",
   "publisher": "AndreOneti",
   "engines": {
     "vscode": "^1.6.0"
   },
   "icon": "images/logo.png",
   "galleryBanner": {
-    "color": "#FFFFFF",
-    "theme": "light"
+    "color": "#313191",
+    "theme": "dark"
   },
   "categories": [
     "Programming Languages",
@@ -20,7 +22,7 @@
   "activationEvents": [
     "onLanguage:qml"
   ],
-  "main": "./out/src/extension",
+  "main": "./client/out/extension",
   "capabilities": {
     "documentFormattingProvider": "true"
   },
@@ -63,17 +65,36 @@
             "qml"
           ],
           "description": "the trigger effect on the language"
-        }
+        },
+				"qmlLanguageServer.trace.server": {
+					"scope": "window",
+					"type": "string",
+					"enum": [
+						"off",
+						"messages",
+						"verbose"
+					],
+					"default": "off",
+					"description": "Traces the communication between VS Code and the language server."
+				}
       }
     }
   },
   "scripts": {
-    "postinstall": "node ./node_modules/vscode/bin/install && tsc",
-		"watch": "tsc -watch -p ./"
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -b",
+		"watch": "tsc -b -w",
+		"lint": "eslint ./client/src ./server/src --ext .ts,.tsx",
+		"postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
+		"test": "sh ./scripts/e2e.sh"
   },
   "devDependencies": {
-    "@types/node": "^13.7.4",
-    "typescript": "^3.8.2",
-    "vscode": "^1.1.36"
+		"@types/mocha": "^8.2.2",
+		"@types/node": "^12.12.0",
+		"@typescript-eslint/eslint-plugin": "^4.23.0",
+		"@typescript-eslint/parser": "^4.23.0",
+		"eslint": "^7.26.0",
+		"mocha": "^8.3.2",
+		"typescript": "^4.4.3"
   }
 }

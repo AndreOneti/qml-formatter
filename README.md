@@ -2,6 +2,9 @@
 
 ## Features
 
+### Preview
+![QML formatting](images/preview.gif)
+
 ### Formatter
 ![QML formatting](images/formatting.gif)
 ### Syntax coloring

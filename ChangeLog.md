@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.9] - 2022-01-19
+
+Refactor complete in extension.
+
+### Added
+
+### Changed
+  - Update extension folders and add language server and client.
+### Fixed
+
+------
+
 ## [1.1.8] - 2022-01-17
 
 Fix some identation.

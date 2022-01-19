@@ -1,0 +1,22 @@
+{
+	"name": "qml-formatter-client",
+	"description": "VSCode part of a QML language server",
+	"author": "AndreIneti",
+	"license": "MIT",
+	"version": "1.0.0",
+	"publisher": "AndreIneti",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/AndreOneti/qml-formatter.git"
+	},
+	"engines": {
+		"vscode": "^1.52.0"
+	},
+	"dependencies": {
+		"vscode-languageclient": "^7.0.0"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.52.0",
+		"@vscode/test-electron": "^1.6.1"
+	}
+}
