@@ -1,1 +1,1 @@
-export declare function Regex(line: string, isfirstLine?: boolean, editor?: number): string;
+export declare function Regex(line: string, isfirstLine?: boolean, identation?: string): string;

@@ -24,110 +24,118 @@ let currentTabSize = 0;
 export function Regex(
   line: string,
   isfirstLine = false,
-  editor = 2
+  identation = "  "
 ): string {
   if (currentTabSize < 0) currentTabSize = 0;
   if (isfirstLine) currentTabSize = 0;
 
   if (IsImport.test(line)) {
     currentTabSize = 0;
-    return whiteSpaceRemove(line.replace(/\s{0,}:\s{0,}/g, ":"), 0);
+    return whiteSpaceRemove(
+      line.replace(/\s{0,}:\s{0,}/g, ":"),
+      currentTabSize,
+      identation
+    );
   }
 
   if (IsBegingComponent.test(line)) {
-    let data = whiteSpaceRemove(line, currentTabSize);
-    if (!data.endsWith("}") && !data.endsWith("]")) currentTabSize += editor;
+    let data = whiteSpaceRemove(line, currentTabSize, identation);
+    if (!data.endsWith("}") && !data.endsWith("]")) currentTabSize++;
     if (data.endsWith("}")) {
       data = data.replace(/\{\}/, "{ }");
       if (data.indexOf("{") < data.indexOf("}") - 2) {
         data = data
-          .replace(/\{\s{0,}/, `{\n${" ".repeat(currentTabSize + editor)}`)
-          .replace(/\s{0,}\}/, `\n${" ".repeat(currentTabSize)}}`);
+          .replace(/\{\s{0,}/, `{\n${identation.repeat(currentTabSize + 1)}`)
+          .replace(/\s{0,}\}/, `\n${identation.repeat(currentTabSize)}}`);
       }
     }
     return data;
   }
 
   if (IsEndComponent.test(line)) {
-    currentTabSize -= editor;
-    return whiteSpaceRemove(line, currentTabSize);
+    currentTabSize--;
+    return whiteSpaceRemove(line, currentTabSize, identation);
   }
 
   if (IsFunction.test(line)) {
-    let data = whiteSpaceRemove(line, currentTabSize);
+    let data = whiteSpaceRemove(line, currentTabSize, identation);
     if (data.lastIndexOf("{"))
       data = data.replace(
         /\s{0,}\{/,
-        `\n${whiteSpaceRemove("{", currentTabSize)}`
+        `\n${whiteSpaceRemove("{", currentTabSize, identation)}`
       );
-    currentTabSize += editor;
+    currentTabSize++;
     return data;
   }
 
   if (IsIf.test(line)) {
-    let data = whiteSpaceRemove(line, currentTabSize);
+    let data = whiteSpaceRemove(line, currentTabSize, identation);
     if (data.lastIndexOf("{") > 0) {
       data = data.replace(
         /\s{0,}\{/,
-        `\n${whiteSpaceRemove("{", currentTabSize)}`
+        `\n${whiteSpaceRemove("{", currentTabSize, identation)}`
       );
     }
     if (data.includes("}")) {
-      data = data.replace("{", `{\n${" ".repeat(currentTabSize + editor)}`);
-      data = data.replace("}", `\n${whiteSpaceRemove("}", currentTabSize)}`);
+      data = data.replace("{", `{\n${identation.repeat(currentTabSize + 1)}`);
+      data = data.replace(
+        "}",
+        `\n${whiteSpaceRemove("}", currentTabSize, identation)}`
+      );
     }
-    if (data.indexOf(")") >= data.length - 1) {
-      currentTabSize += editor;
-    }
+    if (data.indexOf(")") >= data.length - 1) currentTabSize++;
     return data;
   }
 
   if (IsElse.test(line)) {
-    let data = whiteSpaceRemove(line, currentTabSize);
+    let data = whiteSpaceRemove(line, currentTabSize, identation);
     if (data.trim().endsWith("{")) {
       data = data
         .trim()
-        .replace("{", `\n${whiteSpaceRemove("{", currentTabSize - editor)}`);
+        .replace(
+          "{",
+          `\n${whiteSpaceRemove("{", currentTabSize - 1, identation)}`
+        );
     }
     if (data.trim().startsWith("}")) {
       data = data.replace(
         "}",
-        `${whiteSpaceRemove("}", currentTabSize - editor)}\n`
+        `${whiteSpaceRemove("}", currentTabSize - 1, identation)}\n`
       );
       data = data.replace(
         "else",
-        `${whiteSpaceRemove("else", currentTabSize - editor)}`
+        `${whiteSpaceRemove("else", currentTabSize - 1, identation)}`
       );
     }
-    currentTabSize += editor;
+    currentTabSize++;
     return data;
   }
 
   if (IsBrackts.test(line)) {
-    return whiteSpaceRemove(line, currentTabSize - editor);
+    return whiteSpaceRemove(line, currentTabSize - 1, identation);
   }
 
   if (IsLogicalOperator.test(line)) {
-    return whiteSpaceRemove(line, currentTabSize + editor);
+    return whiteSpaceRemove(line, currentTabSize + 1, identation);
   }
 
   if (IsFunctionArgsBegin.test(line)) {
-    const data = whiteSpaceRemove(line, currentTabSize);
-    currentTabSize += editor;
+    const data = whiteSpaceRemove(line, currentTabSize, identation);
+    currentTabSize++;
     return data;
   }
 
   if (IsFunctionArgsEnd.test(line)) {
-    currentTabSize -= editor;
-    return whiteSpaceRemove(line, currentTabSize);
+    currentTabSize--;
+    return whiteSpaceRemove(line, currentTabSize, identation);
   }
 
   if (IsNewJson.test(line)) {
-    const data = whiteSpaceRemove(line, currentTabSize);
-    currentTabSize += editor;
+    const data = whiteSpaceRemove(line, currentTabSize, identation);
+    currentTabSize++;
     return data;
   }
 
-  const newLine = whiteSpaceRemove(line, currentTabSize);
+  const newLine = whiteSpaceRemove(line, currentTabSize, identation);
   return newLine;
 }

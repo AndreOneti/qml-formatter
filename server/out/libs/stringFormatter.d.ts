@@ -1,1 +1,1 @@
-export declare function whiteSpaceRemove(str: string, spaceSize: number): string;
+export declare function whiteSpaceRemove(str: string, spaceSize: number, identation: string): string;

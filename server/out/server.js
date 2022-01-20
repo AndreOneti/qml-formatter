@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_1 = require("vscode-languageserver/node");
 const libs_1 = require("./libs");
+const types_1 = require("./types");
 const vscode_languageserver_textdocument_1 = require("vscode-languageserver-textdocument");
 class ServiceDispatcher {
     constructor() {
@@ -36,7 +37,7 @@ class ServiceDispatcher {
                 textDocumentSync: node_1.TextDocumentSyncKind.Incremental,
                 completionProvider: {
                     resolveProvider: true,
-                    triggerCharacters: ["."]
+                    triggerCharacters: ['.']
                 },
                 definitionProvider: true,
                 documentFormattingProvider: true,
@@ -75,11 +76,11 @@ class ServiceDispatcher {
             .slice(0, complitionPosition.position.character)
             .split(' ');
         const word = wordList && wordList[(wordList === null || wordList === void 0 ? void 0 : wordList.length) - 1];
-        if (!word)
-            return [];
         let prop = [];
         let itens = [];
-        if (!complitionPosition.context || complitionPosition.context.triggerKind === 1) // trigged by "ctrl+space"
+        if (!word)
+            return this.getComponentProps(text, complitionPosition.position.line);
+        if (!complitionPosition.context || complitionPosition.context.triggerKind === 1) // trigged by 'ctrl+space'
          {
             prop = text
                 .split('\n')
@@ -108,12 +109,17 @@ class ServiceDispatcher {
                 item.label = complitionText;
                 return item;
             });
+            itens = [
+                ...this.getComponentProps(text, complitionPosition.position.line)
+                    .filter((item) => item.data.toLowerCase().includes(word)),
+                ...itens
+            ];
         }
-        if (((_a = complitionPosition.context) === null || _a === void 0 ? void 0 : _a.triggerKind) === 2 || word.includes(".")) // trigged by "."
+        if (((_a = complitionPosition.context) === null || _a === void 0 ? void 0 : _a.triggerKind) === 2 || word.includes('.')) // trigged by '.'
          {
-            const componentId = word.split(".")[0];
-            if (componentId === "JSON") {
-                prop = ["stringify", "parse"];
+            const componentId = word.split('.')[0];
+            if (componentId === 'JSON') {
+                prop = ['stringify', 'parse'];
                 itens = prop.map((str) => {
                     const item = {};
                     item.kind = node_1.CompletionItemKind.Function;
@@ -134,7 +140,7 @@ class ServiceDispatcher {
                 parsedData = parsedData.slice(0, lastIndex);
                 prop = parsedData
                     .split('\n')
-                    .filter((line) => this.references.some((ref) => line.trim().startsWith(ref)) || line.includes(":"))
+                    .filter((line) => this.references.some((ref) => line.trim().startsWith(ref)) || line.includes(':'))
                     .filter((line) => !line.trim().startsWith('id'));
                 itens = prop.map((str) => {
                     const item = {};
@@ -153,11 +159,51 @@ class ServiceDispatcher {
                     item.label = complitionText;
                     return item;
                 });
+                itens = [...itens, ...this.getComponentProps(text, complitionPosition.position.line)]
+                    .filter((item) => !item.data.trim().startsWith('id'));
             }
         }
-        if (!prop.length)
-            return [];
         itens = itens.filter((item, index) => itens.findIndex((i) => i.data === item.data) == index);
+        return itens;
+    }
+    getProps(component) {
+        const props = types_1.default[component].properties;
+        if (types_1.default[component].inherit)
+            return Object.assign({}, props, this.getProps(types_1.default[component].inherit));
+        return props;
+    }
+    getComponentProps(text, line) {
+        let prop = [];
+        let itens = [];
+        const header = text
+            .split('\n')
+            .slice(0, line)
+            .filter((str) => str.match(/[a-zA-Z]{1,}\s{0,}\{/));
+        let component = header[header.length - 1] || "";
+        if (component) {
+            component = component.replace(/(\(|\{|:).*/, '').trim().toLowerCase();
+            const defaultProp = this.getProps(component);
+            prop = [...prop, ...Object.keys(defaultProp)];
+            itens = prop
+                .map((str) => {
+                const item = {};
+                if (str.includes("function") || str.includes("signal")) {
+                    item.kind = node_1.CompletionItemKind.Function;
+                }
+                else {
+                    item.kind = node_1.CompletionItemKind.Property;
+                }
+                let complitionText = str
+                    .replace(/(property [a-zA-Z0-9]{1,}|function |signal )/, "")
+                    .trim()
+                    .replace(/:.*|\(.*/, "");
+                complitionText =
+                    (complitionText.match(/[A-z]+/) || [])[0] || complitionText;
+                item.data = complitionText;
+                item.label = complitionText;
+                return item;
+            });
+        }
         return itens;
     }
     onCompletionResolve(item) {
@@ -168,7 +214,9 @@ class ServiceDispatcher {
         if (!doc)
             return [];
         const file = doc.getText();
-        const tabSize = params.options.tabSize;
+        const tabSize = params.options.insertSpaces
+            ? " ".repeat(params.options.tabSize)
+            : "\t";
         const textEdit = [];
         file.split('\n').forEach((line, index) => {
             const data = (0, libs_1.Regex)(this.preFormatter(line), index === 0, tabSize);
@@ -202,14 +250,16 @@ class ServiceDispatcher {
         let word = wordList && wordList[(wordList === null || wordList === void 0 ? void 0 : wordList.length) - 1];
         word = textLine.split(' ').find(txt => txt.includes(word)) || word;
         word = word.replace(/(\(|\{|:).*/, '');
-        if (word.includes("Component"))
+        if (word.includes('Component'))
             return;
         let prop = data === null || data === void 0 ? void 0 : data.split('\n').filter((str) => str.match(new RegExp(`${word}`))).filter((str) => str !== textLine).filter((str) => this.references.some((reference) => str.includes(reference))).filter((str) => str
             .split(' ')
             .some((txt) => txt.replace(/(\(|\{|:).*/, '') === word));
-        if (word.includes(".")) {
-            const componentId = word.split(".")[0];
-            word = word.split(".")[1];
+        if (word.includes('.')) {
+            const componentId = word.split('.')[0];
+            const defText = wordList[(wordList === null || wordList === void 0 ? void 0 : wordList.length) - 1];
+            const splited = word.split('.');
+            word = splited.find(txt => txt.includes(defText)) || splited[1];
             const match = data.match(new RegExp(`id: ?${componentId}`));
             if (!match)
                 return [];
@@ -221,8 +271,7 @@ class ServiceDispatcher {
             parsedData = parsedData.slice(0, lastIndex);
             prop = parsedData
                 .split('\n')
-                .filter((line) => this.references.some((ref) => line.trim().startsWith(ref)) || line.includes(":"))
-                .filter((line) => !line.trim().startsWith('id'))
+                .filter((line) => this.references.some((ref) => line.trim().startsWith(ref)) || line.includes(':'))
                 .filter((str) => str
                 .split(' ')
                 .some((txt) => txt.replace(/(\(|\{|:).*/, '') === word));
@@ -230,10 +279,12 @@ class ServiceDispatcher {
         if (!prop || prop.length === 0)
             return;
         if (prop.length === 1) {
-            const text = prop[0];
+            const definitionLine = data
+                .split('\n')
+                .findIndex(str => str.includes(word));
+            const text = data.split('\n')[definitionLine];
             const initPosition = text.indexOf(word);
             const endPosition = initPosition + word.length;
-            const definitionLine = data.split("\n").indexOf(text);
             return node_1.Location.create(uri, {
                 start: { line: definitionLine, character: initPosition },
                 end: { line: definitionLine, character: endPosition },
@@ -244,7 +295,7 @@ class ServiceDispatcher {
             prop.forEach((item) => {
                 const initPosition = item.indexOf(word);
                 const endPosition = initPosition + word.length;
-                const definitionLine = data.split("\n").indexOf(item);
+                const definitionLine = data.split('\n').indexOf(item);
                 locations.push(node_1.Location.create(uri, {
                     start: { line: definitionLine, character: initPosition },
                     end: { line: definitionLine, character: endPosition },

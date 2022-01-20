@@ -1,7 +1,11 @@
-export function whiteSpaceRemove(str: string, spaceSize: number): string {
+export function whiteSpaceRemove(
+  str: string,
+  spaceSize: number,
+  identation: string
+): string {
   str = str.trim();
   spaceSize = spaceSize > 0 ? spaceSize : 0;
-  const identationSpace = str === "" ? "" : " ".repeat(spaceSize);
+  const identationSpace = str === "" ? "" : identation.repeat(spaceSize);
   return (
     identationSpace +
     str

@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.10] - 2022-01-20
+
+Fixing issue #12.
+
+### Added
+
+### Changed
+### Fixed
+  - Fix identation validate on issue [Add verification from configured identation space #12](https://github.com/AndreOneti/qml-formatter/issues/12)
+
+------
+
 ## [1.1.9] - 2022-01-19
 
 Refactor complete in extension.

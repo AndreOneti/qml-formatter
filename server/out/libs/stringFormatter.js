@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.whiteSpaceRemove = void 0;
-function whiteSpaceRemove(str, spaceSize) {
+function whiteSpaceRemove(str, spaceSize, identation) {
     str = str.trim();
     spaceSize = spaceSize > 0 ? spaceSize : 0;
-    const identationSpace = str === "" ? "" : " ".repeat(spaceSize);
+    const identationSpace = str === "" ? "" : identation.repeat(spaceSize);
     return (identationSpace +
         str
             .replace(/\s{0,},\s{0,}/g, ", ")
