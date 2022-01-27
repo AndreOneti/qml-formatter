@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.11] - 2022-01-27
+
+### Added
+  - Add "Code Action" to adjust custom components import.
+
+### Changed
+  - improve "Go to definition" to go to custom component and fix go to id.
+### Fixed
+
+------
+
 ## [1.1.10] - 2022-01-20
 
 Fixing issue #12.

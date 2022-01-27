@@ -1,6 +1,21 @@
-# [QML](http://www.qt.io/) Formatter and Language support for [Visual Studio Code](https://code.visualstudio.com/)
+[![Visual Studio Marketplace](https://vsmarketplacebadge.apphb.com/version/AndreOneti.qml-formatter.svg)](https://marketplace.visualstudio.com/items?itemName=AndreOneti.qml-formatter)
+
+# [QML](http://www.qt.io/) Language support for [Visual Studio Code](https://code.visualstudio.com/)
+Provides Intellisense for QML in VSCode
 
 ## Features
+- [x] Autocompletion
+- [x] Go to Definition
+- [x] Formatting
+- [x] Code Snippets
+
+## Installing
+* Launch VS Code Quick Open (Ctrl+P), paste the following command, and press enter:
+* `ext install AndreOneti.qml-formatter`
+
+Alternatively, you can download the extension from the [marketplace](https://marketplace.visualstudio.com/items?itemName=AndreOneti.qml-formatter).
+
+-------
 
 ### Preview
 ![QML formatting](images/preview.gif)
@@ -10,15 +25,6 @@
 ### Syntax coloring
 ![Syntax coloring](images/syntax.png)
 
-
-## Installation
-### Visual Studio Code
-Hit `F1` and enter the `ext install AndreOneti.qml-formatter` command.
-
-### Installing the extension Locally
-Just clone the [GitHub repository](https://github.com/AndreOneti/qml-formatter) under your local extensions folder:
-* Windows: `%USERPROFILE%\.vscode\extensions`
-* Mac / Linux: `$HOME/.vscode/extensions`
 
 ## Issues / Feature requests
 You can submit your issues and feature requests on the GitHub [issues page](https://github.com/AndreOneti/qml-formatter/issues).

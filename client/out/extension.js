@@ -24,7 +24,7 @@ function activate(context) {
         synchronize: {
             // Notify the server about file changes to '.clientrc files contained in the workspace
             fileEvents: [
-                vscode_1.workspace.createFileSystemWatcher("**/.qrc"),
+                vscode_1.workspace.createFileSystemWatcher("**/*.qrc"),
                 vscode_1.workspace.createFileSystemWatcher("**/main.cpp"),
             ],
         },

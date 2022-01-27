@@ -33,7 +33,7 @@ export function activate(context: ExtensionContext) {
     synchronize: {
       // Notify the server about file changes to '.clientrc files contained in the workspace
       fileEvents: [
-        workspace.createFileSystemWatcher("**/.qrc"),
+        workspace.createFileSystemWatcher("**/*.qrc"),
         workspace.createFileSystemWatcher("**/main.cpp"),
       ],
     },

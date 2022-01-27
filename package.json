@@ -4,7 +4,7 @@
   "description": "A simple QML formatter",
 	"author": "AndreOneti",
 	"license": "MIT",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "publisher": "AndreOneti",
   "engines": {
     "vscode": "^1.6.0"
