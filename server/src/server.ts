@@ -113,7 +113,7 @@ class ServiceDispatcher {
 		}
     if(this.workspaceFolders) {
       this.updateQrcData();
-      this.updateMainCpp(this.workspaceFolders[0].uri);
+      // this.updateMainCpp(this.workspaceFolders[0].uri);
     }
 	}
 
@@ -125,10 +125,10 @@ class ServiceDispatcher {
     if(handler.changes.some(change => change.uri.endsWith('.qrc') && change.type === FileChangeType.Changed)) {
       const uri = handler.changes.find(change => change.uri.endsWith('.qrc'))!.uri;
       this.updateQrcData(uri);
-    } else if (handler.changes.some(change => change.uri.endsWith('main.cpp') && change.type === FileChangeType.Changed)) {
+    } /* else if (handler.changes.some(change => change.uri.endsWith('main.cpp') && change.type === FileChangeType.Changed)) {
       const uri = handler.changes.find(change => change.uri.endsWith('main.cpp'))!.uri;
       this.updateMainCpp(uri);
-    }
+    } */
 	}
 
 	private onCompletion(complitionPosition: CompletionParams): CompletionItem[] {
@@ -520,9 +520,9 @@ class ServiceDispatcher {
 
       if(this.qrcData.some(qrc => qrc.split('/').pop() === word)) {
         if(this.workspaceFolders) {
-          let defUri = `${this.workspaceFolders[0].uri}/${this.qrcData.find(qrc => qrc.split('/').pop() === word)}.qml`;
-          defUri = defUri.replace('file://','');
-          const data = fs.readFileSync(defUri, { encoding: 'utf8'}).split('\n');
+          const defUri = `${this.workspaceFolders[0].uri}/${this.qrcData.find(qrc => qrc.split('/').pop() === word)}.qml`;
+          const rootUri = defUri.replace('file://','');
+          const data = fs.readFileSync(rootUri, { encoding: 'utf8'}).split('\n');
           const line = data.findIndex(line => (/[a-zA-Z0-9]{0,} \{/).test(line));
           const character = data[line].trim().replace(/ .*/g, '').length;
 
@@ -626,21 +626,21 @@ class ServiceDispatcher {
     }
   }
 
-  private updateMainCpp(uri: string):void {
-    if(this.workspaceFolders) {
-      this.updateQrcData();
-      const rootPath = uri.replace('file://','');
-      this.mainCppcData = fs.readFileSync(rootPath, { encoding: 'utf8'})
-        .split('\n')
-        .filter(line => line.includes('qmlRegister'))
-        .map(
-          line => line
-            .trim()
-            .replace(/(.*.\(|\).*)/g, '')
-        );
-        console.log(this.mainCppcData);
-    }
-  }
+  // private updateMainCpp(uri: string):void {
+  //   if(this.workspaceFolders) {
+  //     this.updateQrcData();
+  //     const rootPath = uri.replace('file://','');
+  //     this.mainCppcData = fs.readFileSync(rootPath, { encoding: 'utf8'})
+  //       .split('\n')
+  //       .filter(line => line.includes('qmlRegister'))
+  //       .map(
+  //         line => line
+  //           .trim()
+  //           .replace(/(.*.\(|\).*)/g, '')
+  //       );
+  //       console.log(this.mainCppcData);
+  //   }
+  // }
 }
 
 let serviceDispatcher: ServiceDispatcher | null = null;
