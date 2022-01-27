@@ -1,7 +1,7 @@
 {
 	"name": "qml-formatter-server",
 	"description": "An QML server to format, auto complete and more.",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"author": "AndreIneti",
 	"license": "MIT",
 	"engines": {

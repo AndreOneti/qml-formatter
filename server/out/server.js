@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
+const path = require("path");
 const vscode_languageserver_textdocument_1 = require("vscode-languageserver-textdocument");
 const node_1 = require("vscode-languageserver/node");
 const libs_1 = require("./libs");
@@ -12,6 +13,7 @@ class ServiceDispatcher {
         this.workspaceFolders = null;
         this.hasWorkspaceFolderCapability = false;
         this.hasConfigurationCapability = false;
+        this.mainCppDir = "";
         this.qrcData = [];
         this.mainCppcData = [];
         this.references = ['function', 'property', 'signal', 'id'];
@@ -405,8 +407,9 @@ class ServiceDispatcher {
             }
             if (this.qrcData.some(qrc => qrc.split('/').pop() === word)) {
                 if (this.workspaceFolders) {
-                    const defUri = `${this.workspaceFolders[0].uri}/${this.qrcData.find(qrc => qrc.split('/').pop() === word)}.qml`;
-                    const rootUri = defUri.replace('file://', '');
+                    this.updateMainCppDir();
+                    const rootUri = `${this.mainCppDir}/${this.qrcData.find(qrc => qrc.split('/').pop() === word)}.qml`;
+                    const defUri = `file://${rootUri}`;
                     const data = fs.readFileSync(rootUri, { encoding: 'utf8' }).split('\n');
                     const line = data.findIndex(line => (/[a-zA-Z0-9]{0,} \{/).test(line));
                     const character = data[line].trim().replace(/ .*/g, '').length;
@@ -475,17 +478,37 @@ class ServiceDispatcher {
         };
         return fix;
     }
+    getDirsFile(pathToSearch, arrayOfFiles = []) {
+        const files = fs.readdirSync(pathToSearch);
+        for (const file of files) {
+            if (fs.statSync(pathToSearch + "/" + file).isDirectory()) {
+                arrayOfFiles = this.getDirsFile(pathToSearch + "/" + file, arrayOfFiles);
+            }
+            else {
+                arrayOfFiles.push(path.join(pathToSearch, "/", file));
+            }
+        }
+        return arrayOfFiles;
+    }
+    updateMainCppDir() {
+        if (!this.mainCppDir && this.workspaceFolders) {
+            const files = this.getDirsFile(this.workspaceFolders[0].uri.replace('file://', ''));
+            this.mainCppDir = files.find(file => file.includes("main.cpp")) || "";
+            this.mainCppDir = this.mainCppDir.split("/").slice(0, -1).join("/");
+        }
+    }
     updateQrcData(uri = "") {
         if (this.workspaceFolders) {
+            this.updateMainCppDir();
             let data = "";
             if (uri) {
                 const rootPath = uri.replace('file://', '');
                 data = fs.readFileSync(rootPath, { encoding: 'utf8' });
             }
             else {
-                const rootPath = this.workspaceFolders[0].uri.replace('file://', '');
+                const rootPath = this.mainCppDir.replace('file://', '');
                 const files = fs.readdirSync(rootPath).filter(i => i.includes('.qrc'));
-                data = files.map(file => fs.readFileSync(file, { encoding: 'utf8' })).join('\n');
+                data = files.map(file => fs.readFileSync(`${this.mainCppDir}/${file}`, { encoding: 'utf8' })).join('\n');
             }
             this.qrcData = data
                 .split('\n')
