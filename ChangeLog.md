@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.16] - 2022-01-28
+
+### Added
+  - Add new default components properties.
+
+### Changed
+### Fixed
+  - Fixed fix import diagnostic.
+
+------
+
 ## [1.1.15] - 2022-01-27
 
 ### Added

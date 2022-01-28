@@ -115,7 +115,7 @@ class ServiceDispatcher {
 		}
     if(this.workspaceFolders) {
       this.updateQrcData();
-      // this.updateMainCpp(this.workspaceFolders[0].uri);
+      this.updateMainCpp();
     }
 	}
 
@@ -127,10 +127,10 @@ class ServiceDispatcher {
     if(handler.changes.some(change => change.uri.endsWith('.qrc') && change.type === FileChangeType.Changed)) {
       const uri = handler.changes.find(change => change.uri.endsWith('.qrc'))!.uri;
       this.updateQrcData(uri);
-    } /* else if (handler.changes.some(change => change.uri.endsWith('main.cpp') && change.type === FileChangeType.Changed)) {
+    } else if (handler.changes.some(change => change.uri.endsWith('main.cpp') && change.type === FileChangeType.Changed)) {
       const uri = handler.changes.find(change => change.uri.endsWith('main.cpp'))!.uri;
       this.updateMainCpp(uri);
-    } */
+    }
 	}
 
 	private onCompletion(complitionPosition: CompletionParams): CompletionItem[] {
@@ -398,7 +398,7 @@ class ServiceDispatcher {
 			const comp = m[0].replace("{",'').trim();
       const findedComp = this.qrcData.find(qrc => qrc.split('/').pop() === comp);
       const importUrl = findedComp?.split('/').slice(0,-1).join('/');
-      const isSamePath = this.workspaceFolders?.some(file => textDocument.uri.replace(file.uri,'').split('/').slice(0,-1).filter(i=>i).join('/') === importUrl) || false;
+      const isSamePath = textDocument.uri.replace(this.mainCppDir,'').replace('file://','').split('/').slice(0,-1).filter(i=>i).join('/') === importUrl || false;
 			if(
         !!findedComp &&
         !!importUrl &&
@@ -587,10 +587,18 @@ class ServiceDispatcher {
     const impLine = imports[imports.length - 1];
     const line = text.split('\n').findIndex(line => line === imports[imports.length - 1]);
 
-    textEdit.push(TextEdit.insert(
-      Position.create(line, impLine.length),
-      `\n${data.trim()}`
-    ));
+    if(impLine) {
+      textEdit.push(TextEdit.insert(
+        Position.create(line, impLine.length),
+        `\n${data.trim()}`
+      ));
+    } else {
+      const line = text.split('\n').findIndex(line => (/[a-zA-Z0-9]{1,} {0,}\{/).test(line));
+      textEdit.push(TextEdit.insert(
+        Position.create(line, 0),
+        `${data.trim()}\n\n`
+      ));
+    }
 
 		const fix:CodeAction = {
       title: "Add missing import",
@@ -652,21 +660,28 @@ class ServiceDispatcher {
     }
   }
 
-  // private updateMainCpp(uri: string):void {
-  //   if(this.workspaceFolders) {
-  //     this.updateQrcData();
-  //     const rootPath = uri.replace('file://','');
-  //     this.mainCppcData = fs.readFileSync(rootPath, { encoding: 'utf8'})
-  //       .split('\n')
-  //       .filter(line => line.includes('qmlRegister'))
-  //       .map(
-  //         line => line
-  //           .trim()
-  //           .replace(/(.*.\(|\).*)/g, '')
-  //       );
-  //       console.log(this.mainCppcData);
-  //   }
-  // }
+  private updateMainCpp(uri = ""):void {
+    if(this.workspaceFolders) {
+      this.updateQrcData();
+      let data = "";
+      if(uri) {
+        const rootPath = uri.replace('file://','');
+        data = fs.readFileSync(rootPath, { encoding: 'utf8'});
+      } else {
+        const rootPath = `${this.mainCppDir.replace('file://','')}/main.cpp`;
+        data = fs.readFileSync(rootPath, { encoding: 'utf8'});
+      }
+      this.mainCppcData = data
+        .split('\n')
+        .filter(line => line.includes('qmlRegister'))
+        .map(
+          line => line
+            .trim()
+            // .replace(/(.*.\(|\).*)/g, '')
+        );
+        console.log(this.mainCppcData);
+    }
+  }
 }
 
 let serviceDispatcher: ServiceDispatcher | null = null;

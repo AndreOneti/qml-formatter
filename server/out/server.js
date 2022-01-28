@@ -72,7 +72,7 @@ class ServiceDispatcher {
         }
         if (this.workspaceFolders) {
             this.updateQrcData();
-            // this.updateMainCpp(this.workspaceFolders[0].uri);
+            this.updateMainCpp();
         }
     }
     onDidChangeContent(change) {
@@ -82,10 +82,11 @@ class ServiceDispatcher {
         if (handler.changes.some(change => change.uri.endsWith('.qrc') && change.type === node_1.FileChangeType.Changed)) {
             const uri = handler.changes.find(change => change.uri.endsWith('.qrc')).uri;
             this.updateQrcData(uri);
-        } /* else if (handler.changes.some(change => change.uri.endsWith('main.cpp') && change.type === FileChangeType.Changed)) {
-          const uri = handler.changes.find(change => change.uri.endsWith('main.cpp'))!.uri;
-          this.updateMainCpp(uri);
-        } */
+        }
+        else if (handler.changes.some(change => change.uri.endsWith('main.cpp') && change.type === node_1.FileChangeType.Changed)) {
+            const uri = handler.changes.find(change => change.uri.endsWith('main.cpp')).uri;
+            this.updateMainCpp(uri);
+        }
     }
     onCompletion(complitionPosition) {
         var _a;
@@ -305,7 +306,6 @@ class ServiceDispatcher {
         return [];
     }
     async validateImports(textDocument) {
-        var _a;
         const doc = this.documents.get(textDocument.uri);
         const text = doc.getText();
         const imports = text.split('\n').filter(line => line.startsWith('import'));
@@ -316,7 +316,7 @@ class ServiceDispatcher {
             const comp = m[0].replace("{", '').trim();
             const findedComp = this.qrcData.find(qrc => qrc.split('/').pop() === comp);
             const importUrl = findedComp === null || findedComp === void 0 ? void 0 : findedComp.split('/').slice(0, -1).join('/');
-            const isSamePath = ((_a = this.workspaceFolders) === null || _a === void 0 ? void 0 : _a.some(file => textDocument.uri.replace(file.uri, '').split('/').slice(0, -1).filter(i => i).join('/') === importUrl)) || false;
+            const isSamePath = textDocument.uri.replace(this.mainCppDir, '').replace('file://', '').split('/').slice(0, -1).filter(i => i).join('/') === importUrl || false;
             if (!!findedComp &&
                 !!importUrl &&
                 !isSamePath &&
@@ -465,7 +465,13 @@ class ServiceDispatcher {
         const imports = text.split('\n').filter(line => line.trim().startsWith("import"));
         const impLine = imports[imports.length - 1];
         const line = text.split('\n').findIndex(line => line === imports[imports.length - 1]);
-        textEdit.push(node_1.TextEdit.insert(node_1.Position.create(line, impLine.length), `\n${data.trim()}`));
+        if (impLine) {
+            textEdit.push(node_1.TextEdit.insert(node_1.Position.create(line, impLine.length), `\n${data.trim()}`));
+        }
+        else {
+            const line = text.split('\n').findIndex(line => (/[a-zA-Z0-9]{1,} {0,}\{/).test(line));
+            textEdit.push(node_1.TextEdit.insert(node_1.Position.create(line, 0), `${data.trim()}\n\n`));
+        }
         const fix = {
             title: "Add missing import",
             kind: node_1.CodeActionKind.QuickFix,
@@ -518,6 +524,28 @@ class ServiceDispatcher {
                 .replace('<file>', '')
                 .replace('</file>', '')
                 .replace('.qml', ''));
+        }
+    }
+    updateMainCpp(uri = "") {
+        if (this.workspaceFolders) {
+            this.updateQrcData();
+            let data = "";
+            if (uri) {
+                const rootPath = uri.replace('file://', '');
+                data = fs.readFileSync(rootPath, { encoding: 'utf8' });
+            }
+            else {
+                const rootPath = `${this.mainCppDir.replace('file://', '')}/main.cpp`;
+                data = fs.readFileSync(rootPath, { encoding: 'utf8' });
+            }
+            this.mainCppcData = data
+                .split('\n')
+                .filter(line => line.includes('qmlRegister'))
+                .map(line => line
+                .trim()
+            // .replace(/(.*.\(|\).*)/g, '')
+            );
+            console.log(this.mainCppcData);
         }
     }
 }
