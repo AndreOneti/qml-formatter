@@ -137,6 +137,7 @@ class ServiceDispatcher {
                 });
                 itens = [
                     ...this.getCustomComponents(),
+                    ...this.getDefaultComponents(),
                     ...this.getComponentProps(text, complitionPosition.position.line)
                         .filter((item) => item.data.toLowerCase().includes(word)),
                     ...itens
@@ -189,6 +190,7 @@ class ServiceDispatcher {
                     itens = [
                         ...itens,
                         ...this.getCustomComponents(),
+                        ...this.getDefaultComponents(),
                         ...this.getComponentProps(text, complitionPosition.position.line)
                     ]
                         .filter((item) => !item.data.trim().startsWith('id'));
@@ -247,6 +249,11 @@ class ServiceDispatcher {
                 item.label = complitionText;
                 return item;
             });
+            itens = [
+                ...itens,
+                ...this.getCustomComponents(),
+                ...this.getDefaultComponents()
+            ];
         }
         return itens;
     }
@@ -304,6 +311,18 @@ class ServiceDispatcher {
             return itens;
         }
         return [];
+    }
+    getDefaultComponents() {
+        const itens = Object.keys(types_1.default).map(component => {
+            const item = {
+                data: component,
+                label: component,
+                kind: node_1.CompletionItemKind.Module,
+                documentation: types_1.default[component].doc || `Default component ${component}`
+            };
+            return item;
+        });
+        return itens;
     }
     async validateImports(textDocument) {
         const doc = this.documents.get(textDocument.uri);

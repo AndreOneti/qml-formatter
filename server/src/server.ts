@@ -186,6 +186,7 @@ class ServiceDispatcher {
         });
         itens = [
           ...this.getCustomComponents(),
+          ...this.getDefaultComponents(),
           ...this.getComponentProps(text,complitionPosition.position.line)
             .filter((item: CompletionItem) => item.data.toLowerCase().includes(word)),
           ...itens
@@ -250,6 +251,7 @@ class ServiceDispatcher {
           itens = [
             ...itens,
             ...this.getCustomComponents(),
+            ...this.getDefaultComponents(),
             ...this.getComponentProps(text, complitionPosition.position.line)
             ]
             .filter((item: CompletionItem): boolean => !item.data.trim().startsWith('id'));
@@ -317,6 +319,11 @@ class ServiceDispatcher {
 
           return item;
         });
+      itens = [
+        ...itens,
+        ...this.getCustomComponents(),
+        ...this.getDefaultComponents()
+      ];
     }
     return itens;
   }
@@ -383,6 +390,20 @@ class ServiceDispatcher {
       return itens;
     }
     return [];
+  }
+
+  private getDefaultComponents(): CompletionItem[] {
+    const itens: CompletionItem[] = Object.keys(References).map(component => {
+      const item: CompletionItem = {
+        data: component,
+        label: component,
+        kind: CompletionItemKind.Module,
+        documentation: References[component].doc || `Default component ${component}`
+      };
+      return item;
+    });
+
+    return itens;
   }
 
 	private async validateImports(textDocument: TextDocument): Promise<void> {

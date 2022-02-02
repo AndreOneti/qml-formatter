@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.0] - 2022-02-02
+
+### Added
+  - Add autcomplete from all custom and default components
+
+### Changed
+  - Add default components ColumnLayout, RowLayout and GridLayout base on issue [Add layouts #14](https://github.com/AndreOneti/qml-formatter/issues/14)
+### Fixed
+
+------
+
 ## [1.1.16] - 2022-01-28
 
 ### Added

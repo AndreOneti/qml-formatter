@@ -1,13 +1,16 @@
 interface IReferences {
-  [key: string]: any;
+  [key: string]: IComponent;
 }
+
+interface IComponent {
+  properties: Record<string, string | Record<string, string>>;
+  methods: Record<string, string | string[]>;
+  signals: Record<string, string>;
+  inherit?: string;
+  doc?: string;
+}
+
 const References: IReferences = {
-  Default: {
-    properties: {},
-    signals: {},
-    methods: {},
-    inherit: "QtObject",
-  },
   Abstract3DSeries: {
     properties: {
       baseColor: "color",
@@ -711,6 +714,94 @@ const References: IReferences = {
     signals: {},
     methods: {},
     inherit: "AbstractButton",
+  },
+  ColumnLayout: {
+    properties: {
+      layoutDirection: "enumeration",
+      spacing: "real",
+      Layout: {
+        minimumWidth: "int",
+        minimumHeight: "int",
+        preferredWidth: "int",
+        preferredHeight: "int",
+        maximumWidth: "int",
+        maximumHeight: "int",
+        fillWidth: "int",
+        fillHeight: "int",
+        alignment: "int",
+        margins: "int",
+        leftMargin: "int",
+        rightMargin: "int",
+        topMargin: "int",
+        bottomMargin: "int",
+      },
+    },
+    signals: {},
+    methods: {},
+    inherit: "Item",
+  },
+  RowLayout: {
+    properties: {
+      layoutDirection: "enumeration",
+      spacing: "real",
+      Layout: {
+        minimumWidth: "int",
+        minimumHeight: "int",
+        preferredWidth: "int",
+        preferredHeight: "int",
+        maximumWidth: "int",
+        maximumHeight: "int",
+        fillWidth: "int",
+        fillHeight: "int",
+        alignment: "int",
+        margins: "int",
+        leftMargin: "int",
+        rightMargin: "int",
+        topMargin: "int",
+        bottomMargin: "int",
+      },
+    },
+    signals: {},
+    methods: {},
+    inherit: "Item",
+  },
+  GridLayout: {
+    properties: {
+      columnSpacing: "real",
+      columns: "int",
+      flow: "enumeration",
+      layoutDirection: "enumeration",
+      rowSpacing: "real",
+      rows: "int",
+      Layout: {
+        row: "int",
+        column: "int",
+        rowSpan: "int",
+        columnSpan: "int",
+        minimumWidth: "int",
+        minimumHeight: "int",
+        preferredWidth: "int",
+        preferredHeight: "int",
+        maximumWidth: "int",
+        maximumHeight: "int",
+        fillWidth: "int",
+        fillHeight: "int",
+        alignment: "int",
+        margins: "int",
+        leftMargin: "int",
+        rightMargin: "int",
+        topMargin: "int",
+        bottomMargin: "int",
+      },
+    },
+    signals: {},
+    methods: {},
+    inherit: "Item",
+    doc: `If the GridLayout is resized, all items in the layout will be rearranged. It is similar to the widget-based QGridLayout. All visible children of the GridLayout element will belong to the layout. If you want a layout with just one row or one column, you can use the RowLayout or ColumnLayout. These offer a bit more convenient API, and improve readability.
+
+    By default items will be arranged according to the flow property. The default value of the flow property is GridLayout.LeftToRight.
+
+    If the columns property is specified, it will be treated as a maximum limit of how many columns the layout can have, before the auto-positioning wraps back to the beginning of the next row. The columns property is only used when flow is GridLayout.LeftToRight.`
   },
 };
 
