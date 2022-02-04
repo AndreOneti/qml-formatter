@@ -318,7 +318,8 @@ class ServiceDispatcher {
                 data: component,
                 label: component,
                 kind: node_1.CompletionItemKind.Module,
-                documentation: types_1.default[component].doc || `Default component ${component}`
+                documentation: types_1.default[component].doc,
+                detail: types_1.default[component].doc && component
             };
             return item;
         });

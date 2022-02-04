@@ -6,7 +6,10 @@ interface IComponent {
     methods: Record<string, string | string[]>;
     signals: Record<string, string>;
     inherit?: string;
-    doc?: string;
+    doc?: {
+        kind: "markdown";
+        value: string;
+    };
 }
 declare const References: IReferences;
 export default References;

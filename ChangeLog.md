@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.1] - 2022-02-04
+
+### Added
+  - Add StackLayout and StackView  based on issue [Add StackLayout and StackView on default components #18](https://github.com/AndreOneti/qml-formatter/issues/18)
+  - Add documentation on default component.
+
+### Changed
+### Fixed
+
+------
+
 ## [1.2.0] - 2022-02-02
 
 ### Added
