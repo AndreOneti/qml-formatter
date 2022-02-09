@@ -4,7 +4,7 @@
   "description": "A simple QML formatter",
 	"author": "AndreOneti",
 	"license": "MIT",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "publisher": "AndreOneti",
   "engines": {
     "vscode": "^1.6.0"
@@ -78,6 +78,27 @@
 					"description": "Traces the communication between VS Code and the language server."
 				}
       }
+    },
+    "commands": [
+      {
+        "command": "qmlFormatter.qml",
+        "title": "Generate new QML"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "qmlFormatter.qml",
+          "when": "explorerResourceIsFolder"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "qmlFormatter.qml",
+          "when": "explorerResourceIsFolder",
+          "group": "qmlFormatter@1"
+        }
+      ]
     }
   },
   "scripts": {

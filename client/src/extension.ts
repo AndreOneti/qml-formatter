@@ -1,16 +1,30 @@
 import * as path from "path";
-import { workspace, ExtensionContext } from "vscode";
-
+import { commands, ExtensionContext, workspace } from "vscode";
 import {
   LanguageClient,
   LanguageClientOptions,
   ServerOptions,
-  TransportKind,
+  TransportKind
 } from "vscode-languageclient/node";
+import { generateQmlFile } from "./commands/generateQmlFile";
 
 let client: LanguageClient;
 
 export function activate(context: ExtensionContext) {
+  registerCommands();
+  serverConnect(context);
+}
+
+export function deactivate(): Thenable<void> | undefined {
+  if (!client) return undefined;
+  return client.stop();
+}
+
+function registerCommands() {
+  commands.registerCommand("qmlFormatter.qml", generateQmlFile);
+}
+
+function serverConnect(context: ExtensionContext) {
   const serverModule = context.asAbsolutePath(
     path.join("server", "out", "server.js")
   );
@@ -31,7 +45,6 @@ export function activate(context: ExtensionContext) {
       { scheme: "untitle", language: "qml" },
     ],
     synchronize: {
-      // Notify the server about file changes to '.clientrc files contained in the workspace
       fileEvents: [
         workspace.createFileSystemWatcher("**/*.qrc"),
         workspace.createFileSystemWatcher("**/main.cpp"),
@@ -39,7 +52,6 @@ export function activate(context: ExtensionContext) {
     },
   };
 
-  // Create the language client and start the client.
   client = new LanguageClient(
     "qmlLanguageServer",
     "QML Language Server",
@@ -47,13 +59,5 @@ export function activate(context: ExtensionContext) {
     clientOptions
   );
 
-  // Start the client. This will also launch the server
   client.start();
-}
-
-export function deactivate(): Thenable<void> | undefined {
-  if (!client) {
-    return undefined;
-  }
-  return client.stop();
 }
