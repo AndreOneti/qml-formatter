@@ -565,10 +565,6 @@ class ServiceDispatcher {
 
   private preFormatter(textDocument: string): string {
     const textDocumentFormatted = textDocument
-      .replace(/ {0,}\{ {0,}/g, " { ")
-      .replace(/ {0,}\} {0,}/g, " } ")
-      .replace(/\( {0,}/g, "(")
-      .replace(/ {0,}\) {0,}/g, ")")
       .replace(/\s{0,}:\s{0,}/g, ": ");
     return textDocumentFormatted || textDocument;
   }

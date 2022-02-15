@@ -1,177 +1,523 @@
 {
-	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "QML",
-	"patterns": [
-		{
-			"include": "#keywords"
-		},
-		{
-			"include": "#strings"
-		},
-		{
-			"include": "#comment"
-		},
-		{
-			"name": "comment.line.qml",
-			"match": "\\b(true)\\b|\\b(false)\\b"
-		},
-		{
-			"Beschreibung": "----START A->P -----QML Standart Objekte -------",
-			"name": "markup.bold.qml",
-			"match": "\\b(Abstract3DSeries)\\b|\\b(AbstractActionInput)\\b|\\b(AbstractAnimation)\\b|\\b(AbstractAxis)\\b|\\b(AbstractAxis3D)\\b|\\b(AbstractAxisInput)\\b|\\b(AbstractBarSeries)\\b|\\b(AbstractButton)\\b|\\b(AbstractClipAnimator)\\b|\\b(AbstractClipBlendNode)\\b|\\b(AbstractDataProxy)\\b|\\b(AbstractGraph3D)\\b|\\b(AbstractInputHandler3D)\\b|\\b(AbstractPhysicalDevice)\\b|\\b(AbstractRayCaster)\\b|\\b(AbstractSeries)\\b|\\b(AbstractSkeleton)\\b|\\b(AbstractTextureImage)\\b|\\b(Accelerometer)\\b|\\b(AccelerometerReading)\\b|\\b(Accessible)\\b|\\b(Action)\\b|\\b(ActionGroup)\\b|\\b(ActionInput)\\b|\\b(AdditiveClipBlend)\\b|\\b(Address)\\b|\\b(Affector)\\b|\\b(Age)\\b|\\b(AlphaCoverage)\\b|\\b(AlphaTest)\\b|\\b(Altimeter)\\b|\\b(AltimeterReading)\\b|\\b(AmbientLightReading)\\b|\\b(AmbientLightSensor)\\b|\\b(AmbientTemperatureReading)\\b|\\b(AmbientTemperatureSensor)\\b|\\b(AnalogAxisInput)\\b|\\b(AnchorAnimation)\\b|\\b(AnchorChanges)\\b|\\b(AngleDirection)\\b|\\b(AnimatedImage)\\b|\\b(AnimatedSprite)\\b|\\b(Animation)\\b|\\b(AnimationController)\\b|\\b(AnimationController)\\b|\\b(AnimationGroup)\\b|\\b(Animator)\\b|\\b(ApplicationWindow)\\b|\\b(ApplicationWindowStyle)\\b|\\b(AreaSeries)\\b|\\b(Armature)\\b|\\b(AttenuationModelInverse)\\b|\\b(AttenuationModelLinear)\\b|\\b(Attractor)\\b|\\b(Attribute)\\b|\\b(Audio)\\b|\\b(AudioCategory)\\b|\\b(AudioEngine)\\b|\\b(AudioListener)\\b|\\b(AudioSample)\\b|\\b(AuthenticationDialogRequest)\\b|\\b(Axis)\\b|\\b(AxisAccumulator)\\b|\\b(AxisSetting)\\b|\\b(BackspaceKey)\\b|\\b(Bar3DSeries)\\b|\\b(BarCategoryAxis)\\b|\\b(BarDataProxy)\\b|\\b(Bars3D)\\b|\\b(BarSeries)\\b|\\b(BarSet)\\b|\\b(BaseKey)\\b|\\b(Behavior)\\b|\\b(Binding)\\b|\\b(Blend)\\b|\\b(BlendedClipAnimator)\\b|\\b(BlendEquation)\\b|\\b(BlendEquationArguments)\\b|\\b(BlitFramebuffer)\\b|\\b(BluetoothDiscoveryModel)\\b|\\b(BluetoothService)\\b|\\b(BluetoothSocket)\\b|\\b(BorderImage)\\b|\\b(BorderImageMesh)\\b|\\b(BoxPlotSeries)\\b|\\b(BoxSet)\\b|\\b(BrightnessContrast)\\b|\\b(Buffer)\\b|\\b(BusyIndicator)\\b|\\b(BusyIndicatorStyle)\\b|\\b(Button)\\b|\\b(ButtonAxisInput)\\b|\\b(ButtonGroup)\\b|\\b(ButtonStyle)\\b|\\b(Calendar)\\b|\\b(CalendarStyle)\\b|\\b(Camera)\\b|\\b(Camera3D)\\b|\\b(CameraCapabilities)\\b|\\b(CameraCapture)\\b|\\b(CameraExposure)\\b|\\b(CameraFlash)\\b|\\b(CameraFocus)\\b|\\b(CameraImageProcessing)\\b|\\b(CameraLens)\\b|\\b(CameraRecorder)\\b|\\b(CameraSelector)\\b|\\b(CandlestickSeries)\\b|\\b(CandlestickSet)\\b|\\b(Canvas)\\b|\\b(Canvas3D)\\b|\\b(Canvas3DAbstractObject)\\b|\\b(Canvas3DActiveInfo)\\b|\\b(Canvas3DBuffer)\\b|\\b(Canvas3DContextAttributes)\\b|\\b(Canvas3DFrameBuffer)\\b|\\b(Canvas3DProgram)\\b|\\b(Canvas3DRenderBuffer)\\b|\\b(Canvas3DShader)\\b|\\b(Canvas3DShaderPrecisionFormat)\\b|\\b(Canvas3DTexture)\\b|\\b(Canvas3DTextureProvider)\\b|\\b(Canvas3DUniformLocation)\\b|\\b(CanvasGradient)\\b|\\b(CanvasImageData)\\b|\\b(CanvasPixelArray)\\b|\\b(Category)\\b|\\b(CategoryAxis)\\b|\\b(CategoryAxis3D)\\b|\\b(CategoryModel)\\b|\\b(CategoryRange)\\b|\\b(ChangeLanguageKey)\\b|\\b(ChartView)\\b|\\b(CheckBox)\\b|\\b(CheckBoxStyle)\\b|\\b(CheckDelegate)\\b|\\b(CircularGauge)\\b|\\b(CircularGaugeStyle)\\b|\\b(ClearBuffers)\\b|\\b(ClipAnimator)\\b|\\b(ClipPlane)\\b|\\b(CloseEvent)\\b|\\b(ColorAnimation)\\b|\\b(ColorDialog)\\b|\\b(ColorDialogRequest)\\b|\\b(ColorGradient)\\b|\\b(ColorGradientStop)\\b|\\b(Colorize)\\b|\\b(ColorMask)\\b|\\b(ColorOverlay)\\b|\\b(Column)\\b|\\b(ColumnLayout)\\b|\\b(ComboBox)\\b|\\b(ComboBoxStyle)\\b|\\b(Compass)\\b|\\b(CompassReading)\\b|\\b(Component)\\b|\\b(Component3D)\\b|\\b(ComputeCommand)\\b|\\b(ConeGeometry)\\b|\\b(ConicalGradient)\\b|\\b(Connections)\\b|\\b(ContactDetail)\\b|\\b(ContactDetails)\\b|\\b(Container)\\b|\\b(Context2D)\\b|\\b(Context3D)\\b|\\b(ContextMenuRequest)\\b|\\b(Control)\\b|\\b(CoordinateAnimation)\\b|\\b(CuboidGeometry)\\b|\\b(CuboidMesh)\\b|\\b(CullFace)\\b|\\b(CumulativeDirection)\\b|\\b(Custom3DItem)\\b|\\b(Custom3DLabel)\\b|\\b(Custom3DVolume)\\b|\\b(CustomParticle)\\b|\\b(CylinderGeometry)\\b|\\b(CylinderMesh)\\b|\\b(Date)\\b|\\b(DateTimeAxis)\\b|\\b(DelayButton)\\b|\\b(DelayButtonStyle)\\b|\\b(DelegateModel)\\b|\\b(DelegateModelGroup)\\b|\\b(DepthTest)\\b|\\b(Desaturate)\\b|\\b(Dial)\\b|\\b(Dialog)\\b|\\b(DialogButtonBox)\\b|\\b(DialStyle)\\b|\\b(DiffuseMapMaterial)\\b|\\b(DiffuseSpecularMapMaterial)\\b|\\b(DiffuseSpecularMaterial)\\b|\\b(Direction)\\b|\\b(DirectionalBlur)\\b|\\b(DirectionalLight)\\b|\\b(DispatchCompute)\\b|\\b(Displace)\\b|\\b(DistanceReading)\\b|\\b(DistanceSensor)\\b|\\b(Dithering)\\b|\\b(DoubleValidator)\\b|\\b(Drag)\\b|\\b(DragEvent)\\b|\\b(DragHandler)\\b|\\b(Drawer)\\b|\\b(DropArea)\\b|\\b(DropShadow)\\b|\\b(DwmFeatures)\\b|\\b(DynamicParameter)\\b|\\b(EditorialModel)\\b|\\b(Effect)\\b|\\b(EllipseShape)\\b|\\b(Emitter)\\b|\\b(EnterKey)\\b|\\b(EnterKeyAction)\\b|\\b(Entity)\\b|\\b(EntityLoader)\\b|\\b(EnvironmentLight)\\b|\\b(EventConnection)\\b|\\b(EventPoint)\\b|\\b(EventTouchPoint)\\b|\\b(ExclusiveGroup)\\b|\\b(ExtendedAttributes)\\b|\\b(ExtrudedTextGeometry)\\b|\\b(ExtrudedTextMesh)\\b|\\b(FastBlur)\\b|\\b(FileDialog)\\b|\\b(FileDialogRequest)\\b|\\b(FillerKey)\\b|\\b(FilterKey)\\b|\\b(FinalState)\\b|\\b(FirstPersonCameraController)\\b|\\b(Flickable)\\b|\\b(Flipable)\\b|\\b(Flow)\\b|\\b(FocusScope)\\b|\\b(FolderListModel)\\b|\\b(FontDialog)\\b|\\b(FontLoader)\\b|\\b(FontMetrics)\\b|\\b(FormValidationMessageRequest)\\b|\\b(ForwardRenderer)\\b|\\b(Frame)\\b|\\b(FrameAction)\\b|\\b(FrameGraphNode)\\b|\\b(Friction)\\b|\\b(FrontFace)\\b|\\b(FrustumCulling)\\b|\\b(FullScreenRequest)\\b|\\b(GammaAdjust)\\b|\\b(Gauge)\\b|\\b(GaugeStyle)\\b|\\b(GaussianBlur)\\b|\\b(GeocodeModel)\\b|\\b(Geometry)\\b|\\b(GeometryRenderer)\\b|\\b(GestureEvent)\\b|\\b(Glow)\\b|\\b(GLStateDumpExt)\\b|\\b(GoochMaterial)\\b|\\b(Gradient)\\b|\\b(GradientStop)\\b|\\b(GraphicsApiFilter)\\b|\\b(GraphicsInfo)\\b|\\b(Gravity)\\b|\\b(Grid)\\b|\\b(GridLayout)\\b|\\b(GridMesh)\\b|\\b(GridView)\\b|\\b(GroupBox)\\b|\\b(GroupGoal)\\b|\\b(Gyroscope)\\b|\\b(GyroscopeReading)\\b|\\b(HandlerPoint)\\b|\\b(HandwritingInputPanel)\\b|\\b(HandwritingModeKey)\\b|\\b(HBarModelMapper)\\b|\\b(HBoxPlotModelMapper)\\b|\\b(HCandlestickModelMapper)\\b|\\b(HeightMapSurfaceDataProxy)\\b|\\b(HideKeyboardKey)\\b|\\b(HistoryState)\\b|\\b(HolsterReading)\\b|\\b(HolsterSensor)\\b|\\b(HorizontalBarSeries)\\b|\\b(HorizontalPercentBarSeries)\\b|\\b(HorizontalStackedBarSeries)\\b|\\b(HPieModelMapper)\\b|\\b(HueSaturation)\\b|\\b(HumidityReading)\\b|\\b(HumiditySensor)\\b|\\b(HXYModelMapper)\\b|\\b(Icon)\\b|\\b(Image)\\b|\\b(ImageModel)\\b|\\b(ImageParticle)\\b|\\b(InnerShadow)\\b|\\b(InputChord)\\b|\\b(InputContext)\\b|\\b(InputEngine)\\b|\\b(InputHandler3D)\\b|\\b(InputMethod)\\b|\\b(InputModeKey)\\b|\\b(InputPanel)\\b|\\b(InputSequence)\\b|\\b(InputSettings)\\b|\\b(Instantiator)\\b|\\b(IntValidator)\\b|\\b(InvokedServices)\\b|\\b(IRProximityReading)\\b|\\b(IRProximitySensor)\\b|\\b(Item)\\b|\\b(ItemDelegate)\\b|\\b(ItemGrabResult)\\b|\\b(ItemModelBarDataProxy)\\b|\\b(ItemModelScatterDataProxy)\\b|\\b(ItemModelSurfaceDataProxy)\\b|\\b(ItemParticle)\\b|\\b(ItemSelectionModel)\\b|\\b(IviApplication)\\b|\\b(IviSurface)\\b|\\b(JavaScriptDialogRequest)\\b|\\b(Joint)\\b|\\b(JumpList)\\b|\\b(JumpListCategory)\\b|\\b(JumpListDestination)\\b|\\b(JumpListLink)\\b|\\b(JumpListSeparator)\\b|\\b(Key)\\b|\\b(KeyboardColumn)\\b|\\b(KeyboardDevice)\\b|\\b(KeyboardHandler)\\b|\\b(KeyboardLayout)\\b|\\b(KeyboardLayoutLoader)\\b|\\b(KeyboardRow)\\b|\\b(KeyboardStyle)\\b|\\b(KeyEvent)\\b|\\b(KeyframeAnimation)\\b|\\b(KeyIcon)\\b|\\b(KeyNavigation)\\b|\\b(KeyPanel)\\b|\\b(Keys)\\b|\\b(Label)\\b|\\b(Layer)\\b|\\b(LayerFilter)\\b|\\b(Layout)\\b|\\b(LayoutMirroring)\\b|\\b(Legend)\\b|\\b(LerpBlend)\\b|\\b(LevelAdjust)\\b|\\b(LevelOfDetail)\\b|\\b(LevelOfDetailBoundingSphere)\\b|\\b(LevelOfDetailLoader)\\b|\\b(LevelOfDetailSwitch)\\b|\\b(LidReading)\\b|\\b(LidSensor)\\b|\\b(Light)\\b|\\b(Light3D)\\b|\\b(LightReading)\\b|\\b(LightSensor)\\b|\\b(LinearGradient)\\b|\\b(LineSeries)\\b|\\b(LineShape)\\b|\\b(LineWidth)\\b|\\b(ListElement)\\b|\\b(ListModel)\\b|\\b(ListView)\\b|\\b(Loader)\\b|\\b(Locale)\\b|\\b(Location)\\b|\\b(LoggingCategory)\\b|\\b(LogicalDevice)\\b|\\b(LogValueAxis)\\b|\\b(LogValueAxis3DFormatter)\\b|\\b(Magnetometer)\\b|\\b(MagnetometerReading)\\b|\\b(Map)\\b|\\b(MapCircle)\\b|\\b(MapCircleObject)\\b|\\b(MapCopyrightNotice)\\b|\\b(MapGestureArea)\\b|\\b(MapIconObject)\\b|\\b(MapItemGroup)\\b|\\b(MapItemView)\\b|\\b(MapObjectView)\\b|\\b(MapParameter)\\b|\\b(MapPinchEvent)\\b|\\b(MapPolygon)\\b|\\b(MapPolygonObject)\\b|\\b(MapPolyline)\\b|\\b(MapPolylineObject)\\b|\\b(MapQuickItem)\\b|\\b(MapRectangle)\\b|\\b(MapRoute)\\b|\\b(MapRouteObject)\\b|\\b(MapType)\\b|\\b(Margins)\\b|\\b(MaskedBlur)\\b|\\b(MaskShape)\\b|\\b(Material)\\b|\\b(Matrix4x4)\\b|\\b(MediaPlayer)\\b|\\b(MemoryBarrier)\\b|\\b(Menu)\\b|\\b(MenuBar)\\b|\\b(MenuBarItem)\\b|\\b(MenuBarStyle)\\b|\\b(MenuItem)\\b|\\b(MenuSeparator)\\b|\\b(MenuStyle)\\b|\\b(Mesh)\\b|\\b(MessageDialog)\\b|\\b(ModeKey)\\b|\\b(MorphingAnimation)\\b|\\b(MorphTarget)\\b|\\b(MouseArea)\\b|\\b(MouseDevice)\\b|\\b(MouseEvent)\\b|\\b(MouseHandler)\\b|\\b(MultiPointHandler)\\b|\\b(MultiPointTouchArea)\\b|\\b(MultiSampleAntiAliasing)\\b|\\b(Navigator)\\b|\\b(NdefFilter)\\b|\\b(NdefMimeRecord)\\b|\\b(NdefRecord)\\b|\\b(NdefTextRecord)\\b|\\b(NdefUriRecord)\\b|\\b(NearField)\\b|\\b(Node)\\b|\\b(NodeInstantiator)\\b|\\b(NoDepthMask)\\b|\\b(NoDraw)\\b|\\b(NormalDiffuseMapAlphaMaterial)\\b|\\b(NormalDiffuseMapMaterial)\\b|\\b(NormalDiffuseSpecularMapMaterial)\\b|\\b(Number)\\b|\\b(NumberAnimation)\\b|\\b(NumberKey)\\b|\\b(Object3D)\\b|\\b(ObjectModel)\\b|\\b(ObjectPicker)\\b|\\b(OpacityAnimator)\\b|\\b(OpacityMask)\\b|\\b(OpenGLInfo)\\b|\\b(OrbitCameraController)\\b|\\b(OrientationReading)\\b|\\b(OrientationSensor)\\b|\\b(Overlay)\\b"
-		},
-		{
-			"Beschreibung": "----START P->S -----QML Standart Objekte -------",
-			"name": "markup.bold.qml",
-			"match": "\\b(Package)\\b|\\b(Page)\\b|\\b(PageIndicator)\\b|\\b(Pane)\\b|\\b(ParallelAnimation)\\b|\\b(Parameter)\\b|\\b(ParentAnimation)\\b|\\b(ParentChange)\\b|\\b(Particle)\\b|\\b(ParticleGroup)\\b|\\b(ParticlePainter)\\b|\\b(ParticleSystem)\\b|\\b(Path)\\b|\\b(PathAngleArc)\\b|\\b(PathAnimation)\\b|\\b(PathArc)\\b|\\b(PathAttribute)\\b|\\b(PathCubic)\\b|\\b(PathCurve)\\b|\\b(PathElement)\\b|\\b(PathInterpolator)\\b|\\b(PathLine)\\b|\\b(PathMove)\\b|\\b(PathPercent)\\b|\\b(PathQuad)\\b|\\b(PathSvg)\\b|\\b(PathView)\\b|\\b(PauseAnimation)\\b|\\b(PercentBarSeries)\\b|\\b(PerVertexColorMaterial)\\b|\\b(PhongAlphaMaterial)\\b|\\b(PhongMaterial)\\b|\\b(PickEvent)\\b|\\b(PickingSettings)\\b|\\b(PickLineEvent)\\b|\\b(PickPointEvent)\\b|\\b(PickTriangleEvent)\\b|\\b(Picture)\\b|\\b(PieMenu)\\b|\\b(PieMenuStyle)\\b|\\b(PieSeries)\\b|\\b(PieSlice)\\b|\\b(PinchArea)\\b|\\b(PinchEvent)\\b|\\b(PinchHandler)\\b|\\b(Place)\\b|\\b(PlaceAttribute)\\b|\\b(PlaceSearchModel)\\b|\\b(PlaceSearchSuggestionModel)\\b|\\b(PlaneGeometry)\\b|\\b(PlaneMesh)\\b|\\b(Playlist)\\b|\\b(PlaylistItem)\\b|\\b(PlayVariation)\\b|\\b(Plugin)\\b|\\b(PluginParameter)\\b|\\b(PointDirection)\\b|\\b(PointerDevice)\\b|\\b(PointerDeviceHandler)\\b|\\b(PointerEvent)\\b|\\b(PointerHandler)\\b|\\b(PointHandler)\\b|\\b(PointLight)\\b|\\b(PointSize)\\b|\\b(PolarChartView)\\b|\\b(PolygonOffset)\\b|\\b(Popup)\\b|\\b(Position)\\b|\\b(Positioner)\\b|\\b(PositionSource)\\b|\\b(PressureReading)\\b|\\b(PressureSensor)\\b|\\b(Product)\\b|\\b(ProgressBar)\\b|\\b(ProgressBarStyle)\\b|\\b(PropertyAction)\\b|\\b(PropertyAnimation)\\b|\\b(PropertyChanges)\\b|\\b(ProximityFilter)\\b|\\b(ProximityReading)\\b|\\b(ProximitySensor)\\b|\\b(QAbstractState)\\b|\\b(QAbstractTransition)\\b|\\b(QSignalTransition)\\b|\\b(Qt)\\b|\\b(QtMultimedia)\\b|\\b(QtObject)\\b|\\b(QtPositioning)\\b|\\b(QuaternionAnimation)\\b|\\b(QuotaRequest)\\b|\\b(RadialBlur)\\b|\\b(RadialGradient)\\b|\\b(Radio)\\b|\\b(RadioButton)\\b|\\b(RadioButtonStyle)\\b|\\b(RadioData)\\b|\\b(RadioDelegate)\\b|\\b(RangeSlider)\\b|\\b(Ratings)\\b|\\b(RayCaster)\\b|\\b(Rectangle)\\b|\\b(RectangleShape)\\b|\\b(RectangularGlow)\\b|\\b(RecursiveBlur)\\b|\\b(RegExpValidator)\\b|\\b(RegisterProtocolHandlerRequest)\\b|\\b(RenderCapture)\\b|\\b(RenderCaptureReply)\\b|\\b(RenderPass)\\b|\\b(RenderPassFilter)\\b|\\b(RenderSettings)\\b|\\b(RenderState)\\b|\\b(RenderStateSet)\\b|\\b(RenderSurfaceSelector)\\b|\\b(RenderTarget)\\b|\\b(RenderTargetOutput)\\b|\\b(RenderTargetSelector)\\b|\\b(Repeater)\\b|\\b(ReviewModel)\\b|\\b(Rotation)\\b|\\b(RotationAnimation)\\b|\\b(RotationAnimator)\\b|\\b(RotationReading)\\b|\\b(RotationSensor)\\b|\\b(RoundButton)\\b|\\b(Route)\\b|\\b(RouteManeuver)\\b|\\b(RouteModel)\\b|\\b(RouteQuery)\\b|\\b(RouteSegment)\\b|\\b(Row)\\b|\\b(RowLayout)\\b|\\b(Scale)\\b|\\b(ScaleAnimator)\\b|\\b(Scatter3D)\\b|\\b(Scatter3DSeries)\\b|\\b(ScatterDataProxy)\\b|\\b(ScatterSeries)\\b|\\b(Scene2D)\\b|\\b(Scene3D)\\b|\\b(SceneLoader)\\b|\\b(ScissorTest)\\b|\\b(Screen)\\b|\\b(ScreenRayCaster)\\b|\\b(ScriptAction)\\b|\\b(ScrollBar)\\b|\\b(ScrollView)\\b|\\b(ScrollViewStyle)\\b|\\b(ScxmlStateMachine)\\b|\\b(SeamlessCubemap)\\b|\\b(SelectionListItem)\\b|\\b(SelectionListModel)\\b|\\b(Sensor)\\b|\\b(SensorGesture)\\b|\\b(SensorGlobal)\\b|\\b(SensorReading)\\b|\\b(SequentialAnimation)\\b|\\b(Settings)\\b|\\b(ShaderEffect)\\b|\\b(ShaderEffectSource)\\b|\\b(ShaderProgram)\\b|\\b(ShaderProgramBuilder)\\b|\\b(Shape)\\b|\\b(ShapeGradient)\\b|\\b(ShapePath)\\b|\\b(ShellSurface)\\b|\\b(ShellSurfaceItem)\\b|\\b(ShiftHandler)\\b|\\b(ShiftKey)\\b|\\b(Shortcut)\\b|\\b(SignalSpy)\\b|\\b(SignalTransition)\\b|\\b(SinglePointHandler)\\b|\\b(Skeleton)\\b|\\b(SkeletonLoader)\\b|\\b(Slider)\\b|\\b(SliderStyle)\\b|\\b(SmoothedAnimation)\\b|\\b(SortPolicy)\\b|\\b(Sound)\\b|\\b(SoundEffect)\\b|\\b(SoundInstance)\\b|\\b(SpaceKey)\\b|\\b(SphereGeometry)\\b|\\b(SphereMesh)\\b|\\b(SpinBox)\\b|\\b(SpinBoxStyle)\\b|\\b(SplineSeries)\\b|\\b(SplitView)\\b|\\b(SpotLight)\\b|\\b(SpringAnimation)\\b|\\b(Sprite)\\b|\\b(SpriteGoal)\\b|\\b(SpriteSequence)\\b|\\b(Stack)\\b|\\b(StackedBarSeries)\\b|\\b(StackLayout)\\b|\\b(StackView)\\b|\\b(StackViewDelegate)\\b|\\b(State)\\b|\\b(StateChangeScript)\\b|\\b(StateGroup)\\b|\\b(StateMachine)\\b|\\b(StateMachineLoader)\\b|\\b(StatusBar)\\b|\\b(StatusBarStyle)\\b|\\b(StatusIndicator)\\b|\\b(StatusIndicatorStyle)\\b|\\b(StencilMask)\\b|\\b(StencilOperation)\\b|\\b(StencilOperationArguments)\\b|\\b(StencilTest)\\b|\\b(StencilTestArguments)\\b|\\b(Store)\\b|\\b(String)\\b|\\b(Supplier)\\b|\\b(Surface3D)\\b|\\b(Surface3DSeries)\\b|\\b(SurfaceDataProxy)\\b|\\b(SwipeDelegate)\\b|\\b(SwipeView)\\b|\\b(Switch)\\b|\\b(SwitchDelegate)\\b|\\b(SwitchStyle)\\b|\\b(SymbolModeKey)\\b|\\b(SystemPalette)\\b|\\b(Tab)\\b|\\b(TabBar)\\b|\\b(TabButton)\\b|\\b(TableView)\\b|\\b(TableViewColumn)\\b|\\b(TableViewStyle)\\b|\\b(TabView)\\b|\\b(TabViewStyle)\\b|\\b(TapHandler)\\b|\\b(TapReading)\\b|\\b(TapSensor)\\b|\\b(TargetDirection)\\b|\\b(TaskbarButton)\\b|\\b(Technique)\\b|\\b(TechniqueFilter)\\b|\\b(TestCase)\\b|\\b(Text)\\b|\\b(TextArea)\\b|\\b(TextAreaStyle)\\b|\\b(TextEdit)\\b|\\b(TextField)\\b|\\b(TextFieldStyle)\\b|\\b(TextInput)\\b|\\b(TextMetrics)\\b|\\b(TextureImage)\\b|\\b(TextureImageFactory)\\b|\\b(Theme3D)\\b|\\b(ThemeColor)\\b|\\b(ThresholdMask)\\b|\\b(ThumbnailToolBar)\\b|\\b(ThumbnailToolButton)\\b|\\b(TiltReading)\\b|\\b(TiltSensor)\\b|\\b(TimeoutTransition)\\b|\\b(Timer)\\b|\\b(ToggleButton)\\b|\\b(ToggleButtonStyle)\\b|\\b(ToolBar)\\b|\\b(ToolBarStyle)\\b|\\b(ToolButton)\\b|\\b(ToolSeparator)\\b|\\b(ToolTip)\\b|\\b(Torch)\\b|\\b(TorusGeometry)\\b|\\b(TorusMesh)\\b|\\b(TouchEventSequence)\\b|\\b(TouchInputHandler3D)\\b"
-		},
-		{
-			"Beschreibung": "----START T->Z -----QML Standart Objekte -------",
-			"name": "markup.bold.qml",
-			"match": "\\b(TouchPoint)\\b|\\b(Trace)\\b|\\b(TraceCanvas)\\b|\\b(TraceInputArea)\\b|\\b(TraceInputKey)\\b|\\b(TraceInputKeyPanel)\\b|\\b(TrailEmitter)\\b|\\b(Transaction)\\b|\\b(Transform)\\b|\\b(Transition)\\b|\\b(Translate)\\b|\\b(TreeView)\\b|\\b(TreeViewStyle)\\b|\\b(Tumbler)\\b|\\b(TumblerColumn)\\b|\\b(TumblerStyle)\\b|\\b(Turbulence)\\b|\\b(UniformAnimator)\\b|\\b(User)\\b|\\b(ValueAxis)\\b|\\b(ValueAxis3D)\\b|\\b(ValueAxis3DFormatter)\\b|\\b(VBarModelMapper)\\b|\\b(VBoxPlotModelMapper)\\b|\\b(VCandlestickModelMapper)\\b|\\b(Vector3dAnimation)\\b|\\b(VertexBlendAnimation)\\b|\\b(Video)\\b|\\b(VideoOutput)\\b|\\b(Viewport)\\b|\\b(ViewTransition)\\b|\\b(VirtualKeyboardSettings)\\b|\\b(VisualDataGroup)\\b|\\b(VisualDataModel)\\b|\\b(VisualItemModel)\\b|\\b(VPieModelMapper)\\b|\\b(VXYModelMapper)\\b|\\b(Wander)\\b|\\b(WaylandClient)\\b|\\b(WaylandCompositor)\\b|\\b(WaylandHardwareLayer)\\b|\\b(WaylandOutput)\\b|\\b(WaylandQuickItem)\\b|\\b(WaylandSeat)\\b|\\b(WaylandSurface)\\b|\\b(WaylandView)\\b|\\b(Waypoint)\\b|\\b(WebChannel)\\b|\\b(WebEngine)\\b|\\b(WebEngineCertificateError)\\b|\\b(WebEngineDownloadItem)\\b|\\b(WebEngineHistory)\\b|\\b(WebEngineHistoryListModel)\\b|\\b(WebEngineLoadRequest)\\b|\\b(WebEngineNavigationRequest)\\b|\\b(WebEngineNewViewRequest)\\b|\\b(WebEngineProfile)\\b|\\b(WebEngineScript)\\b|\\b(WebEngineSettings)\\b|\\b(WebEngineView)\\b|\\b(WebSocket)\\b|\\b(WebSocketServer)\\b|\\b(WebView)\\b|\\b(WebViewLoadRequest)\\b|\\b(WheelEvent)\\b|\\b(\\b(Window)\\b)\\b|\\b(WlShell)\\b|\\b(WlShellSurface)\\b|\\b(WorkerScript)\\b|\\b(XAnimator)\\b|\\b(XdgPopupV5)\\b|\\b(XdgPopupV6)\\b|\\b(XdgShellV5)\\b|\\b(XdgShellV6)\\b|\\b(XdgSurfaceV5)\\b|\\b(XdgSurfaceV6)\\b|\\b(XdgToplevelV6)\\b|\\b(XmlListModel)\\b|\\b(XmlRole)\\b|\\b(XYPoint)\\b|\\b(XYSeries)\\b|\\b(YAnimator)\\b|\\b(ZoomBlur)\\b"
-		},
-		{
-			"Beschreibung": "QML Basistypen",
-			"name": "storage.qml",
-			"match": "\\b(bool)\\b|\\b(double)\\b|\\b(int)\\b|\\b(real)\\b|\\b(string)\\b|\\b(variant)\\b|\\b(var)\\b"
-		},
-		{
-			"Beschreibung": "QML Basiswörter",
-			"name": "variable.language.qml",
-			"match": "\\b(color)\\b|\\b(coordinate)\\b|\\b(date)\\b|\\b(enumeration)\\b|\\b(font)\\b|\\b(geocircle)\\b|\\b(geopath)\\b|\\b(geopolygon)\\b|\\b(georectangle)\\b|\\b(geoshape)\\b|\\b(list)\\b|\\b(matrix4x4)\\b|\\b(mediaplayer-qml-dynamic)\\b|\\b(palette)\\b|\\b(point)\\b|\\b(quaternion)\\b|\\b(rect)\\b|\\b(size)\\b|\\b(url)\\b|\\b(vector2d)\\b|\\b(vector3d|vector4d)\\b"
-		},
-		{
-			"name": "markup.changed.qml",
-			"match": "\\d"
-		},
-		{
-			"name": "markup.changed.qml",
-			"match": "\\b(alias)\\b|\\b(signal)\\b"
-		},
-		{
-			"name": "comment.qml",
-			"match": "(//[\\t|\\s|\\w|\\d|\\.]*[\\r\\n|\\n|:])"
-		},
-		{
-			"Beschreibung": "QML Usertypen",
-			"name": "markup.changed.qml",
-			"match": "\\w+(?={|{ | {| { \\b)"
-		}
-	],
-	"repository": {
-		"keywords": {
-			"Beschreibung": "QML und Javascript Schlüsselwörter",
-			"patterns": [
-				{
-					"name": "keyword.control.qml",
-					"match": "\\b(if)\\b|\\b(else)\\b|\\b(while)\\b|\\b(for)\\b|\\b(function)\\b|\\b(return)\\b|\\b(import)\\b|\\b(as)\\b|\\b(property)\\b"
-				}
-			]
-		},
-		"strings": {
-			"name": "string.quoted.double.qml",
-			"begin": "\"",
-			"end": "\"",
-			"patterns": [
-				{
-					"name": "constant.character.escape.qml",
-					"match": "\\\\."
-				}
-			]
-		},
-		"comment": {
-			"patterns": [
-				{
-					"name": "comment.block.documentation.qml",
-					"begin": "/\\*\\*(?!/)",
-					"beginCaptures": {
-						"0": {
-							"name": "punctuation.definition.comment.qml"
-						}
-					},
-					"end": "\\*/",
-					"endCaptures": {
-						"0": {
-							"name": "punctuation.definition.comment.qml"
-						}
-					},
-					"patterns": [
-						{
-							"include": "#docblock"
-						}
-					]
-				},
-				{
-					"name": "comment.block.qml",
-					"begin": "(/\\*)(?:\\s*((@)internal)(?=\\s|(\\*/)))?",
-					"beginCaptures": {
-						"1": {
-							"name": "punctuation.definition.comment.qml"
-						},
-						"2": {
-							"name": "storage.type.internaldeclaration.qml"
-						},
-						"3": {
-							"name": "punctuation.decorator.internaldeclaration.qml"
-						}
-					},
-					"end": "\\*/",
-					"endCaptures": {
-						"0": {
-							"name": "punctuation.definition.comment.qml"
-						}
-					}
-				},
-				{
-					"begin": "(^[ \\t]+)?((//)(?:\\s*((@)internal)(?=\\s|$))?)",
-					"beginCaptures": {
-						"1": {
-							"name": "punctuation.whitespace.comment.leading.qml"
-						},
-						"2": {
-							"name": "comment.line.double-slash.qml"
-						},
-						"3": {
-							"name": "punctuation.definition.comment.qml"
-						},
-						"4": {
-							"name": "storage.type.internaldeclaration.qml"
-						},
-						"5": {
-							"name": "punctuation.decorator.internaldeclaration.qml"
-						}
-					},
-					"end": "(?=$)",
-					"contentName": "comment.line.double-slash.qml"
-				}
-			]
-		},
-		"single-line-comment-consuming-line-ending": {
-			"patterns": [
-				{
-					"begin": "(^[ \\t]+)?((//)(?:\\s*((@)internal)(?=\\s|$))?)",
-					"beginCaptures": {
-						"1": {
-							"name": "punctuation.whitespace.comment.leading.qml"
-						},
-						"2": {
-							"name": "comment.line.double-slash.qml"
-						},
-						"3": {
-							"name": "punctuation.definition.comment.qml"
-						},
-						"4": {
-							"name": "storage.type.internaldeclaration.qml"
-						},
-						"5": {
-							"name": "punctuation.decorator.internaldeclaration.qml"
-						}
-					},
-					"end": "(?=^)",
-					"contentName": "comment.line.double-slash.qml"
-				}
-			]
-		}
-	},
-	"scopeName": "source.qml"
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "QML",
+  "patterns": [
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#operators"
+    },
+    {
+      "include": "#comment"
+    },
+    {
+      "include": "#function_innards"
+    },
+    {
+      "name": "comment.line.qml",
+      "match": "\\b(true)\\b|\\b(false)\\b"
+    },
+    {
+      "Beschreibung": "----START A->P -----QML Standart Objekte -------",
+      "name": "markup.bold.qml",
+      "match": "\\b(Abstract3DSeries)\\b|\\b(AbstractActionInput)\\b|\\b(AbstractAnimation)\\b|\\b(AbstractAxis)\\b|\\b(AbstractAxis3D)\\b|\\b(AbstractAxisInput)\\b|\\b(AbstractBarSeries)\\b|\\b(AbstractButton)\\b|\\b(AbstractClipAnimator)\\b|\\b(AbstractClipBlendNode)\\b|\\b(AbstractDataProxy)\\b|\\b(AbstractGraph3D)\\b|\\b(AbstractInputHandler3D)\\b|\\b(AbstractPhysicalDevice)\\b|\\b(AbstractRayCaster)\\b|\\b(AbstractSeries)\\b|\\b(AbstractSkeleton)\\b|\\b(AbstractTextureImage)\\b|\\b(Accelerometer)\\b|\\b(AccelerometerReading)\\b|\\b(Accessible)\\b|\\b(Action)\\b|\\b(ActionGroup)\\b|\\b(ActionInput)\\b|\\b(AdditiveClipBlend)\\b|\\b(Address)\\b|\\b(Affector)\\b|\\b(Age)\\b|\\b(AlphaCoverage)\\b|\\b(AlphaTest)\\b|\\b(Altimeter)\\b|\\b(AltimeterReading)\\b|\\b(AmbientLightReading)\\b|\\b(AmbientLightSensor)\\b|\\b(AmbientTemperatureReading)\\b|\\b(AmbientTemperatureSensor)\\b|\\b(AnalogAxisInput)\\b|\\b(AnchorAnimation)\\b|\\b(AnchorChanges)\\b|\\b(AngleDirection)\\b|\\b(AnimatedImage)\\b|\\b(AnimatedSprite)\\b|\\b(Animation)\\b|\\b(AnimationController)\\b|\\b(AnimationController)\\b|\\b(AnimationGroup)\\b|\\b(Animator)\\b|\\b(ApplicationWindow)\\b|\\b(ApplicationWindowStyle)\\b|\\b(AreaSeries)\\b|\\b(Armature)\\b|\\b(AttenuationModelInverse)\\b|\\b(AttenuationModelLinear)\\b|\\b(Attractor)\\b|\\b(Attribute)\\b|\\b(Audio)\\b|\\b(AudioCategory)\\b|\\b(AudioEngine)\\b|\\b(AudioListener)\\b|\\b(AudioSample)\\b|\\b(AuthenticationDialogRequest)\\b|\\b(Axis)\\b|\\b(AxisAccumulator)\\b|\\b(AxisSetting)\\b|\\b(BackspaceKey)\\b|\\b(Bar3DSeries)\\b|\\b(BarCategoryAxis)\\b|\\b(BarDataProxy)\\b|\\b(Bars3D)\\b|\\b(BarSeries)\\b|\\b(BarSet)\\b|\\b(BaseKey)\\b|\\b(Behavior)\\b|\\b(Binding)\\b|\\b(Blend)\\b|\\b(BlendedClipAnimator)\\b|\\b(BlendEquation)\\b|\\b(BlendEquationArguments)\\b|\\b(BlitFramebuffer)\\b|\\b(BluetoothDiscoveryModel)\\b|\\b(BluetoothService)\\b|\\b(BluetoothSocket)\\b|\\b(BorderImage)\\b|\\b(BorderImageMesh)\\b|\\b(BoxPlotSeries)\\b|\\b(BoxSet)\\b|\\b(BrightnessContrast)\\b|\\b(Buffer)\\b|\\b(BusyIndicator)\\b|\\b(BusyIndicatorStyle)\\b|\\b(Button)\\b|\\b(ButtonAxisInput)\\b|\\b(ButtonGroup)\\b|\\b(ButtonStyle)\\b|\\b(Calendar)\\b|\\b(CalendarStyle)\\b|\\b(Camera)\\b|\\b(Camera3D)\\b|\\b(CameraCapabilities)\\b|\\b(CameraCapture)\\b|\\b(CameraExposure)\\b|\\b(CameraFlash)\\b|\\b(CameraFocus)\\b|\\b(CameraImageProcessing)\\b|\\b(CameraLens)\\b|\\b(CameraRecorder)\\b|\\b(CameraSelector)\\b|\\b(CandlestickSeries)\\b|\\b(CandlestickSet)\\b|\\b(Canvas)\\b|\\b(Canvas3D)\\b|\\b(Canvas3DAbstractObject)\\b|\\b(Canvas3DActiveInfo)\\b|\\b(Canvas3DBuffer)\\b|\\b(Canvas3DContextAttributes)\\b|\\b(Canvas3DFrameBuffer)\\b|\\b(Canvas3DProgram)\\b|\\b(Canvas3DRenderBuffer)\\b|\\b(Canvas3DShader)\\b|\\b(Canvas3DShaderPrecisionFormat)\\b|\\b(Canvas3DTexture)\\b|\\b(Canvas3DTextureProvider)\\b|\\b(Canvas3DUniformLocation)\\b|\\b(CanvasGradient)\\b|\\b(CanvasImageData)\\b|\\b(CanvasPixelArray)\\b|\\b(Category)\\b|\\b(CategoryAxis)\\b|\\b(CategoryAxis3D)\\b|\\b(CategoryModel)\\b|\\b(CategoryRange)\\b|\\b(ChangeLanguageKey)\\b|\\b(ChartView)\\b|\\b(CheckBox)\\b|\\b(CheckBoxStyle)\\b|\\b(CheckDelegate)\\b|\\b(CircularGauge)\\b|\\b(CircularGaugeStyle)\\b|\\b(ClearBuffers)\\b|\\b(ClipAnimator)\\b|\\b(ClipPlane)\\b|\\b(CloseEvent)\\b|\\b(ColorAnimation)\\b|\\b(ColorDialog)\\b|\\b(ColorDialogRequest)\\b|\\b(ColorGradient)\\b|\\b(ColorGradientStop)\\b|\\b(Colorize)\\b|\\b(ColorMask)\\b|\\b(ColorOverlay)\\b|\\b(Column)\\b|\\b(ColumnLayout)\\b|\\b(ComboBox)\\b|\\b(ComboBoxStyle)\\b|\\b(Compass)\\b|\\b(CompassReading)\\b|\\b(Component)\\b|\\b(Component3D)\\b|\\b(ComputeCommand)\\b|\\b(ConeGeometry)\\b|\\b(ConicalGradient)\\b|\\b(Connections)\\b|\\b(ContactDetail)\\b|\\b(ContactDetails)\\b|\\b(Container)\\b|\\b(Context2D)\\b|\\b(Context3D)\\b|\\b(ContextMenuRequest)\\b|\\b(Control)\\b|\\b(CoordinateAnimation)\\b|\\b(CuboidGeometry)\\b|\\b(CuboidMesh)\\b|\\b(CullFace)\\b|\\b(CumulativeDirection)\\b|\\b(Custom3DItem)\\b|\\b(Custom3DLabel)\\b|\\b(Custom3DVolume)\\b|\\b(CustomParticle)\\b|\\b(CylinderGeometry)\\b|\\b(CylinderMesh)\\b|\\b(Date)\\b|\\b(DateTimeAxis)\\b|\\b(DelayButton)\\b|\\b(DelayButtonStyle)\\b|\\b(DelegateModel)\\b|\\b(DelegateModelGroup)\\b|\\b(DepthTest)\\b|\\b(Desaturate)\\b|\\b(Dial)\\b|\\b(Dialog)\\b|\\b(DialogButtonBox)\\b|\\b(DialStyle)\\b|\\b(DiffuseMapMaterial)\\b|\\b(DiffuseSpecularMapMaterial)\\b|\\b(DiffuseSpecularMaterial)\\b|\\b(Direction)\\b|\\b(DirectionalBlur)\\b|\\b(DirectionalLight)\\b|\\b(DispatchCompute)\\b|\\b(Displace)\\b|\\b(DistanceReading)\\b|\\b(DistanceSensor)\\b|\\b(Dithering)\\b|\\b(DoubleValidator)\\b|\\b(Drag)\\b|\\b(DragEvent)\\b|\\b(DragHandler)\\b|\\b(Drawer)\\b|\\b(DropArea)\\b|\\b(DropShadow)\\b|\\b(DwmFeatures)\\b|\\b(DynamicParameter)\\b|\\b(EditorialModel)\\b|\\b(Effect)\\b|\\b(EllipseShape)\\b|\\b(Emitter)\\b|\\b(EnterKey)\\b|\\b(EnterKeyAction)\\b|\\b(Entity)\\b|\\b(EntityLoader)\\b|\\b(EnvironmentLight)\\b|\\b(EventConnection)\\b|\\b(EventPoint)\\b|\\b(EventTouchPoint)\\b|\\b(ExclusiveGroup)\\b|\\b(ExtendedAttributes)\\b|\\b(ExtrudedTextGeometry)\\b|\\b(ExtrudedTextMesh)\\b|\\b(FastBlur)\\b|\\b(FileDialog)\\b|\\b(FileDialogRequest)\\b|\\b(FillerKey)\\b|\\b(FilterKey)\\b|\\b(FinalState)\\b|\\b(FirstPersonCameraController)\\b|\\b(Flickable)\\b|\\b(Flipable)\\b|\\b(Flow)\\b|\\b(FocusScope)\\b|\\b(FolderListModel)\\b|\\b(FontDialog)\\b|\\b(FontLoader)\\b|\\b(FontMetrics)\\b|\\b(FormValidationMessageRequest)\\b|\\b(ForwardRenderer)\\b|\\b(Frame)\\b|\\b(FrameAction)\\b|\\b(FrameGraphNode)\\b|\\b(Friction)\\b|\\b(FrontFace)\\b|\\b(FrustumCulling)\\b|\\b(FullScreenRequest)\\b|\\b(GammaAdjust)\\b|\\b(Gauge)\\b|\\b(GaugeStyle)\\b|\\b(GaussianBlur)\\b|\\b(GeocodeModel)\\b|\\b(Geometry)\\b|\\b(GeometryRenderer)\\b|\\b(GestureEvent)\\b|\\b(Glow)\\b|\\b(GLStateDumpExt)\\b|\\b(GoochMaterial)\\b|\\b(Gradient)\\b|\\b(GradientStop)\\b|\\b(GraphicsApiFilter)\\b|\\b(GraphicsInfo)\\b|\\b(Gravity)\\b|\\b(Grid)\\b|\\b(GridLayout)\\b|\\b(GridMesh)\\b|\\b(GridView)\\b|\\b(GroupBox)\\b|\\b(GroupGoal)\\b|\\b(Gyroscope)\\b|\\b(GyroscopeReading)\\b|\\b(HandlerPoint)\\b|\\b(HandwritingInputPanel)\\b|\\b(HandwritingModeKey)\\b|\\b(HBarModelMapper)\\b|\\b(HBoxPlotModelMapper)\\b|\\b(HCandlestickModelMapper)\\b|\\b(HeightMapSurfaceDataProxy)\\b|\\b(HideKeyboardKey)\\b|\\b(HistoryState)\\b|\\b(HolsterReading)\\b|\\b(HolsterSensor)\\b|\\b(HorizontalBarSeries)\\b|\\b(HorizontalPercentBarSeries)\\b|\\b(HorizontalStackedBarSeries)\\b|\\b(HPieModelMapper)\\b|\\b(HueSaturation)\\b|\\b(HumidityReading)\\b|\\b(HumiditySensor)\\b|\\b(HXYModelMapper)\\b|\\b(Icon)\\b|\\b(Image)\\b|\\b(ImageModel)\\b|\\b(ImageParticle)\\b|\\b(InnerShadow)\\b|\\b(InputChord)\\b|\\b(InputContext)\\b|\\b(InputEngine)\\b|\\b(InputHandler3D)\\b|\\b(InputMethod)\\b|\\b(InputModeKey)\\b|\\b(InputPanel)\\b|\\b(InputSequence)\\b|\\b(InputSettings)\\b|\\b(Instantiator)\\b|\\b(IntValidator)\\b|\\b(InvokedServices)\\b|\\b(IRProximityReading)\\b|\\b(IRProximitySensor)\\b|\\b(Item)\\b|\\b(ItemDelegate)\\b|\\b(ItemGrabResult)\\b|\\b(ItemModelBarDataProxy)\\b|\\b(ItemModelScatterDataProxy)\\b|\\b(ItemModelSurfaceDataProxy)\\b|\\b(ItemParticle)\\b|\\b(ItemSelectionModel)\\b|\\b(IviApplication)\\b|\\b(IviSurface)\\b|\\b(JavaScriptDialogRequest)\\b|\\b(Joint)\\b|\\b(JumpList)\\b|\\b(JumpListCategory)\\b|\\b(JumpListDestination)\\b|\\b(JumpListLink)\\b|\\b(JumpListSeparator)\\b|\\b(Key)\\b|\\b(KeyboardColumn)\\b|\\b(KeyboardDevice)\\b|\\b(KeyboardHandler)\\b|\\b(KeyboardLayout)\\b|\\b(KeyboardLayoutLoader)\\b|\\b(KeyboardRow)\\b|\\b(KeyboardStyle)\\b|\\b(KeyEvent)\\b|\\b(KeyframeAnimation)\\b|\\b(KeyIcon)\\b|\\b(KeyNavigation)\\b|\\b(KeyPanel)\\b|\\b(Keys)\\b|\\b(Label)\\b|\\b(Layer)\\b|\\b(LayerFilter)\\b|\\b(Layout)\\b|\\b(LayoutMirroring)\\b|\\b(Legend)\\b|\\b(LerpBlend)\\b|\\b(LevelAdjust)\\b|\\b(LevelOfDetail)\\b|\\b(LevelOfDetailBoundingSphere)\\b|\\b(LevelOfDetailLoader)\\b|\\b(LevelOfDetailSwitch)\\b|\\b(LidReading)\\b|\\b(LidSensor)\\b|\\b(Light)\\b|\\b(Light3D)\\b|\\b(LightReading)\\b|\\b(LightSensor)\\b|\\b(LinearGradient)\\b|\\b(LineSeries)\\b|\\b(LineShape)\\b|\\b(LineWidth)\\b|\\b(ListElement)\\b|\\b(ListModel)\\b|\\b(ListView)\\b|\\b(Loader)\\b|\\b(Locale)\\b|\\b(Location)\\b|\\b(LoggingCategory)\\b|\\b(LogicalDevice)\\b|\\b(LogValueAxis)\\b|\\b(LogValueAxis3DFormatter)\\b|\\b(Magnetometer)\\b|\\b(MagnetometerReading)\\b|\\b(Map)\\b|\\b(MapCircle)\\b|\\b(MapCircleObject)\\b|\\b(MapCopyrightNotice)\\b|\\b(MapGestureArea)\\b|\\b(MapIconObject)\\b|\\b(MapItemGroup)\\b|\\b(MapItemView)\\b|\\b(MapObjectView)\\b|\\b(MapParameter)\\b|\\b(MapPinchEvent)\\b|\\b(MapPolygon)\\b|\\b(MapPolygonObject)\\b|\\b(MapPolyline)\\b|\\b(MapPolylineObject)\\b|\\b(MapQuickItem)\\b|\\b(MapRectangle)\\b|\\b(MapRoute)\\b|\\b(MapRouteObject)\\b|\\b(MapType)\\b|\\b(Margins)\\b|\\b(MaskedBlur)\\b|\\b(MaskShape)\\b|\\b(Material)\\b|\\b(Matrix4x4)\\b|\\b(MediaPlayer)\\b|\\b(MemoryBarrier)\\b|\\b(Menu)\\b|\\b(MenuBar)\\b|\\b(MenuBarItem)\\b|\\b(MenuBarStyle)\\b|\\b(MenuItem)\\b|\\b(MenuSeparator)\\b|\\b(MenuStyle)\\b|\\b(Mesh)\\b|\\b(MessageDialog)\\b|\\b(ModeKey)\\b|\\b(MorphingAnimation)\\b|\\b(MorphTarget)\\b|\\b(MouseArea)\\b|\\b(MouseDevice)\\b|\\b(MouseEvent)\\b|\\b(MouseHandler)\\b|\\b(MultiPointHandler)\\b|\\b(MultiPointTouchArea)\\b|\\b(MultiSampleAntiAliasing)\\b|\\b(Navigator)\\b|\\b(NdefFilter)\\b|\\b(NdefMimeRecord)\\b|\\b(NdefRecord)\\b|\\b(NdefTextRecord)\\b|\\b(NdefUriRecord)\\b|\\b(NearField)\\b|\\b(Node)\\b|\\b(NodeInstantiator)\\b|\\b(NoDepthMask)\\b|\\b(NoDraw)\\b|\\b(NormalDiffuseMapAlphaMaterial)\\b|\\b(NormalDiffuseMapMaterial)\\b|\\b(NormalDiffuseSpecularMapMaterial)\\b|\\b(Number)\\b|\\b(NumberAnimation)\\b|\\b(NumberKey)\\b|\\b(Object3D)\\b|\\b(ObjectModel)\\b|\\b(ObjectPicker)\\b|\\b(OpacityAnimator)\\b|\\b(OpacityMask)\\b|\\b(OpenGLInfo)\\b|\\b(OrbitCameraController)\\b|\\b(OrientationReading)\\b|\\b(OrientationSensor)\\b|\\b(Overlay)\\b"
+    },
+    {
+      "Beschreibung": "----START P->S -----QML Standart Objekte -------",
+      "name": "markup.bold.qml",
+      "match": "\\b(Package)\\b|\\b(Page)\\b|\\b(PageIndicator)\\b|\\b(Pane)\\b|\\b(ParallelAnimation)\\b|\\b(Parameter)\\b|\\b(ParentAnimation)\\b|\\b(ParentChange)\\b|\\b(Particle)\\b|\\b(ParticleGroup)\\b|\\b(ParticlePainter)\\b|\\b(ParticleSystem)\\b|\\b(Path)\\b|\\b(PathAngleArc)\\b|\\b(PathAnimation)\\b|\\b(PathArc)\\b|\\b(PathAttribute)\\b|\\b(PathCubic)\\b|\\b(PathCurve)\\b|\\b(PathElement)\\b|\\b(PathInterpolator)\\b|\\b(PathLine)\\b|\\b(PathMove)\\b|\\b(PathPercent)\\b|\\b(PathQuad)\\b|\\b(PathSvg)\\b|\\b(PathView)\\b|\\b(PauseAnimation)\\b|\\b(PercentBarSeries)\\b|\\b(PerVertexColorMaterial)\\b|\\b(PhongAlphaMaterial)\\b|\\b(PhongMaterial)\\b|\\b(PickEvent)\\b|\\b(PickingSettings)\\b|\\b(PickLineEvent)\\b|\\b(PickPointEvent)\\b|\\b(PickTriangleEvent)\\b|\\b(Picture)\\b|\\b(PieMenu)\\b|\\b(PieMenuStyle)\\b|\\b(PieSeries)\\b|\\b(PieSlice)\\b|\\b(PinchArea)\\b|\\b(PinchEvent)\\b|\\b(PinchHandler)\\b|\\b(Place)\\b|\\b(PlaceAttribute)\\b|\\b(PlaceSearchModel)\\b|\\b(PlaceSearchSuggestionModel)\\b|\\b(PlaneGeometry)\\b|\\b(PlaneMesh)\\b|\\b(Playlist)\\b|\\b(PlaylistItem)\\b|\\b(PlayVariation)\\b|\\b(Plugin)\\b|\\b(PluginParameter)\\b|\\b(PointDirection)\\b|\\b(PointerDevice)\\b|\\b(PointerDeviceHandler)\\b|\\b(PointerEvent)\\b|\\b(PointerHandler)\\b|\\b(PointHandler)\\b|\\b(PointLight)\\b|\\b(PointSize)\\b|\\b(PolarChartView)\\b|\\b(PolygonOffset)\\b|\\b(Popup)\\b|\\b(Position)\\b|\\b(Positioner)\\b|\\b(PositionSource)\\b|\\b(PressureReading)\\b|\\b(PressureSensor)\\b|\\b(Product)\\b|\\b(ProgressBar)\\b|\\b(ProgressBarStyle)\\b|\\b(PropertyAction)\\b|\\b(PropertyAnimation)\\b|\\b(PropertyChanges)\\b|\\b(ProximityFilter)\\b|\\b(ProximityReading)\\b|\\b(ProximitySensor)\\b|\\b(QAbstractState)\\b|\\b(QAbstractTransition)\\b|\\b(QSignalTransition)\\b|\\b(Qt)\\b|\\b(QtMultimedia)\\b|\\b(QtObject)\\b|\\b(QtPositioning)\\b|\\b(QuaternionAnimation)\\b|\\b(QuotaRequest)\\b|\\b(RadialBlur)\\b|\\b(RadialGradient)\\b|\\b(Radio)\\b|\\b(RadioButton)\\b|\\b(RadioButtonStyle)\\b|\\b(RadioData)\\b|\\b(RadioDelegate)\\b|\\b(RangeSlider)\\b|\\b(Ratings)\\b|\\b(RayCaster)\\b|\\b(Rectangle)\\b|\\b(RectangleShape)\\b|\\b(RectangularGlow)\\b|\\b(RecursiveBlur)\\b|\\b(RegExpValidator)\\b|\\b(RegisterProtocolHandlerRequest)\\b|\\b(RenderCapture)\\b|\\b(RenderCaptureReply)\\b|\\b(RenderPass)\\b|\\b(RenderPassFilter)\\b|\\b(RenderSettings)\\b|\\b(RenderState)\\b|\\b(RenderStateSet)\\b|\\b(RenderSurfaceSelector)\\b|\\b(RenderTarget)\\b|\\b(RenderTargetOutput)\\b|\\b(RenderTargetSelector)\\b|\\b(Repeater)\\b|\\b(ReviewModel)\\b|\\b(Rotation)\\b|\\b(RotationAnimation)\\b|\\b(RotationAnimator)\\b|\\b(RotationReading)\\b|\\b(RotationSensor)\\b|\\b(RoundButton)\\b|\\b(Route)\\b|\\b(RouteManeuver)\\b|\\b(RouteModel)\\b|\\b(RouteQuery)\\b|\\b(RouteSegment)\\b|\\b(Row)\\b|\\b(RowLayout)\\b|\\b(Scale)\\b|\\b(ScaleAnimator)\\b|\\b(Scatter3D)\\b|\\b(Scatter3DSeries)\\b|\\b(ScatterDataProxy)\\b|\\b(ScatterSeries)\\b|\\b(Scene2D)\\b|\\b(Scene3D)\\b|\\b(SceneLoader)\\b|\\b(ScissorTest)\\b|\\b(Screen)\\b|\\b(ScreenRayCaster)\\b|\\b(ScriptAction)\\b|\\b(ScrollBar)\\b|\\b(ScrollView)\\b|\\b(ScrollViewStyle)\\b|\\b(ScxmlStateMachine)\\b|\\b(SeamlessCubemap)\\b|\\b(SelectionListItem)\\b|\\b(SelectionListModel)\\b|\\b(Sensor)\\b|\\b(SensorGesture)\\b|\\b(SensorGlobal)\\b|\\b(SensorReading)\\b|\\b(SequentialAnimation)\\b|\\b(Settings)\\b|\\b(ShaderEffect)\\b|\\b(ShaderEffectSource)\\b|\\b(ShaderProgram)\\b|\\b(ShaderProgramBuilder)\\b|\\b(Shape)\\b|\\b(ShapeGradient)\\b|\\b(ShapePath)\\b|\\b(ShellSurface)\\b|\\b(ShellSurfaceItem)\\b|\\b(ShiftHandler)\\b|\\b(ShiftKey)\\b|\\b(Shortcut)\\b|\\b(SignalSpy)\\b|\\b(SignalTransition)\\b|\\b(SinglePointHandler)\\b|\\b(Skeleton)\\b|\\b(SkeletonLoader)\\b|\\b(Slider)\\b|\\b(SliderStyle)\\b|\\b(SmoothedAnimation)\\b|\\b(SortPolicy)\\b|\\b(Sound)\\b|\\b(SoundEffect)\\b|\\b(SoundInstance)\\b|\\b(SpaceKey)\\b|\\b(SphereGeometry)\\b|\\b(SphereMesh)\\b|\\b(SpinBox)\\b|\\b(SpinBoxStyle)\\b|\\b(SplineSeries)\\b|\\b(SplitView)\\b|\\b(SpotLight)\\b|\\b(SpringAnimation)\\b|\\b(Sprite)\\b|\\b(SpriteGoal)\\b|\\b(SpriteSequence)\\b|\\b(Stack)\\b|\\b(StackedBarSeries)\\b|\\b(StackLayout)\\b|\\b(StackView)\\b|\\b(StackViewDelegate)\\b|\\b(State)\\b|\\b(StateChangeScript)\\b|\\b(StateGroup)\\b|\\b(StateMachine)\\b|\\b(StateMachineLoader)\\b|\\b(StatusBar)\\b|\\b(StatusBarStyle)\\b|\\b(StatusIndicator)\\b|\\b(StatusIndicatorStyle)\\b|\\b(StencilMask)\\b|\\b(StencilOperation)\\b|\\b(StencilOperationArguments)\\b|\\b(StencilTest)\\b|\\b(StencilTestArguments)\\b|\\b(Store)\\b|\\b(String)\\b|\\b(Supplier)\\b|\\b(Surface3D)\\b|\\b(Surface3DSeries)\\b|\\b(SurfaceDataProxy)\\b|\\b(SwipeDelegate)\\b|\\b(SwipeView)\\b|\\b(Switch)\\b|\\b(SwitchDelegate)\\b|\\b(SwitchStyle)\\b|\\b(SymbolModeKey)\\b|\\b(SystemPalette)\\b|\\b(Tab)\\b|\\b(TabBar)\\b|\\b(TabButton)\\b|\\b(TableView)\\b|\\b(TableViewColumn)\\b|\\b(TableViewStyle)\\b|\\b(TabView)\\b|\\b(TabViewStyle)\\b|\\b(TapHandler)\\b|\\b(TapReading)\\b|\\b(TapSensor)\\b|\\b(TargetDirection)\\b|\\b(TaskbarButton)\\b|\\b(Technique)\\b|\\b(TechniqueFilter)\\b|\\b(TestCase)\\b|\\b(Text)\\b|\\b(TextArea)\\b|\\b(TextAreaStyle)\\b|\\b(TextEdit)\\b|\\b(TextField)\\b|\\b(TextFieldStyle)\\b|\\b(TextInput)\\b|\\b(TextMetrics)\\b|\\b(TextureImage)\\b|\\b(TextureImageFactory)\\b|\\b(Theme3D)\\b|\\b(ThemeColor)\\b|\\b(ThresholdMask)\\b|\\b(ThumbnailToolBar)\\b|\\b(ThumbnailToolButton)\\b|\\b(TiltReading)\\b|\\b(TiltSensor)\\b|\\b(TimeoutTransition)\\b|\\b(Timer)\\b|\\b(ToggleButton)\\b|\\b(ToggleButtonStyle)\\b|\\b(ToolBar)\\b|\\b(ToolBarStyle)\\b|\\b(ToolButton)\\b|\\b(ToolSeparator)\\b|\\b(ToolTip)\\b|\\b(Torch)\\b|\\b(TorusGeometry)\\b|\\b(TorusMesh)\\b|\\b(TouchEventSequence)\\b|\\b(TouchInputHandler3D)\\b"
+    },
+    {
+      "Beschreibung": "----START T->Z -----QML Standart Objekte -------",
+      "name": "markup.bold.qml",
+      "match": "\\b(TouchPoint)\\b|\\b(Trace)\\b|\\b(TraceCanvas)\\b|\\b(TraceInputArea)\\b|\\b(TraceInputKey)\\b|\\b(TraceInputKeyPanel)\\b|\\b(TrailEmitter)\\b|\\b(Transaction)\\b|\\b(Transform)\\b|\\b(Transition)\\b|\\b(Translate)\\b|\\b(TreeView)\\b|\\b(TreeViewStyle)\\b|\\b(Tumbler)\\b|\\b(TumblerColumn)\\b|\\b(TumblerStyle)\\b|\\b(Turbulence)\\b|\\b(UniformAnimator)\\b|\\b(User)\\b|\\b(ValueAxis)\\b|\\b(ValueAxis3D)\\b|\\b(ValueAxis3DFormatter)\\b|\\b(VBarModelMapper)\\b|\\b(VBoxPlotModelMapper)\\b|\\b(VCandlestickModelMapper)\\b|\\b(Vector3dAnimation)\\b|\\b(VertexBlendAnimation)\\b|\\b(Video)\\b|\\b(VideoOutput)\\b|\\b(Viewport)\\b|\\b(ViewTransition)\\b|\\b(VirtualKeyboardSettings)\\b|\\b(VisualDataGroup)\\b|\\b(VisualDataModel)\\b|\\b(VisualItemModel)\\b|\\b(VPieModelMapper)\\b|\\b(VXYModelMapper)\\b|\\b(Wander)\\b|\\b(WaylandClient)\\b|\\b(WaylandCompositor)\\b|\\b(WaylandHardwareLayer)\\b|\\b(WaylandOutput)\\b|\\b(WaylandQuickItem)\\b|\\b(WaylandSeat)\\b|\\b(WaylandSurface)\\b|\\b(WaylandView)\\b|\\b(Waypoint)\\b|\\b(WebChannel)\\b|\\b(WebEngine)\\b|\\b(WebEngineCertificateError)\\b|\\b(WebEngineDownloadItem)\\b|\\b(WebEngineHistory)\\b|\\b(WebEngineHistoryListModel)\\b|\\b(WebEngineLoadRequest)\\b|\\b(WebEngineNavigationRequest)\\b|\\b(WebEngineNewViewRequest)\\b|\\b(WebEngineProfile)\\b|\\b(WebEngineScript)\\b|\\b(WebEngineSettings)\\b|\\b(WebEngineView)\\b|\\b(WebSocket)\\b|\\b(WebSocketServer)\\b|\\b(WebView)\\b|\\b(WebViewLoadRequest)\\b|\\b(WheelEvent)\\b|\\b(\\b(Window)\\b)\\b|\\b(WlShell)\\b|\\b(WlShellSurface)\\b|\\b(WorkerScript)\\b|\\b(XAnimator)\\b|\\b(XdgPopupV5)\\b|\\b(XdgPopupV6)\\b|\\b(XdgShellV5)\\b|\\b(XdgShellV6)\\b|\\b(XdgSurfaceV5)\\b|\\b(XdgSurfaceV6)\\b|\\b(XdgToplevelV6)\\b|\\b(XmlListModel)\\b|\\b(XmlRole)\\b|\\b(XYPoint)\\b|\\b(XYSeries)\\b|\\b(YAnimator)\\b|\\b(ZoomBlur)\\b"
+    },
+    {
+      "Beschreibung": "QML Basistypen",
+      "name": "storage.qml",
+      "match": "\\b(bool)\\b|\\b(double)\\b|\\b(int)\\b|\\b(real)\\b|\\b(string)\\b|\\b(variant)\\b|\\b(var)\\b"
+    },
+    {
+      "Beschreibung": "QML Basiswörter",
+      "name": "variable.language.qml",
+      "match": "\\b(color)\\b|\\b(coordinate)\\b|\\b(date)\\b|\\b(enumeration)\\b|\\b(font)\\b|\\b(geocircle)\\b|\\b(geopath)\\b|\\b(geopolygon)\\b|\\b(georectangle)\\b|\\b(geoshape)\\b|\\b(list)\\b|\\b(matrix4x4)\\b|\\b(mediaplayer-qml-dynamic)\\b|\\b(palette)\\b|\\b(point)\\b|\\b(quaternion)\\b|\\b(rect)\\b|\\b(size)\\b|\\b(url)\\b|\\b(vector2d)\\b|\\b(vector3d|vector4d)\\b"
+    },
+    {
+      "name": "markup.changed.qml",
+      "match": "\\d"
+    },
+    {
+      "name": "markup.changed.qml",
+      "match": "\\b(alias)\\b|\\b(signal)\\b"
+    },
+    {
+      "name": "comment.qml",
+      "match": "(//[\\t|\\s|\\w|\\d|\\.]*[\\r\\n|\\n|:])"
+    },
+    {
+      "Beschreibung": "QML Usertypen",
+      "name": "markup.changed.qml",
+      "match": "\\w+(?={|{ | {| { \\b)"
+    },
+    {
+      "Beschreibung": "QML Usertypen",
+      "name": "markup.changed.qml",
+      "match": "\\w+(?={|{ | {| { \\b)"
+    },
+    {
+      "begin": "(?<![\\w$])console(?![\\w$]|\\s*:)",
+      "beginCaptures": {
+        "0": {
+          "name": "entity.name.type.object.console.qml"
+        }
+      },
+      "end": "(?x)\n(?<=\\)) | (?=\n  (?! (\\s*//)|(\\s*/\\*)|(\\s*(\\.)\\s*\n    (assert|clear|debug|error|info|log|profile|profileEnd|time|timeEnd|warn)\n    \\s*\\(\n  )) \\s*\\S\n)",
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "begin": "\\s*(\\.)\\s*(\\w+)\\s*(?=\\()",
+          "beginCaptures": {
+            "1": {
+              "name": "meta.delimiter.method.period.qml"
+            },
+            "2": {
+              "name": "support.function.console.qml"
+            }
+          },
+          "end": "(?<=\\))",
+          "name": "meta.method-call.qml",
+          "patterns": [
+            {
+              "include": "#arguments"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "repository": {
+    "keywords": {
+      "Beschreibung": "QML und Javascript Schlüsselwörter",
+      "patterns": [
+        {
+          "name": "keyword.control.qml",
+          "match": "\\b(if)\\b|\\b(else)\\b|\\b(while)\\b|\\b(for)\\b|\\b(function)\\b|\\b(return)\\b|\\b(import)\\b|\\b(as)\\b|\\b(property)\\b"
+        }
+      ]
+    },
+    "comment": {
+      "patterns": [
+        {
+          "name": "comment.block.documentation.qml",
+          "begin": "/\\*\\*(?!/)",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.qml"
+            }
+          },
+          "end": "\\*/",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.qml"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#docblock"
+            }
+          ]
+        },
+        {
+          "name": "comment.block.qml",
+          "begin": "(/\\*)(?:\\s*((@)internal)(?=\\s|(\\*/)))?",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.comment.qml"
+            },
+            "2": {
+              "name": "storage.type.internaldeclaration.qml"
+            },
+            "3": {
+              "name": "punctuation.decorator.internaldeclaration.qml"
+            }
+          },
+          "end": "\\*/",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.qml"
+            }
+          }
+        },
+        {
+          "begin": "(^[ \\t]+)?((//)(?:\\s*((@)internal)(?=\\s|$))?)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.whitespace.comment.leading.qml"
+            },
+            "2": {
+              "name": "comment.line.double-slash.qml"
+            },
+            "3": {
+              "name": "punctuation.definition.comment.qml"
+            },
+            "4": {
+              "name": "storage.type.internaldeclaration.qml"
+            },
+            "5": {
+              "name": "punctuation.decorator.internaldeclaration.qml"
+            }
+          },
+          "end": "(?=$)",
+          "contentName": "comment.line.double-slash.qml"
+        }
+      ]
+    },
+    "single-line-comment-consuming-line-ending": {
+      "patterns": [
+        {
+          "begin": "(^[ \\t]+)?((//)(?:\\s*((@)internal)(?=\\s|$))?)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.whitespace.comment.leading.qml"
+            },
+            "2": {
+              "name": "comment.line.double-slash.qml"
+            },
+            "3": {
+              "name": "punctuation.definition.comment.qml"
+            },
+            "4": {
+              "name": "storage.type.internaldeclaration.qml"
+            },
+            "5": {
+              "name": "punctuation.decorator.internaldeclaration.qml"
+            }
+          },
+          "end": "(?=^)",
+          "contentName": "comment.line.double-slash.qml"
+        }
+      ]
+    },
+    "function_innards": {
+      "patterns": [
+        {
+          "match": "\\b(function)\\b(?:\\s*(\\*))?",
+          "captures": {
+            "1": {
+              "name": "storage.type.function.qml"
+            },
+            "2": {
+              "name": "storage.modifier.generator.qml"
+            }
+          }
+        },
+        {
+          "match": "[a-zA-Z_$][\\w$]*(?=\\s*\\()",
+          "name": "entity.name.function.qml"
+        },
+        {
+          "include": "#function_params"
+        },
+        {
+          "include": "#comments"
+        }
+      ]
+    },
+    "function_params": {
+      "patterns": [
+        {
+          "begin": "\\(",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.parameters.begin.bracket.round.qml"
+            }
+          },
+          "end": "\\)",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.parameters.end.bracket.round.qml"
+            }
+          },
+          "name": "meta.parameters.qml",
+          "patterns": [
+            {
+              "match": "(\\.\\.\\.)([a-zA-Z_$][\\w$]*)",
+              "captures": {
+                "1": {
+                  "name": "keyword.operator.spread.qml"
+                },
+                "2": {
+                  "name": "variable.parameter.rest.function.qml"
+                }
+              }
+            },
+            {
+              "include": "$self"
+            },
+            {
+              "match": "[a-zA-Z_$][\\w$]*",
+              "name": "variable.parameter.function.qml"
+            }
+          ]
+        }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.comment.begin.qml"
+            },
+            "2": {
+              "name": "punctuation.definition.comment.end.qml"
+            }
+          },
+          "match": "(/\\*)(\\*/)",
+          "name": "comment.block.empty.qml"
+        },
+        {
+          "begin": "/\\*\\*",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.begin.qml"
+            }
+          },
+          "end": "\\*/",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.end.qml"
+            }
+          },
+          "name": "comment.block.documentation.qml",
+          "patterns": [
+            {
+              "include": "source.jsdoc"
+            }
+          ]
+        },
+        {
+          "begin": "/\\*",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.begin.qml"
+            }
+          },
+          "end": "\\*/",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.end.qml"
+            }
+          },
+          "name": "comment.block.qml"
+        },
+        {
+          "begin": "//",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.qml"
+            }
+          },
+          "end": "$",
+          "name": "comment.line.double-slash.qml"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "begin": "'",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin.qml"
+            }
+          },
+          "end": "'",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end.qml"
+            }
+          },
+          "name": "string.quoted.single.qml",
+          "patterns": [
+            {
+              "include": "#string_escapes"
+            },
+            {
+              "match": "[^']*[^\\n\\r'\\\\]$",
+              "name": "invalid.illegal.string.qml"
+            }
+          ]
+        },
+        {
+          "begin": "\"",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin.qml"
+            }
+          },
+          "end": "\"",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end.qml"
+            }
+          },
+          "name": "string.quoted.double.qml",
+          "patterns": [
+            {
+              "include": "#string_escapes"
+            },
+            {
+              "match": "[^\"]*[^\\n\\r\"\\\\]$",
+              "name": "invalid.illegal.string.qml"
+            }
+          ]
+        },
+        {
+          "begin": "`",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin.qml"
+            }
+          },
+          "end": "`",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end.qml"
+            }
+          },
+          "name": "string.quoted.template.qml",
+          "patterns": [
+            {
+              "include": "#string_escapes"
+            },
+            {
+              "include": "#interpolated_js"
+            }
+          ]
+        }
+      ]
+    },
+    "string_escapes": {
+      "patterns": [
+        {
+          "match": "\\\\u(?![A-Fa-f0-9]{4}|{[A-Fa-f0-9]+})[^'\"]*",
+          "name": "invalid.illegal.unicode-escape.qml"
+        },
+        {
+          "match": "\\\\u(?:[A-Fa-f0-9]{4}|({)([A-Fa-f0-9]+)(}))",
+          "name": "constant.character.escape.qml",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.unicode-escape.begin.bracket.curly.qml"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "match": "[A-Fa-f\\d]{7,}|(?!10)[A-Fa-f\\d]{6}",
+                  "name": "invalid.illegal.unicode-escape.qml"
+                }
+              ]
+            },
+            "3": {
+              "name": "punctuation.definition.unicode-escape.end.bracket.curly.qml"
+            }
+          }
+        },
+        {
+          "match": "\\\\(x[0-9A-Fa-f]{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)",
+          "name": "constant.character.escape.qml"
+        }
+      ]
+    },
+    "interpolated_js": {
+      "patterns": [
+        {
+          "begin": "\\${",
+          "captures": {
+            "0": {
+              "name": "punctuation.section.embedded.qml"
+            }
+          },
+          "end": "}",
+          "name": "source.js.embedded.source",
+          "patterns": [
+            {
+              "begin": "{",
+              "beginCaptures": {
+                "0": {
+                  "name": "meta.brace.curly.qml"
+                }
+              },
+              "end": "}",
+              "endCaptures": {
+                "0": {
+                  "name": "meta.brace.curly.qml"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "$self"
+                }
+              ]
+            },
+            {
+              "include": "$self"
+            }
+          ]
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "match": "%=|\\+=|-=|\\*=|(?<!\\()/=",
+          "name": "keyword.operator.assignment.compound.qml"
+        },
+        {
+          "match": "&=|\\^=|<<=|>>=|>>>=|\\|=",
+          "name": "keyword.operator.assignment.compound.bitwise.qml"
+        },
+        {
+          "match": "<<|>>>|>>",
+          "name": "keyword.operator.bitwise.shift.qml"
+        },
+        {
+          "match": "!==|!=|<=|>=|===|==|<|>",
+          "name": "keyword.operator.comparison.qml"
+        },
+        {
+          "match": "&&|!!|!|\\|\\|",
+          "name": "keyword.operator.logical.qml"
+        },
+        {
+          "match": "&|\\||\\^|~",
+          "name": "keyword.operator.bitwise.qml"
+        },
+        {
+          "match": "=|:",
+          "name": "keyword.operator.assignment.qml"
+        },
+        {
+          "match": "--",
+          "name": "keyword.operator.decrement.qml"
+        },
+        {
+          "match": "\\+\\+",
+          "name": "keyword.operator.increment.qml"
+        },
+        {
+          "match": "%|\\*|/|-|\\+",
+          "name": "keyword.operator.qml"
+        }
+      ]
+    }
+  },
+  "scopeName": "source.qml"
 }
