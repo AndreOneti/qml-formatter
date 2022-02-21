@@ -3,7 +3,16 @@
   "name": "QML",
   "patterns": [
     {
+      "include": "#directives"
+    },
+    {
+      "include": "#punctuation-semicolon"
+    },
+    {
       "include": "#strings"
+    },
+    {
+      "include": "#comment"
     },
     {
       "include": "#keywords"
@@ -12,14 +21,11 @@
       "include": "#operators"
     },
     {
-      "include": "#comment"
-    },
-    {
       "include": "#function_innards"
     },
     {
-      "name": "comment.line.qml",
-      "match": "\\b(true)\\b|\\b(false)\\b"
+      "match": "(?<!\\.)\\b(true|false)(?!\\s*:)\\b",
+      "name": "constant.language.boolean.$1.qml"
     },
     {
       "Beschreibung": "----START A->P -----QML Standart Objekte -------",
@@ -39,7 +45,7 @@
     {
       "Beschreibung": "QML Basistypen",
       "name": "storage.qml",
-      "match": "\\b(bool)\\b|\\b(double)\\b|\\b(int)\\b|\\b(real)\\b|\\b(string)\\b|\\b(variant)\\b|\\b(var)\\b"
+      "match": "\\b(bool)\\b|\\b(double)\\b|\\b(int)\\b|\\b(real)\\b|\\b(string)\\b|\\b(variant)\\b|\\b(var)\\b|\\b(const)\\b"
     },
     {
       "Beschreibung": "QML Basiswörter",
@@ -78,7 +84,7 @@
       "end": "(?x)\n(?<=\\)) | (?=\n  (?! (\\s*//)|(\\s*/\\*)|(\\s*(\\.)\\s*\n    (assert|clear|debug|error|info|log|profile|profileEnd|time|timeEnd|warn)\n    \\s*\\(\n  )) \\s*\\S\n)",
       "patterns": [
         {
-          "include": "#comments"
+          "include": "#comment"
         },
         {
           "begin": "\\s*(\\.)\\s*(\\w+)\\s*(?=\\()",
@@ -99,6 +105,15 @@
           ]
         }
       ]
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#objects"
+    },
+    {
+      "include": "#switch_statement"
     }
   ],
   "repository": {
@@ -107,7 +122,7 @@
       "patterns": [
         {
           "name": "keyword.control.qml",
-          "match": "\\b(if)\\b|\\b(else)\\b|\\b(while)\\b|\\b(for)\\b|\\b(function)\\b|\\b(return)\\b|\\b(import)\\b|\\b(as)\\b|\\b(property)\\b"
+          "match": "\\b(if)\\b|\\b(else)\\b|\\b(while)\\b|\\b(for)\\b|\\b(function)\\b|\\b(return)\\b|\\b(import)\\b|\\b(as)\\b|\\b(property)\\b|\\b(switch)\\b|\\b(case)\\b|\\b(break)\\b|\\b(default)\\b"
         }
       ]
     },
@@ -179,30 +194,26 @@
       ]
     },
     "single-line-comment-consuming-line-ending": {
-      "patterns": [
-        {
-          "begin": "(^[ \\t]+)?((//)(?:\\s*((@)internal)(?=\\s|$))?)",
-          "beginCaptures": {
-            "1": {
-              "name": "punctuation.whitespace.comment.leading.qml"
-            },
-            "2": {
-              "name": "comment.line.double-slash.qml"
-            },
-            "3": {
-              "name": "punctuation.definition.comment.qml"
-            },
-            "4": {
-              "name": "storage.type.internaldeclaration.qml"
-            },
-            "5": {
-              "name": "punctuation.decorator.internaldeclaration.qml"
-            }
-          },
-          "end": "(?=^)",
-          "contentName": "comment.line.double-slash.qml"
+      "begin": "(^[ \\t]+)?((//)(?:\\s*((@)internal)(?=\\s|$))?)",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.whitespace.comment.leading.qml"
+        },
+        "2": {
+          "name": "comment.line.double-slash.qml"
+        },
+        "3": {
+          "name": "punctuation.definition.comment.qml"
+        },
+        "4": {
+          "name": "storage.type.internaldeclaration.qml"
+        },
+        "5": {
+          "name": "punctuation.decorator.internaldeclaration.qml"
         }
-      ]
+      },
+      "end": "(?=^)",
+      "contentName": "comment.line.double-slash.qml"
     },
     "function_innards": {
       "patterns": [
@@ -225,7 +236,7 @@
           "include": "#function_params"
         },
         {
-          "include": "#comments"
+          "include": "#comment"
         }
       ]
     },
@@ -265,67 +276,6 @@
               "name": "variable.parameter.function.qml"
             }
           ]
-        }
-      ]
-    },
-    "comments": {
-      "patterns": [
-        {
-          "captures": {
-            "1": {
-              "name": "punctuation.definition.comment.begin.qml"
-            },
-            "2": {
-              "name": "punctuation.definition.comment.end.qml"
-            }
-          },
-          "match": "(/\\*)(\\*/)",
-          "name": "comment.block.empty.qml"
-        },
-        {
-          "begin": "/\\*\\*",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.definition.comment.begin.qml"
-            }
-          },
-          "end": "\\*/",
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.definition.comment.end.qml"
-            }
-          },
-          "name": "comment.block.documentation.qml",
-          "patterns": [
-            {
-              "include": "source.jsdoc"
-            }
-          ]
-        },
-        {
-          "begin": "/\\*",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.definition.comment.begin.qml"
-            }
-          },
-          "end": "\\*/",
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.definition.comment.end.qml"
-            }
-          },
-          "name": "comment.block.qml"
-        },
-        {
-          "begin": "//",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.definition.comment.qml"
-            }
-          },
-          "end": "$",
-          "name": "comment.line.double-slash.qml"
         }
       ]
     },
@@ -517,6 +467,683 @@
           "name": "keyword.operator.qml"
         }
       ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "match": "\\b(?<!\\$)0(x|X)[0-9a-fA-F]+\\b(?!\\$)",
+          "name": "constant.numeric.hex.qml"
+        },
+        {
+          "match": "\\b(?<!\\$)0(b|B)[01]+\\b(?!\\$)",
+          "name": "constant.numeric.binary.qml"
+        },
+        {
+          "match": "\\b(?<!\\$)0(o|O)?[0-7]+\\b(?!\\$)",
+          "name": "constant.numeric.octal.qml"
+        },
+        {
+          "match": "(?x)\n(?<!\\$)(?:\n  (?:\\b[0-9]+(\\.)[0-9]+[eE][+-]?[0-9]+\\b)| # 1.1E+3\n  (?:\\b[0-9]+(\\.)[eE][+-]?[0-9]+\\b)|       # 1.E+3\n  (?:\\B(\\.)[0-9]+[eE][+-]?[0-9]+\\b)|       # .1E+3\n  (?:\\b[0-9]+[eE][+-]?[0-9]+\\b)|            # 1E+3\n  (?:\\b[0-9]+(\\.)[0-9]+\\b)|                # 1.1\n  (?:\\b[0-9]+(\\.)\\B)|                      # 1.\n  (?:\\B(\\.)[0-9]+\\b)|                      # .1\n  (?:\\b[0-9]+\\b(?!\\.))                     # 1\n)(?!\\$)",
+          "captures": {
+            "0": {
+              "name": "constant.numeric.decimal.qml"
+            },
+            "1": {
+              "name": "meta.delimiter.decimal.period.qml"
+            },
+            "2": {
+              "name": "meta.delimiter.decimal.period.qml"
+            },
+            "3": {
+              "name": "meta.delimiter.decimal.period.qml"
+            },
+            "4": {
+              "name": "meta.delimiter.decimal.period.qml"
+            },
+            "5": {
+              "name": "meta.delimiter.decimal.period.qml"
+            },
+            "6": {
+              "name": "meta.delimiter.decimal.period.qml"
+            }
+          }
+        }
+      ]
+    },
+    "arguments": {
+      "patterns": [
+        {
+          "begin": "\\(",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.arguments.begin.bracket.round.qml"
+            }
+          },
+          "end": "\\)",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.arguments.end.bracket.round.qml"
+            }
+          },
+          "name": "meta.arguments.qml",
+          "patterns": [
+            {
+              "include": "$self"
+            }
+          ]
+        }
+      ]
+    },
+    "objects": {
+      "patterns": [
+        {
+          "match": "[A-Z][A-Z0-9_$]*(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)",
+          "name": "constant.other.object.qml"
+        },
+        {
+          "match": "[a-zA-Z_$][\\w$]*(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)",
+          "name": "variable.other.object.qml"
+        }
+      ]
+    },
+    "switch_statement": {
+      "patterns": [
+        {
+          "begin": "\\bswitch\\b",
+          "beginCaptures": {
+            "0": {
+              "name": "keyword.control.switch.qml"
+            }
+          },
+          "end": "}",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.section.switch-block.end.bracket.curly.qml"
+            }
+          },
+          "name": "meta.switch-statement.qml",
+          "patterns": [
+            {
+              "begin": "\\(",
+              "beginCaptures": {
+                "0": {
+                  "name": "punctuation.definition.switch-expression.begin.bracket.round.qml"
+                }
+              },
+              "end": "\\)",
+              "endCaptures": {
+                "0": {
+                  "name": "punctuation.definition.switch-expression.end.bracket.round.qml"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "$self"
+                }
+              ]
+            },
+            {
+              "begin": "{",
+              "beginCaptures": {
+                "0": {
+                  "name": "punctuation.definition.section.switch-block.begin.bracket.curly.qml"
+                }
+              },
+              "end": "(?=})",
+              "patterns": [
+                {
+                  "begin": "\\bcase\\b",
+                  "beginCaptures": {
+                    "0": {
+                      "name": "keyword.control.case.qml"
+                    }
+                  },
+                  "end": ":",
+                  "endCaptures": {
+                    "0": {
+                      "name": "punctuation.definition.section.case-statement.qml"
+                    }
+                  },
+                  "patterns": [
+                    {
+                      "include": "#prevent_object_keys_matching"
+                    },
+                    {
+                      "include": "$self"
+                    }
+                  ]
+                },
+                {
+                  "match": "(?:^\\s*)?\\b(default)\\b\\s*(:)",
+                  "captures": {
+                    "1": {
+                      "name": "keyword.control.default.qml"
+                    },
+                    "2": {
+                      "name": "punctuation.definition.section.case-statement.qml"
+                    }
+                  }
+                },
+                {
+                  "include": "$self"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "docblock": {
+      "patterns": [
+        {
+          "match": "(?x)\n((@)(?:access|api))\n\\s+\n(private|protected|public)\n\\b",
+          "captures": {
+            "1": {
+              "name": "storage.type.class.jsdoc"
+            },
+            "2": {
+              "name": "punctuation.definition.block.tag.jsdoc"
+            },
+            "3": {
+              "name": "constant.language.access-type.jsdoc"
+            }
+          }
+        },
+        {
+          "match": "(?x)\n((@)author)\n\\s+\n(\n  [^@\\s<>*/]\n  (?:[^@<>*/]|\\*[^/])*\n)\n(?:\n  \\s*\n  (<)\n  ([^>\\s]+)\n  (>)\n)?",
+          "captures": {
+            "1": {
+              "name": "storage.type.class.jsdoc"
+            },
+            "2": {
+              "name": "punctuation.definition.block.tag.jsdoc"
+            },
+            "3": {
+              "name": "entity.name.type.instance.jsdoc"
+            },
+            "4": {
+              "name": "punctuation.definition.bracket.angle.begin.jsdoc"
+            },
+            "5": {
+              "name": "constant.other.email.link.underline.jsdoc"
+            },
+            "6": {
+              "name": "punctuation.definition.bracket.angle.end.jsdoc"
+            }
+          }
+        },
+        {
+          "match": "(?x)\n((@)borrows) \\s+\n((?:[^@\\s*/]|\\*[^/])+)    # <that namepath>\n\\s+ (as) \\s+              # as\n((?:[^@\\s*/]|\\*[^/])+)    # <this namepath>",
+          "captures": {
+            "1": {
+              "name": "storage.type.class.jsdoc"
+            },
+            "2": {
+              "name": "punctuation.definition.block.tag.jsdoc"
+            },
+            "3": {
+              "name": "entity.name.type.instance.jsdoc"
+            },
+            "4": {
+              "name": "keyword.operator.control.jsdoc"
+            },
+            "5": {
+              "name": "entity.name.type.instance.jsdoc"
+            }
+          }
+        },
+        {
+          "name": "meta.example.jsdoc",
+          "begin": "((@)example)\\s+",
+          "end": "(?=@|\\*/)",
+          "beginCaptures": {
+            "1": {
+              "name": "storage.type.class.jsdoc"
+            },
+            "2": {
+              "name": "punctuation.definition.block.tag.jsdoc"
+            }
+          },
+          "patterns": [
+            {
+              "match": "^\\s\\*\\s+"
+            },
+            {
+              "contentName": "constant.other.description.jsdoc",
+              "begin": "\\G(<)caption(>)",
+              "beginCaptures": {
+                "0": {
+                  "name": "entity.name.tag.inline.jsdoc"
+                },
+                "1": {
+                  "name": "punctuation.definition.bracket.angle.begin.jsdoc"
+                },
+                "2": {
+                  "name": "punctuation.definition.bracket.angle.end.jsdoc"
+                }
+              },
+              "end": "(</)caption(>)|(?=\\*/)",
+              "endCaptures": {
+                "0": {
+                  "name": "entity.name.tag.inline.jsdoc"
+                },
+                "1": {
+                  "name": "punctuation.definition.bracket.angle.begin.jsdoc"
+                },
+                "2": {
+                  "name": "punctuation.definition.bracket.angle.end.jsdoc"
+                }
+              }
+            },
+            {
+              "match": "[^\\s@*](?:[^*]|\\*[^/])*",
+              "captures": {
+                "0": {
+                  "name": "source.embedded.qml"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "match": "(?x) ((@)kind) \\s+ (class|constant|event|external|file|function|member|mixin|module|namespace|typedef) \\b",
+          "captures": {
+            "1": {
+              "name": "storage.type.class.jsdoc"
+            },
+            "2": {
+              "name": "punctuation.definition.block.tag.jsdoc"
+            },
+            "3": {
+              "name": "constant.language.symbol-type.jsdoc"
+            }
+          }
+        },
+        {
+          "match": "(?x)\n((@)see)\n\\s+\n(?:\n  # URL\n  (\n    (?=https?://)\n    (?:[^\\s*]|\\*[^/])+\n  )\n  |\n  # JSDoc namepath\n  (\n    (?!\n      # Avoid matching bare URIs (also acceptable as links)\n      https?://\n      |\n      # Avoid matching {@inline tags}; we match those below\n      (?:\\[[^\\[\\]]*\\])? # Possible description [preceding]{@tag}\n      {@(?:link|linkcode|linkplain|tutorial)\\b\n    )\n    # Matched namepath\n    (?:[^@\\s*/]|\\*[^/])+\n  )\n)",
+          "captures": {
+            "1": {
+              "name": "storage.type.class.jsdoc"
+            },
+            "2": {
+              "name": "punctuation.definition.block.tag.jsdoc"
+            },
+            "3": {
+              "name": "variable.other.link.underline.jsdoc"
+            },
+            "4": {
+              "name": "entity.name.type.instance.jsdoc"
+            }
+          }
+        },
+        {
+          "match": "(?x)\n((@)template)\n\\s+\n# One or more valid identifiers\n(\n  [A-Za-z_$]         # First character: non-numeric word character\n  [\\w$.\\[\\]]*        # Rest of identifier\n  (?:                # Possible list of additional identifiers\n    \\s* , \\s*\n    [A-Za-z_$]\n    [\\w$.\\[\\]]*\n  )*\n)",
+          "captures": {
+            "1": {
+              "name": "storage.type.class.jsdoc"
+            },
+            "2": {
+              "name": "punctuation.definition.block.tag.jsdoc"
+            },
+            "3": {
+              "name": "variable.other.jsdoc"
+            }
+          }
+        },
+        {
+          "begin": "(?x)((@)template)\\s+(?={)",
+          "beginCaptures": {
+            "1": {
+              "name": "storage.type.class.jsdoc"
+            },
+            "2": {
+              "name": "punctuation.definition.block.tag.jsdoc"
+            }
+          },
+          "end": "(?=\\s|\\*/|[^{}\\[\\]A-Za-z_$])",
+          "patterns": [
+            {
+              "include": "#jsdoctype"
+            },
+            {
+              "name": "variable.other.jsdoc",
+              "match": "([A-Za-z_$][\\w$.\\[\\]]*)"
+            }
+          ]
+        },
+        {
+          "match": "(?x)\n(\n  (@)\n  (?:arg|argument|const|constant|member|namespace|param|var)\n)\n\\s+\n(\n  [A-Za-z_$]\n  [\\w$.\\[\\]]*\n)",
+          "captures": {
+            "1": {
+              "name": "storage.type.class.jsdoc"
+            },
+            "2": {
+              "name": "punctuation.definition.block.tag.jsdoc"
+            },
+            "3": {
+              "name": "variable.other.jsdoc"
+            }
+          }
+        },
+        {
+          "begin": "((@)typedef)\\s+(?={)",
+          "beginCaptures": {
+            "1": {
+              "name": "storage.type.class.jsdoc"
+            },
+            "2": {
+              "name": "punctuation.definition.block.tag.jsdoc"
+            }
+          },
+          "end": "(?=\\s|\\*/|[^{}\\[\\]A-Za-z_$])",
+          "patterns": [
+            {
+              "include": "#jsdoctype"
+            },
+            {
+              "name": "entity.name.type.instance.jsdoc",
+              "match": "(?:[^@\\s*/]|\\*[^/])+"
+            }
+          ]
+        },
+        {
+          "begin": "((@)(?:arg|argument|const|constant|member|namespace|param|prop|property|var))\\s+(?={)",
+          "beginCaptures": {
+            "1": {
+              "name": "storage.type.class.jsdoc"
+            },
+            "2": {
+              "name": "punctuation.definition.block.tag.jsdoc"
+            }
+          },
+          "end": "(?=\\s|\\*/|[^{}\\[\\]A-Za-z_$])",
+          "patterns": [
+            {
+              "include": "#jsdoctype"
+            },
+            {
+              "name": "variable.other.jsdoc",
+              "match": "([A-Za-z_$][\\w$.\\[\\]]*)"
+            },
+            {
+              "name": "variable.other.jsdoc",
+              "match": "(?x)\n(\\[)\\s*\n[\\w$]+\n(?:\n  (?:\\[\\])?                                        # Foo[ ].bar properties within an array\n  \\.                                                # Foo.Bar namespaced parameter\n  [\\w$]+\n)*\n(?:\n  \\s*\n  (=)                                                # [foo=bar] Default parameter value\n  \\s*\n  (\n    # The inner regexes are to stop the match early at */ and to not stop at escaped quotes\n    (?>\n      \"(?:(?:\\*(?!/))|(?:\\\\(?!\"))|[^*\\\\])*?\" |                      # [foo=\"bar\"] Double-quoted\n      '(?:(?:\\*(?!/))|(?:\\\\(?!'))|[^*\\\\])*?' |                      # [foo='bar'] Single-quoted\n      \\[ (?:(?:\\*(?!/))|[^*])*? \\] |                                # [foo=[1,2]] Array literal\n      (?:(?:\\*(?!/))|\\s(?!\\s*\\])|\\[.*?(?:\\]|(?=\\*/))|[^*\\s\\[\\]])*   # Everything else\n    )*\n  )\n)?\n\\s*(?:(\\])((?:[^*\\s]|\\*[^\\s/])+)?|(?=\\*/))",
+              "captures": {
+                "1": {
+                  "name": "punctuation.definition.optional-value.begin.bracket.square.jsdoc"
+                },
+                "2": {
+                  "name": "keyword.operator.assignment.jsdoc"
+                },
+                "3": {
+                  "name": "source.embedded.qml"
+                },
+                "4": {
+                  "name": "punctuation.definition.optional-value.end.bracket.square.jsdoc"
+                },
+                "5": {
+                  "name": "invalid.illegal.syntax.jsdoc"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "begin": "(?x)\n(\n  (@)\n  (?:define|enum|exception|export|extends|lends|implements|modifies\n  |namespace|private|protected|returns?|suppress|this|throws|type\n  |yields?)\n)\n\\s+(?={)",
+          "beginCaptures": {
+            "1": {
+              "name": "storage.type.class.jsdoc"
+            },
+            "2": {
+              "name": "punctuation.definition.block.tag.jsdoc"
+            }
+          },
+          "end": "(?=\\s|\\*/|[^{}\\[\\]A-Za-z_$])",
+          "patterns": [
+            {
+              "include": "#jsdoctype"
+            }
+          ]
+        },
+        {
+          "match": "(?x)\n(\n  (@)\n  (?:alias|augments|callback|constructs|emits|event|fires|exports?\n  |extends|external|function|func|host|lends|listens|interface|memberof!?\n  |method|module|mixes|mixin|name|requires|see|this|typedef|uses)\n)\n\\s+\n(\n  (?:\n    [^{}@\\s*] | \\*[^/]\n  )+\n)",
+          "captures": {
+            "1": {
+              "name": "storage.type.class.jsdoc"
+            },
+            "2": {
+              "name": "punctuation.definition.block.tag.jsdoc"
+            },
+            "3": {
+              "name": "entity.name.type.instance.jsdoc"
+            }
+          }
+        },
+        {
+          "contentName": "variable.other.jsdoc",
+          "begin": "((@)(?:default(?:value)?|license|version))\\s+(([''\"]))",
+          "beginCaptures": {
+            "1": {
+              "name": "storage.type.class.jsdoc"
+            },
+            "2": {
+              "name": "punctuation.definition.block.tag.jsdoc"
+            },
+            "3": {
+              "name": "variable.other.jsdoc"
+            },
+            "4": {
+              "name": "punctuation.definition.string.begin.jsdoc"
+            }
+          },
+          "end": "(\\3)|(?=$|\\*/)",
+          "endCaptures": {
+            "0": {
+              "name": "variable.other.jsdoc"
+            },
+            "1": {
+              "name": "punctuation.definition.string.end.jsdoc"
+            }
+          }
+        },
+        {
+          "match": "((@)(?:default(?:value)?|license|tutorial|variation|version))\\s+([^\\s*]+)",
+          "captures": {
+            "1": {
+              "name": "storage.type.class.jsdoc"
+            },
+            "2": {
+              "name": "punctuation.definition.block.tag.jsdoc"
+            },
+            "3": {
+              "name": "variable.other.jsdoc"
+            }
+          }
+        },
+        {
+          "name": "storage.type.class.jsdoc",
+          "match": "(?x) (@) (?:abstract|access|alias|api|arg|argument|async|attribute|augments|author|beta|borrows|bubbles |callback|chainable|class|classdesc|code|config|const|constant|constructor|constructs|copyright |default|defaultvalue|define|deprecated|desc|description|dict|emits|enum|event|example|exception |exports?|extends|extension(?:_?for)?|external|externs|file|fileoverview|final|fires|for|func |function|generator|global|hideconstructor|host|ignore|implements|implicitCast|inherit[Dd]oc |inner|instance|interface|internal|kind|lends|license|listens|main|member|memberof!?|method |mixes|mixins?|modifies|module|name|namespace|noalias|nocollapse|nocompile|nosideeffects |override|overview|package|param|polymer(?:Behavior)?|preserve|private|prop|property|protected |public|read[Oo]nly|record|require[ds]|returns?|see|since|static|struct|submodule|summary |suppress|template|this|throws|todo|tutorial|type|typedef|unrestricted|uses|var|variation |version|virtual|writeOnce|yields?) \\b",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.block.tag.jsdoc"
+            }
+          }
+        },
+        {
+          "include": "#inline-tags"
+        },
+        {
+          "match": "((@)(?:[_$[:alpha:]][_$[:alnum:]]*))(?=\\s+)",
+          "captures": {
+            "1": {
+              "name": "storage.type.class.jsdoc"
+            },
+            "2": {
+              "name": "punctuation.definition.block.tag.jsdoc"
+            }
+          }
+        }
+      ]
+    },
+    "brackets": {
+      "patterns": [
+        {
+          "begin": "{",
+          "end": "}|(?=\\*/)",
+          "patterns": [
+            {
+              "include": "#brackets"
+            }
+          ]
+        },
+        {
+          "begin": "\\[",
+          "end": "\\]|(?=\\*/)",
+          "patterns": [
+            {
+              "include": "#brackets"
+            }
+          ]
+        }
+      ]
+    },
+    "inline-tags": {
+      "patterns": [
+        {
+          "name": "constant.other.description.jsdoc",
+          "match": "(\\[)[^\\]]+(\\])(?={@(?:link|linkcode|linkplain|tutorial))",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.bracket.square.begin.jsdoc"
+            },
+            "2": {
+              "name": "punctuation.definition.bracket.square.end.jsdoc"
+            }
+          }
+        },
+        {
+          "name": "entity.name.type.instance.jsdoc",
+          "begin": "({)((@)(?:link(?:code|plain)?|tutorial))\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.bracket.curly.begin.jsdoc"
+            },
+            "2": {
+              "name": "storage.type.class.jsdoc"
+            },
+            "3": {
+              "name": "punctuation.definition.inline.tag.jsdoc"
+            }
+          },
+          "end": "}|(?=\\*/)",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.bracket.curly.end.jsdoc"
+            }
+          },
+          "patterns": [
+            {
+              "match": "\\G((?=https?://)(?:[^|}\\s*]|\\*[/])+)(\\|)?",
+              "captures": {
+                "1": {
+                  "name": "variable.other.link.underline.jsdoc"
+                },
+                "2": {
+                  "name": "punctuation.separator.pipe.jsdoc"
+                }
+              }
+            },
+            {
+              "match": "\\G((?:[^{}@\\s|*]|\\*[^/])+)(\\|)?",
+              "captures": {
+                "1": {
+                  "name": "variable.other.description.jsdoc"
+                },
+                "2": {
+                  "name": "punctuation.separator.pipe.jsdoc"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "jsdoctype": {
+      "patterns": [
+        {
+          "contentName": "entity.name.type.instance.jsdoc",
+          "begin": "\\G({)",
+          "beginCaptures": {
+            "0": {
+              "name": "entity.name.type.instance.jsdoc"
+            },
+            "1": {
+              "name": "punctuation.definition.bracket.curly.begin.jsdoc"
+            }
+          },
+          "end": "((}))\\s*|(?=\\*/)",
+          "endCaptures": {
+            "1": {
+              "name": "entity.name.type.instance.jsdoc"
+            },
+            "2": {
+              "name": "punctuation.definition.bracket.curly.end.jsdoc"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#brackets"
+            }
+          ]
+        }
+      ]
+    },
+    "directives": {
+      "name": "comment.line.triple-slash.directive.qml",
+      "begin": "^(///)\\s*(?=<(reference|amd-dependency|amd-module)(\\s+(path|types|no-default-lib|lib|name)\\s*=\\s*((\\'([^\\'\\\\]|\\\\.)*\\')|(\\\"([^\\\"\\\\]|\\\\.)*\\\")|(\\`([^\\`\\\\]|\\\\.)*\\`)))+\\s*/>\\s*$)",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.comment.qml"
+        }
+      },
+      "end": "(?=$)",
+      "patterns": [
+        {
+          "name": "meta.tag.qml",
+          "begin": "(<)(reference|amd-dependency|amd-module)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.directive.qml"
+            },
+            "2": {
+              "name": "entity.name.tag.directive.qml"
+            }
+          },
+          "end": "/>",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.tag.directive.qml"
+            }
+          },
+          "patterns": [
+            {
+              "name": "entity.other.attribute-name.directive.qml",
+              "match": "path|types|no-default-lib|lib|name"
+            },
+            {
+              "name": "keyword.operator.assignment.qml",
+              "match": "="
+            },
+            {
+              "include": "#string"
+            }
+          ]
+        }
+      ]
+    },
+    "punctuation-semicolon": {
+      "name": "punctuation.terminator.statement.qml",
+      "match": ";"
     }
   },
   "scopeName": "source.qml"
