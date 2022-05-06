@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Regex = void 0;
 const stringFormatter_1 = require("./stringFormatter");
 const IsImport = /^\s{0,}import/;
-const IsBegingComponent = /^\s{0,}[A-Za-z0-9.]{1,}\s{0,}:{0,1}\s{0,}(\{|\[)/;
+const IsBegingComponent = /^\s{0,}[A-Za-z0-9.]{1,}\s{0,}:{0,1}\s{0,}[A-Za-z0-9.]{0,}\s{0,}(\{|\[)/;
 const IsEndComponent = /^\s{0,}\}\s{0,},{0,1}\s{0,}|^\s{0,}\]\s{0,}$/;
 const IsBrackts = /^\s{0,}\{/;
 const IsLogicalOperator = /^\s{0,}&&/;
