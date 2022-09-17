@@ -46,6 +46,8 @@ function serverConnect(context: ExtensionContext) {
     ],
     synchronize: {
       fileEvents: [
+        workspace.createFileSystemWatcher("**/*.js"),
+        workspace.createFileSystemWatcher("**/*.qml"),
         workspace.createFileSystemWatcher("**/*.qrc"),
         workspace.createFileSystemWatcher("**/main.cpp"),
       ],

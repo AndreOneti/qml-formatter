@@ -1,2 +1,1 @@
-export * from './stringFormatter';
-export * from './regex';
+export * from "./stringFormatter";

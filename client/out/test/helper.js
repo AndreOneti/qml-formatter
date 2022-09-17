@@ -12,7 +12,7 @@ const path = require("path");
  */
 async function activate(docUri) {
     // The extensionId is `publisher.name` from package.json
-    const ext = vscode.extensions.getExtension('vscode-samples.lsp-sample');
+    const ext = vscode.extensions.getExtension('AndreOneti.qml-formatter');
     await ext.activate();
     try {
         exports.doc = await vscode.workspace.openTextDocument(docUri);

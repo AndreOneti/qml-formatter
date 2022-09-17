@@ -35,6 +35,10 @@ async function generateQmlFile(uri) {
             return;
         }
     }
+    async function openFile() {
+        const doc = await vscode_1.workspace.openTextDocument(qmlUri);
+        await vscode_1.window.showTextDocument(doc);
+    }
     async function updateQrcData(qmlUri) {
         const qrc = (await vscode_1.workspace.findFiles("**/*.qrc", "", 1))[0];
         const qrcUri = vscode_1.Uri.parse(qrc.path);
@@ -75,9 +79,11 @@ async function generateQmlFile(uri) {
             const templateBuffer = Buffer.from(DefaultQmlTemplate_1.DefaultQmlTemplate);
             vscode_1.workspace.fs.writeFile(qmlUri, templateBuffer);
             await updateQrcData(qmlUri);
+            await openFile();
         }
         catch (error) {
             vscode_1.window.showErrorMessage(error.message);
+            await vscode_1.workspace.fs.delete(qmlUri);
         }
         return;
     }

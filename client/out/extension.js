@@ -38,6 +38,7 @@ function serverConnect(context) {
         ],
         synchronize: {
             fileEvents: [
+                vscode_1.workspace.createFileSystemWatcher("**/*.qml"),
                 vscode_1.workspace.createFileSystemWatcher("**/*.qrc"),
                 vscode_1.workspace.createFileSystemWatcher("**/main.cpp"),
             ],

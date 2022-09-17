@@ -1,4 +1,4 @@
-import { FileType, Uri, window, workspace } from "vscode";
+import { FileType, TextDocument, Uri, window, workspace } from "vscode";
 import { DefaultQmlTemplate } from "../DefaultQmlTemplate";
 
 export async function generateQmlFile(uri: Uri) {
@@ -37,6 +37,11 @@ export async function generateQmlFile(uri: Uri) {
       }
       return;
     }
+  }
+
+  async function openFile() {
+    const doc: TextDocument = await workspace.openTextDocument(qmlUri);
+    await window.showTextDocument(doc);
   }
 
   async function updateQrcData(qmlUri: Uri): Promise<void> {
@@ -84,8 +89,10 @@ export async function generateQmlFile(uri: Uri) {
       const templateBuffer: Buffer = Buffer.from(DefaultQmlTemplate);
       workspace.fs.writeFile(qmlUri, templateBuffer);
       await updateQrcData(qmlUri);
+      await openFile();
     } catch (error) {
       window.showErrorMessage(error.message);
+      await workspace.fs.delete(qmlUri);
     }
 
     return;

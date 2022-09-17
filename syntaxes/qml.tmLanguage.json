@@ -45,7 +45,7 @@
     {
       "Beschreibung": "QML Basistypen",
       "name": "storage.qml",
-      "match": "\\b(bool)\\b|\\b(double)\\b|\\b(int)\\b|\\b(real)\\b|\\b(string)\\b|\\b(variant)\\b|\\b(var)\\b|\\b(const)\\b"
+      "match": "\\b(bool)\\b|\\b(double)\\b|\\b(int)\\b|\\b(real)\\b|\\b(string)\\b|\\b(variant)\\b|\\b(var)\\b|\\b(const)\\b|\\b(let)\\b|\\b(enum)\\b|\\b(readonly)\\b"
     },
     {
       "Beschreibung": "QML Basiswörter",
@@ -122,7 +122,7 @@
       "patterns": [
         {
           "name": "keyword.control.qml",
-          "match": "\\b(if)\\b|\\b(else)\\b|\\b(while)\\b|\\b(for)\\b|\\b(function)\\b|\\b(return)\\b|\\b(import)\\b|\\b(as)\\b|\\b(property)\\b|\\b(switch)\\b|\\b(case)\\b|\\b(break)\\b|\\b(default)\\b"
+          "match": "\\b(if)\\b|\\b(else)\\b|\\b(while)\\b|\\b(for)\\b|\\b(function)\\b|\\b(return)\\b|\\b(import)\\b|\\b(as)\\b|\\b(property)\\b|\\b(switch)\\b|\\b(case)\\b|\\b(break)\\b|\\b(default)\\b|\\b(delete)\\b|\\b(pragma)\\b|\\b(Singleton)\\b"
         }
       ]
     },

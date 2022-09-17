@@ -24,16 +24,16 @@ import {
   Location,
   Position,
   ProposedFeatures,
-  Range,
   TextDocumentChangeEvent,
   TextDocuments,
   TextDocumentSyncKind,
   TextEdit,
   WorkspaceFolder,
 } from "vscode-languageserver/node";
+import { Formatter } from "./formatter";
 
-import { Regex } from "./libs";
 import References from "./types";
+import "./utils/prototypes";
 
 class ServiceDispatcher {
   private connection = createConnection(ProposedFeatures.all);
@@ -46,7 +46,9 @@ class ServiceDispatcher {
   private hasConfigurationCapability = false;
   private mainCppDir = "";
   private qrcData: string[] = [];
-  private mainCppcData: string[] = [];
+  private qmlFiles: QmlFiles[] = [];
+  private mainCppcData: any[] = [];
+  private formatter: Formatter;
 
   private readonly references: string[] = [
     "function",
@@ -56,7 +58,10 @@ class ServiceDispatcher {
   ];
 
   constructor() {
+    this.formatter = new Formatter(this.documents);
+
     this.documents.onDidOpen((change) => this.onDidOpen(change));
+    this.documents.onDidClose((change) => this.onDidClose(change));
     this.documents.onDidChangeContent((change) =>
       this.onDidChangeContent(change)
     );
@@ -70,18 +75,19 @@ class ServiceDispatcher {
     this.connection.onCompletionResolve((handler) =>
       this.onCompletionResolve(handler)
     );
+
     this.connection.onDocumentFormatting((params) =>
-      this.onDocumentFormatting(params)
+      this.formatter.formattingDocument(params)
     );
     this.connection.onDocumentRangeFormatting((params) =>
       this.onDocumentRangeFormatting(params)
     );
+
     this.connection.onDefinition((params) => this.onDefinition(params));
     this.connection.onCodeAction((params: CodeActionParams) =>
       this.onCodeAction(params)
     );
 
-    // this.documents.onDidClose(change => this.onDidClose(change));
     // this.connection.onDocumentSymbol(handler => this.onDocumentSymbol(handler));
     // this.connection.onWorkspaceSymbol(handler => this.onWorkspaceSymbol(handler));
     // this.connection.onDidChangeConfiguration(change => this.onDidChangeConfiguration(change));
@@ -114,6 +120,7 @@ class ServiceDispatcher {
         codeActionProvider: true,
       },
     };
+
     if (this.hasWorkspaceFolderCapability) {
       result.capabilities.workspace = {
         workspaceFolders: {
@@ -121,6 +128,7 @@ class ServiceDispatcher {
         },
       };
     }
+
     return result;
   }
 
@@ -131,14 +139,17 @@ class ServiceDispatcher {
         undefined
       );
     }
+
     if (this.hasWorkspaceFolderCapability) {
       this.connection.workspace.onDidChangeWorkspaceFolders((_event) => {
         this.connection.console.log("Workspace folder change event received.");
       });
     }
+
     if (this.workspaceFolders) {
       this.updateQrcData();
       this.updateMainCpp();
+      this.getAllQmlFiles();
     }
   }
 
@@ -150,6 +161,13 @@ class ServiceDispatcher {
 
   private onDidOpen(change: TextDocumentChangeEvent<TextDocument>): void {
     this.validateImports(change.document);
+  }
+
+  private onDidClose(change: TextDocumentChangeEvent<TextDocument>): void {
+    this.connection.sendDiagnostics({
+      uri: change.document.uri,
+      diagnostics: [],
+    });
   }
 
   private onDidChangeWatchedFiles(handler: DidChangeWatchedFilesParams): void {
@@ -174,6 +192,12 @@ class ServiceDispatcher {
         change.uri.endsWith("main.cpp")
       )!.uri;
       this.updateMainCpp(uri);
+    } else if (handler.changes.some(({ uri }) => uri.endsWith(".qml"))) {
+      const change = handler.changes.find(({ uri }) => uri.endsWith(".qml"))!;
+      console.log(change.uri);
+      // if (change.type === FileChangeType.Changed) {
+      //   this.updateQmlFile(change.uri);
+      // }
     }
   }
 
@@ -198,10 +222,72 @@ class ServiceDispatcher {
       if (!word)
         return this.getComponentProps(text, complitionPosition.position.line);
 
-      if (
-        !complitionPosition.context ||
-        complitionPosition.context.triggerKind === 1
-      ) {
+      if (word.includes("console.")) {
+        return [
+          {
+            label: "log",
+            kind: CompletionItemKind.Function,
+            documentation: "console.log",
+            insertText: "log();",
+          },
+          {
+            label: "assert",
+            kind: CompletionItemKind.Function,
+            documentation: "console.assert",
+            insertText: "assert();",
+          },
+          {
+            label: "warn",
+            kind: CompletionItemKind.Function,
+            documentation: "console.warn",
+            insertText: "warn();",
+          },
+          {
+            label: "error",
+            kind: CompletionItemKind.Function,
+            documentation: "console.error",
+            insertText: "error();",
+          },
+          {
+            label: "info",
+            kind: CompletionItemKind.Function,
+            documentation: "console.info",
+            insertText: "info();",
+          },
+          {
+            label: "debug",
+            kind: CompletionItemKind.Function,
+            documentation: "console.debug",
+            insertText: "debug();",
+          },
+          {
+            label: "trace",
+            kind: CompletionItemKind.Function,
+            documentation: "console.trace",
+            insertText: "trace();",
+          },
+          {
+            label: "time",
+            kind: CompletionItemKind.Function,
+            documentation: "console.time",
+            insertText: "time();",
+          },
+          {
+            label: "timeEnd",
+            kind: CompletionItemKind.Function,
+            documentation: "console.timeEnd",
+            insertText: "timeEnd();",
+          },
+          {
+            label: "count",
+            kind: CompletionItemKind.Function,
+            documentation: "console.count",
+            insertText: "count();",
+          },
+        ];
+      }
+
+      if (complitionPosition.context?.triggerKind === 1) {
         // trigged by 'ctrl+space'
         prop = text
           .split("\n")
@@ -233,9 +319,30 @@ class ServiceDispatcher {
 
           return item;
         });
+
+        const propertyData = this.getpropertyData(text, word.split(".")[0]);
+        if (propertyData) {
+          const wordList = word.split(".").filter((str) => str);
+          let property = JSON.parse(propertyData);
+          wordList
+            .slice(1)
+            .forEach((item) => (property = property[item] || {}));
+          itens = [
+            ...itens,
+            ...Object.keys(property).map((key) => {
+              const item: CompletionItem = {} as CompletionItem;
+              item.kind = CompletionItemKind.Property;
+              item.label = key;
+              item.data = key;
+              return item;
+            }),
+          ];
+        }
+
         itens = [
           ...this.getCustomComponents(),
           ...this.getDefaultComponents(),
+          ...this.getCompletionProps(word),
           ...this.getComponentProps(
             text,
             complitionPosition.position.line
@@ -265,53 +372,70 @@ class ServiceDispatcher {
           });
         } else {
           const match = text.match(new RegExp(`id: ?${componentId}`));
-          if (!match)
-            return this.getPropsFromProp(
-              text,
-              complitionPosition.position.line,
-              word
-            );
-          let parsedData = text.slice(match.index, text.length);
-          const finalData = parsedData.match(/[a-zA-Z]{1,}\s{0,}\{/);
-          let lastIndex = parsedData.length;
-          if (finalData && finalData.index) lastIndex = finalData.index;
+          if (match) {
+            let parsedData = text.slice(match.index, text.length);
+            const finalData = parsedData.match(/[a-zA-Z]{1,}\s{0,}\{/);
+            let lastIndex = parsedData.length;
+            if (finalData && finalData.index) lastIndex = finalData.index;
 
-          parsedData = parsedData.slice(0, lastIndex);
+            parsedData = parsedData.slice(0, lastIndex);
 
-          prop = parsedData
-            .split("\n")
-            .filter(
-              (line: string): boolean =>
-                this.references.some((ref) => line.trim().startsWith(ref)) ||
-                line.includes(":")
-            )
-            .filter((line: string): boolean => !line.trim().startsWith("id"));
+            prop = parsedData
+              .split("\n")
+              .filter(
+                (line: string): boolean =>
+                  this.references.some((ref) => line.trim().startsWith(ref)) ||
+                  line.includes(":")
+              )
+              .filter((line: string): boolean => !line.trim().startsWith("id"));
 
-          itens = prop.map((str) => {
-            const item: CompletionItem = {} as CompletionItem;
+            itens = prop.map((str) => {
+              const item: CompletionItem = {} as CompletionItem;
 
-            if (str.includes("function") || str.includes("signal")) {
-              item.kind = CompletionItemKind.Function;
-            } else {
-              item.kind = CompletionItemKind.Property;
+              if (str.includes("function") || str.includes("signal")) {
+                item.kind = CompletionItemKind.Function;
+              } else {
+                item.kind = CompletionItemKind.Property;
+              }
+
+              let complitionText = str
+                .replace(/(property [a-zA-Z0-9]{1,}|function |signal )/, "")
+                .trim()
+                .replace(/:.*|\(.*/, "");
+              complitionText =
+                (complitionText.match(/[A-z]+/) || [])[0] || complitionText;
+
+              item.data = complitionText;
+              item.label = complitionText;
+
+              return item;
+            });
+          }
+
+          const propertyData = this.getpropertyData(text, componentId);
+          if (propertyData) {
+            const wordList = word.split(".").filter((str) => str);
+            let property = JSON.parse(propertyData.replace(/,\s{0,}\}/g, "}"));
+            wordList
+              .slice(1)
+              .forEach((item) => (property = property[item] || {}));
+            if (typeof property === "object") {
+              itens = [
+                ...itens,
+                ...Object.keys(property).map((key) => {
+                  const item: CompletionItem = {} as CompletionItem;
+                  item.kind = CompletionItemKind.Property;
+                  item.label = key;
+                  item.data = key;
+                  return item;
+                }),
+              ];
             }
+          }
 
-            let complitionText = str
-              .replace(/(property [a-zA-Z0-9]{1,}|function |signal )/, "")
-              .trim()
-              .replace(/:.*|\(.*/, "");
-            complitionText =
-              (complitionText.match(/[A-z]+/) || [])[0] || complitionText;
-
-            item.data = complitionText;
-            item.label = complitionText;
-
-            return item;
-          });
           itens = [
             ...itens,
-            ...this.getCustomComponents(),
-            ...this.getDefaultComponents(),
+            ...this.getCompletionProps(word),
             ...this.getComponentProps(text, complitionPosition.position.line),
           ].filter(
             (item: CompletionItem): boolean =>
@@ -325,6 +449,89 @@ class ServiceDispatcher {
       );
     } catch (error) {
       console.error(error);
+    }
+
+    return itens;
+  }
+
+  private getpropertyData(text: string, property: string, index = 0): string {
+    const propMatch = text.match(
+      new RegExp(` ?.*property [A-Za-z0-9]+ ?${property}: ?{`)
+    );
+    if (propMatch) {
+      const propData = text.slice(propMatch.index);
+      let lastIndex = propData.indexOf("}");
+      let tmpData = propData.slice(0, lastIndex);
+      while (tmpData.count("{") - 1 != tmpData.count("}")) {
+        lastIndex = propData.indexOf("}", lastIndex + 1);
+        tmpData = propData.slice(0, lastIndex);
+      }
+
+      tmpData = `{${tmpData
+        .slice(tmpData.indexOf("{") + 1)
+        .replace("'", '"')}}`;
+
+      return tmpData;
+    }
+    return "";
+  }
+
+  private getCompletionProps(word: string): CompletionItem[] {
+    const itens: CompletionItem[] = [];
+
+    let clearedWord = "";
+    if (word.includes(".")) clearedWord = word.replace(/\..*/, "");
+    else clearedWord = word;
+
+    let componentUri = this.qrcData.find((item) => item.includes(clearedWord));
+
+    if (componentUri) {
+      componentUri = `${this.mainCppDir}/${componentUri}.qml`;
+      const dataList = fs
+        .readFileSync(componentUri, { encoding: "utf8" })
+        .split("\n");
+
+      const functionList = dataList
+        .filter((line) => line.trim().startsWith("function"))
+        .map((line) =>
+          line
+            .replace(/\/\*.*\*\//g, "")
+            .replace("function", "")
+            .replace(/\(.*/g, "")
+            .trim()
+        );
+      itens.push(
+        ...functionList.map((name) => {
+          const item: CompletionItem = {
+            data: name,
+            label: name,
+            kind: CompletionItemKind.Function,
+          };
+          return item;
+        })
+      );
+      const propertyRegex = /property [a-zA-Z0-9]{1,}/;
+      const propertyList = dataList
+        .filter((line) => propertyRegex.test(line))
+        .map((line) =>
+          line
+            .replace(/\/\*.*\*\//g, "")
+            .replace(propertyRegex, "")
+            .replace(/\(.*/g, "")
+            .trim()
+            .replace(/:.*/, "")
+        );
+
+      itens.push(
+        ...propertyList.map((name) => {
+          const item: CompletionItem = {
+            data: name,
+            label: name,
+            kind: CompletionItemKind.Property,
+          };
+          return item;
+        })
+      );
     }
 
     return itens;
@@ -502,14 +709,27 @@ class ServiceDispatcher {
           !!findedComp &&
           !!importUrl &&
           !isSamePath &&
-          !imports.some(
-            (line) =>
-              line
-                .replace(/(import| |"|qrc:\/)/g, "")
+          !imports.some((line) => {
+            const cleanedLine = line
+              .replace(/(import| |"|qrc:\/|\/\/.*)/g, "")
+              .split("/")
+              .filter((i) => i)
+              .join("/");
+            const componentUri = textDocument.uri
+              .split("/")
+              .slice(0, -1)
+              .join("/");
+            return (
+              cleanedLine === importUrl ||
+              path
+                .join(componentUri, cleanedLine)
+                .replace(/file:\/{1,}/, "/")
+                .replace(this.mainCppDir, "")
                 .split("/")
                 .filter((i) => i)
                 .join("/") === importUrl
-          )
+            );
+          })
         ) {
           const diagnostic: Diagnostic = {
             severity: DiagnosticSeverity.Error,
@@ -530,43 +750,10 @@ class ServiceDispatcher {
     this.connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
   }
 
-  private onDocumentFormatting(params: DocumentFormattingParams): TextEdit[] {
-    const doc = this.documents.get(params.textDocument.uri);
-    if (!doc) return [];
-
-    const file = doc.getText();
-    const tabSize: string = params.options.insertSpaces
-      ? " ".repeat(params.options.tabSize)
-      : "\t";
-
-    const textEdit: TextEdit[] = [];
-
-    file.split("\n").forEach((line, index) => {
-      const data = Regex(this.preFormatter(line), index === 0, tabSize);
-      textEdit.push(
-        TextEdit.replace(
-          Range.create(
-            Position.create(index, 0),
-            Position.create(index, line.length)
-          ),
-          data.trimEnd()
-        )
-      );
-    });
-
-    return textEdit;
-  }
-
   private onDocumentRangeFormatting(
     params: DocumentFormattingParams
   ): TextEdit[] {
     return [];
-  }
-
-  private preFormatter(textDocument: string): string {
-    const textDocumentFormatted = textDocument
-      .replace(/\s{0,}:\s{0,}/g, ": ");
-    return textDocumentFormatted || textDocument;
   }
 
   private onDefinition(
@@ -577,6 +764,7 @@ class ServiceDispatcher {
         textDocument: { uri },
         position: { character, line },
       } = params;
+      this.updateMainCpp();
 
       const doc = this.documents.get(uri);
       if (!doc) return;
@@ -588,7 +776,7 @@ class ServiceDispatcher {
       const wordList = textLine.slice(0, character)?.split(" ");
       let word: string = wordList && wordList[wordList?.length - 1];
       word = textLine!.split(" ").find((txt) => txt.includes(word)) || word;
-      word = word.replace(/(\(|\{|:).*/, "");
+      word = word.split("(").filter((txt) => !!txt)[0];
 
       if (word.includes("Component")) return;
 
@@ -607,6 +795,21 @@ class ServiceDispatcher {
             )
         );
 
+      if (this.qmlFiles.some((file) => file.fileName === word)) {
+        return this.qmlFiles
+          .filter((file) => file.fileName === word)
+          .map(({ definitionPosition: { line, start, end }, uri: fileUri }) => {
+            return Location.create(fileUri.prefix("file://"), {
+              start: { line, character: start },
+              end: { line, character: end },
+            });
+          });
+      } /*  else if (
+        this.qmlFiles.some((file) => file.fileName === word.split(".")[0])
+      ) {
+        console.log("É uma prop de algum componente do custom");
+      } */
+
       if (word.includes(".")) {
         const componentId = word.split(".")[0];
         const defText = wordList[wordList?.length - 1];
@@ -614,29 +817,52 @@ class ServiceDispatcher {
         word = splited.find((txt) => txt.includes(defText)) || splited[1];
 
         const match = data.match(new RegExp(`id: ?${componentId}`));
-        if (!match) return [];
-        let parsedData = data.slice(match.index, data.length);
-        const finalData = parsedData.match(/[a-zA-Z]{1,}\s{0,}\{/);
-        let lastIndex = parsedData.length;
-        if (finalData && finalData.index) lastIndex = finalData.index;
+        if (match) {
+          let parsedData = data.slice(match.index, data.length);
+          const finalData = parsedData.match(/[a-zA-Z]{1,}\s{0,}\{/);
+          let lastIndex = parsedData.length;
+          if (finalData && finalData.index) lastIndex = finalData.index;
 
-        parsedData = parsedData.slice(0, lastIndex);
+          parsedData = parsedData.slice(0, lastIndex);
 
-        prop = parsedData
-          .split("\n")
-          .filter(
-            (line: string): boolean =>
-              this.references.some((ref) => line.trim().startsWith(ref)) ||
-              line.includes(":")
-          )
-          .filter((str: string) =>
-            str
-              .split(" ")
-              .some(
-                (txt: string): boolean =>
-                  txt.replace(/(\(|\{|:).*/, "") === word
-              )
-          );
+          prop = parsedData
+            .split("\n")
+            .filter(
+              (line: string): boolean =>
+                this.references.some((ref) => line.trim().startsWith(ref)) ||
+                line.includes(":")
+            )
+            .filter((str: string) =>
+              str
+                .split(" ")
+                .some(
+                  (txt: string): boolean =>
+                    txt.replace(/(\(|\{|:).*/, "") === word
+                )
+            );
+        } else if (
+          this.qrcData.some((qrc) => qrc.split("/").pop() === componentId)
+        ) {
+          if (this.workspaceFolders) {
+            this.updateMainCppDir();
+            const rootUri = `${this.mainCppDir}/${this.qrcData.find(
+              (qrc) => qrc.split("/").pop() === componentId
+            )}.qml`;
+            const defUri = `file://${rootUri}`;
+            const data = fs
+              .readFileSync(rootUri, { encoding: "utf8" })
+              .split("\n");
+            const line = data.findIndex((line) =>
+              /[a-zA-Z0-9]{0,} \{/.test(line)
+            );
+            const character = data[line].trim().replace(/ .*/g, "").length;
+
+            return Location.create(defUri, {
+              start: { line, character: 0 },
+              end: { line, character },
+            });
+          }
+        }
       }
 
       if (this.qrcData.some((qrc) => qrc.split("/").pop() === word)) {
@@ -823,14 +1049,84 @@ class ServiceDispatcher {
         const rootPath = `${this.mainCppDir.replace("file://", "")}/main.cpp`;
         data = fs.readFileSync(rootPath, { encoding: "utf8" });
       }
+
+      const cppFiles = this.getDirsFile(
+        this.workspaceFolders[0].uri.replace("file://", "")
+      ).filter(
+        (file: string): boolean =>
+          file.trim().endsWith(".cpp") && file.trim().includes(this.mainCppDir)
+      );
+
       this.mainCppcData = data
         .split("\n")
         .filter((line) => line.includes("qmlRegister"))
         .map(
-          (line) => line.trim()
+          (line) => {
+            const splitedLine = line.split("<");
+            if (splitedLine.length === 2) {
+              const [file, dirtImport] = splitedLine[1].split(">(");
+              const [importName, major, minor, usability] =
+                dirtImport.split(",");
+
+              return {
+                file: file.trim(),
+                uri: cppFiles.find((cpp) =>
+                  cpp.toLowerCase().includes(file.trim().toLowerCase())
+                ),
+                importName: importName.trim().replace('"', ""),
+                version: `${major.trim()}.${minor.trim()}`,
+                usability: usability
+                  .trim()
+                  .replace('"', "")
+                  .replace(/\).*/g, ""),
+              };
+            }
+            return line.trim();
+          }
           // .replace(/(.*.\(|\).*)/g, '')
         );
-      console.log(this.mainCppcData);
+      // console.log(this.mainCppcData);
+    }
+  }
+
+  private async getAllQmlFiles(): Promise<void> {
+    if (this.workspaceFolders) {
+      const dataFiles = this.getDirsFile(
+        this.workspaceFolders[0].uri.replace("file://", "")
+      )
+        .filter((file) => file.trim().endsWith(".qml"))
+        .map(
+          (file) =>
+            new Promise<QmlFiles>((resolve) => {
+              const data = fs.promises.readFile(file, { encoding: "utf8" });
+              const importUri = file.replace(
+                this.mainCppDir.formatToPath(),
+                ""
+              );
+              data.then((data) => {
+                const myData = data.split("\n");
+                const line = myData.findIndex((line) =>
+                  /[a-zA-Z0-9]{0,} \{/.test(line)
+                );
+                const character =
+                  line !== -1
+                    ? myData[line].trim().replace(/ .*/g, "").length
+                    : 0;
+                resolve({
+                  data,
+                  uri: file.formatToPath(),
+                  fileName: file.getFileName(),
+                  importUri: `import "qrc:${importUri}"`,
+                  definitionPosition: {
+                    start: 0,
+                    end: character,
+                    line: line === -1 ? 0 : line,
+                  },
+                });
+              });
+            })
+        );
+      Promise.all(dataFiles).then((data) => (this.qmlFiles = data));
     }
   }
 }
@@ -839,4 +1135,16 @@ let serviceDispatcher: ServiceDispatcher | null = null;
 
 if (serviceDispatcher === null) {
   serviceDispatcher = new ServiceDispatcher();
+}
+
+interface QmlFiles {
+  uri: string;
+  data: string;
+  fileName: string;
+  importUri: string;
+  definitionPosition: {
+    end: number;
+    line: number;
+    start: number;
+  };
 }
