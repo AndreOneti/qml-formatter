@@ -1,12 +1,13 @@
 import * as path from "path";
-import { commands, ExtensionContext, workspace } from "vscode";
+import { commands, ExtensionContext, window, workspace } from "vscode";
 import {
   LanguageClient,
   LanguageClientOptions,
   ServerOptions,
-  TransportKind
+  TransportKind,
 } from "vscode-languageclient/node";
 import { generateQmlFile } from "./commands/generateQmlFile";
+import { organizeImports } from './commands/organizeImports';
 
 let client: LanguageClient;
 
@@ -22,6 +23,7 @@ export function deactivate(): Thenable<void> | undefined {
 
 function registerCommands() {
   commands.registerCommand("qmlFormatter.qml", generateQmlFile);
+  commands.registerCommand("qmlFormatter.imports.organize", organizeImports);
 }
 
 function serverConnect(context: ExtensionContext) {

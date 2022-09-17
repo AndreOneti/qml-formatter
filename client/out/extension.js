@@ -5,6 +5,7 @@ const path = require("path");
 const vscode_1 = require("vscode");
 const node_1 = require("vscode-languageclient/node");
 const generateQmlFile_1 = require("./commands/generateQmlFile");
+const organizeImports_1 = require("./commands/organizeImports");
 let client;
 function activate(context) {
     registerCommands();
@@ -19,6 +20,7 @@ function deactivate() {
 exports.deactivate = deactivate;
 function registerCommands() {
     vscode_1.commands.registerCommand("qmlFormatter.qml", generateQmlFile_1.generateQmlFile);
+    vscode_1.commands.registerCommand("qmlFormatter.imports.organize", organizeImports_1.organizeImports);
 }
 function serverConnect(context) {
     const serverModule = context.asAbsolutePath(path.join("server", "out", "server.js"));
@@ -38,6 +40,7 @@ function serverConnect(context) {
         ],
         synchronize: {
             fileEvents: [
+                vscode_1.workspace.createFileSystemWatcher("**/*.js"),
                 vscode_1.workspace.createFileSystemWatcher("**/*.qml"),
                 vscode_1.workspace.createFileSystemWatcher("**/*.qrc"),
                 vscode_1.workspace.createFileSystemWatcher("**/main.cpp"),
