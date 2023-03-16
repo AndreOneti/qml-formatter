@@ -15,5 +15,6 @@ export declare class Formatter {
     private resetGlobalVars;
     private initGlobalVars;
     private Regex;
+    private preFormat;
     formattingDocument(params: DocumentFormattingParams): TextEdit[];
 }

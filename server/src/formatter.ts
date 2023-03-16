@@ -324,6 +324,14 @@ export class Formatter {
     return newLine;
   }
 
+  private preFormat(text:string): string {
+    text = text.replace(/([A-Za-z0-9]{1,})( {0,})(\{)/gm, "$1 $3");
+    text = text.replace(/(property) ([A-Za-z0-9]{1,}) ([A-Za-z0-9]{1,})(\s{0,}):(\s{0,})/gm, "$1 $2 $3: ");
+    text = text.replace(/([A-Za-z0-9]{1,})(\s{0,}):(\s{0,})(\{|\[|\()/gm, "$1: $4");
+
+    return text;
+  }
+
   formattingDocument(params: DocumentFormattingParams): TextEdit[] {
     this.resetGlobalVars();
     this.initGlobalVars(params);
@@ -333,7 +341,7 @@ export class Formatter {
       return textEdit;
     }
 
-    const fileData = this.doc.getText();
+    const fileData = this.preFormat(this.doc.getText());
     fileData.split("\n").forEach((line, index) => {
       const data = this.Regex(line, index === 0, this.tabSize);
       textEdit.push(

@@ -20,4 +20,11 @@ String.prototype.formatToPath = function () {
 String.prototype.prefix = function (prefix) {
     return `${prefix}${this}`;
 };
+String.prototype.count = function count(rgx) {
+    const rx = new RegExp(String(rgx), "ig");
+    return (this.match(rx) || []).length;
+};
+String.prototype.lastChar = function lastChar() {
+    return this[this.length - 1];
+};
 //# sourceMappingURL=prototypes.js.map

@@ -680,8 +680,7 @@ class ServiceDispatcher {
 
   // TODO: fix diagnostic when has 2 components with same name.
   private async validateImports(textDocument: TextDocument): Promise<void> {
-    const doc = this.documents.get(textDocument.uri);
-    const text = doc!.getText();
+    const text = textDocument.getText();
     const imports = text
       .split("\n")
       .filter((line) => line.startsWith("import"));

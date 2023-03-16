@@ -1,4 +1,4 @@
-[![Visual Studio Marketplace](https://vsmarketplacebadge.apphb.com/version/AndreOneti.qml-formatter.svg)](https://marketplace.visualstudio.com/items?itemName=AndreOneti.qml-formatter) ![Installs](https://vsmarketplacebadge.apphb.com/installs/AndreOneti.qml-formatter.svg) ![Rating](https://vsmarketplacebadge.apphb.com/rating-short/AndreOneti.qml-formatter.svg)
+<!-- [![Visual Studio Marketplace](https://vsmarketplacebadge.apphb.com/version/AndreOneti.qml-formatter.svg)](https://marketplace.visualstudio.com/items?itemName=AndreOneti.qml-formatter) ![Installs](https://vsmarketplacebadge.apphb.com/installs/AndreOneti.qml-formatter.svg) ![Rating](https://vsmarketplacebadge.apphb.com/rating-short/AndreOneti.qml-formatter.svg) -->
 
 # [QML](http://www.qt.io/) Language support for [Visual Studio Code](https://code.visualstudio.com/)
 Provides Intellisense for QML in VSCode

@@ -209,6 +209,12 @@ class Formatter {
         const newLine = (0, libs_1.whiteSpaceRemove)(line, this.currentTabSize, identation);
         return newLine;
     }
+    preFormat(text) {
+        text = text.replace(/([A-Za-z0-9]{1,})( {0,})(\{)/gm, "$1 $3");
+        text = text.replace(/(property) ([A-Za-z0-9]{1,}) ([A-Za-z0-9]{1,})(\s{0,}):(\s{0,})/gm, "$1 $2 $3: ");
+        text = text.replace(/([A-Za-z0-9]{1,})(\s{0,}):(\s{0,})(\{|\[|\()/gm, "$1: $4");
+        return text;
+    }
     formattingDocument(params) {
         this.resetGlobalVars();
         this.initGlobalVars(params);
@@ -216,7 +222,7 @@ class Formatter {
         if (!this.doc) {
             return textEdit;
         }
-        const fileData = this.doc.getText();
+        const fileData = this.preFormat(this.doc.getText());
         fileData.split("\n").forEach((line, index) => {
             const data = this.Regex(line, index === 0, this.tabSize);
             textEdit.push(node_1.TextEdit.replace(node_1.Range.create(node_1.Position.create(index, 0), node_1.Position.create(index, line.length)), data.trimEnd()));
