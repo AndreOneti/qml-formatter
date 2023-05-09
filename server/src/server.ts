@@ -22,6 +22,7 @@ import {
   InitializeParams,
   InitializeResult,
   Location,
+  NotificationType,
   Position,
   ProposedFeatures,
   TextDocumentChangeEvent,
@@ -34,6 +35,10 @@ import { Formatter } from "./formatter";
 
 import References from "./types";
 import "./utils/prototypes";
+
+const QmlTypesNotification = {
+  type: new NotificationType<string[]>('qml/types')
+};
 
 class ServiceDispatcher {
   private connection = createConnection(ProposedFeatures.all);
@@ -87,6 +92,10 @@ class ServiceDispatcher {
     this.connection.onCodeAction((params: CodeActionParams) =>
       this.onCodeAction(params)
     );
+
+    this.connection.onNotification(QmlTypesNotification.type, uris => {
+      this.onQmlTypesNotification(uris);
+    });
 
     // this.connection.onDocumentSymbol(handler => this.onDocumentSymbol(handler));
     // this.connection.onWorkspaceSymbol(handler => this.onWorkspaceSymbol(handler));
@@ -933,6 +942,22 @@ class ServiceDispatcher {
       actions.push(this.createImport(doc!, codeAction));
     });
     return actions;
+  }
+
+  private onQmlTypesNotification(uris: string[]): void {
+    uris.forEach(uri => {
+      try {
+        const jsonString = fs.readFileSync(uri, 'utf-8');
+        const qmlTypes = JSON.parse(jsonString);
+        if (qmlTypes !== null && typeof qmlTypes === 'object') {
+          for (const name in qmlTypes) {
+              References[name] = qmlTypes[name];
+          }
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    });
   }
 
   private createImport(document: TextDocument, data: string): CodeAction {
