@@ -7,6 +7,9 @@ const node_1 = require("vscode-languageserver/node");
 const formatter_1 = require("./formatter");
 const types_1 = require("./types");
 require("./utils/prototypes");
+const QmlTypesNotification = {
+    type: new node_1.NotificationType('qml/types')
+};
 class ServiceDispatcher {
     constructor() {
         this.connection = (0, node_1.createConnection)(node_1.ProposedFeatures.all);
@@ -37,6 +40,9 @@ class ServiceDispatcher {
         this.connection.onDocumentRangeFormatting((params) => this.onDocumentRangeFormatting(params));
         this.connection.onDefinition((params) => this.onDefinition(params));
         this.connection.onCodeAction((params) => this.onCodeAction(params));
+        this.connection.onNotification(QmlTypesNotification.type, uris => {
+            this.onQmlTypesNotification(uris);
+        });
         // this.connection.onDocumentSymbol(handler => this.onDocumentSymbol(handler));
         // this.connection.onWorkspaceSymbol(handler => this.onWorkspaceSymbol(handler));
         // this.connection.onDidChangeConfiguration(change => this.onDidChangeConfiguration(change));
@@ -709,6 +715,22 @@ class ServiceDispatcher {
         });
         return actions;
     }
+    onQmlTypesNotification(uris) {
+        uris.forEach(uri => {
+            try {
+                const jsonString = fs.readFileSync(uri, 'utf-8');
+                const qmlTypes = JSON.parse(jsonString);
+                if (qmlTypes !== null && typeof qmlTypes === 'object') {
+                    for (const name in qmlTypes) {
+                        types_1.default[name] = qmlTypes[name];
+                    }
+                }
+            }
+            catch (err) {
+                console.error(err);
+            }
+        });
+    }
     createImport(document, data) {
         const textEdit = [];
         const text = document.getText();
@@ -853,6 +875,9 @@ class ServiceDispatcher {
             }));
             Promise.all(dataFiles).then((data) => (this.qmlFiles = data));
         }
+    }
+    isObject(item) {
+        return typeof item === "object" && !Array.isArray(item) && item !== null;
     }
 }
 let serviceDispatcher = null;

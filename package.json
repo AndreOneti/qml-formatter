@@ -34,6 +34,7 @@
     "url": "https://github.com/AndreOneti/qml-formatter/issues"
   },
   "contributes": {
+    "qmlTypes": [],
     "languages": [
       {
         "id": "qml",

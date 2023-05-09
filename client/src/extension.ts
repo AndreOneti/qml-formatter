@@ -1,13 +1,19 @@
 import * as path from "path";
-import { commands, ExtensionContext, window, workspace } from "vscode";
+import { commands, ExtensionContext, extensions, workspace } from "vscode";
 import {
   LanguageClient,
   LanguageClientOptions,
+  NotificationType,
   ServerOptions,
   TransportKind,
 } from "vscode-languageclient/node";
 import { generateQmlFile } from "./commands/generateQmlFile";
 import { organizeImports } from './commands/organizeImports';
+import { glob } from 'glob';
+
+const QmlTypesNotification = {
+  type: new NotificationType<string[]>('qml/types')
+};
 
 let client: LanguageClient;
 
@@ -64,4 +70,26 @@ function serverConnect(context: ExtensionContext) {
   );
 
   client.start();
+  client.onReady().then(() => {
+    const qmlTypes = getQmlTypes();
+    client.sendNotification(QmlTypesNotification.type, qmlTypes);
+  });
+}
+
+function getQmlTypes(): string[] {
+	return extensions.all.flatMap(extension => {
+		const qmlTypes = extension.packageJSON?.contributes?.qmlTypes;
+
+    if (!Array.isArray(qmlTypes)) {
+      return [];
+    }
+
+    return qmlTypes.flatMap(pattern => 
+      glob.sync(pattern, {
+        absolute: true,
+        cwd: extension.extensionPath,
+        nodir: true
+      })
+    );
+	});
 }

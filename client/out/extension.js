@@ -6,6 +6,10 @@ const vscode_1 = require("vscode");
 const node_1 = require("vscode-languageclient/node");
 const generateQmlFile_1 = require("./commands/generateQmlFile");
 const organizeImports_1 = require("./commands/organizeImports");
+const glob_1 = require("glob");
+const QmlTypesNotification = {
+    type: new node_1.NotificationType('qml/types')
+};
 let client;
 function activate(context) {
     registerCommands();
@@ -49,5 +53,23 @@ function serverConnect(context) {
     };
     client = new node_1.LanguageClient("qmlLanguageServer", "QML Language Server", serverOptions, clientOptions);
     client.start();
+    client.onReady().then(() => {
+        const qmlTypes = getQmlTypes();
+        client.sendNotification(QmlTypesNotification.type, qmlTypes);
+    });
+}
+function getQmlTypes() {
+    return vscode_1.extensions.all.flatMap(extension => {
+        var _a, _b;
+        const qmlTypes = (_b = (_a = extension.packageJSON) === null || _a === void 0 ? void 0 : _a.contributes) === null || _b === void 0 ? void 0 : _b.qmlTypes;
+        if (!Array.isArray(qmlTypes)) {
+            return [];
+        }
+        return qmlTypes.flatMap(pattern => glob_1.glob.sync(pattern, {
+            absolute: true,
+            cwd: extension.extensionPath,
+            nodir: true
+        }));
+    });
 }
 //# sourceMappingURL=extension.js.map
